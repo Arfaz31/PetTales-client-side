@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import logo from "@/assests/logo.png";
+import logo from "@/assets/logo.png";
 import Image from "next/image";
 import Container from "@/components/Shared/Container";
 import { usePathname } from "next/navigation";

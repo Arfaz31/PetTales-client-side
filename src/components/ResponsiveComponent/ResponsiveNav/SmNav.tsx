@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assests/logo.png";
+import logo from "@/assets/logo.png";
 
 import {
   Sheet,

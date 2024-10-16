@@ -1,7 +1,9 @@
+import AboutUs from "../_component/module/about/indes";
+
 const page = () => {
   return (
     <div>
-      <h1>this is about page</h1>
+      <AboutUs />
     </div>
   );
 };
