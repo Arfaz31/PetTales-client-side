@@ -1,9 +1,10 @@
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { GoHeart } from "react-icons/go";
+
 const LandingBanner = () => {
   return (
     <div>
-      <section className="relative  flex flex-col items-center justify-center gap-4  overflow-hidden h-[670px] pb-20">
+      <section className="relative  flex flex-col items-center justify-center gap-4  overflow-hidden h-[670px] pb-20 md:px-0 px-4">
         {/* Main Content */}
 
         <div className="flex text-pink-500">
@@ -24,10 +25,10 @@ const LandingBanner = () => {
 
         {/* Buttons */}
         <div className="flex gap-5 z-10">
-          <button className="bg-pink-500 hover:bg-pink-600 text-white py-3 px-4 rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-105">
+          <button className="bg-pink-600 hover:bg-pink-500 text-white py-3 px-4 rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-105">
             Explore Now
           </button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-105">
+          <button className="bg-blue-600 hover:bg-blue-500 text-white py-3 px-4 rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-105">
             Learn More
           </button>
         </div>
@@ -49,7 +50,7 @@ const LandingBanner = () => {
         </div>
 
         <div className="mt-8 z-10 rounded-md border-2 border-gray-500 p-4">
-          <p className="text-white">
+          <p className="text-white sm:text-base text-sm">
             Get started with{" "}
             <span className="bg-[#001630] py-1 px-2 rounded-sm">
               PETTALES Community

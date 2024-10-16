@@ -1,7 +1,9 @@
+import Documentations from "../_component/module/docs";
+
 const page = () => {
   return (
     <div>
-      <h1>this is docs page</h1>
+      <Documentations />
     </div>
   );
 };

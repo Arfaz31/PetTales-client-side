@@ -10,10 +10,12 @@ const CommonLayout = ({ children }: TProps) => {
   return (
     <div className="  ">
       <div className="bg-black relative ">
-        <Navbar />
+        <div className="relative z-50">
+          <Navbar />
+        </div>
         {/* Blurred Background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="w-[200px] md:w-[300px] h-[300px] bg-pink-400 opacity-70 blur-[100px] absolute top-10 left-20" />
+          <div className="w-[200px] md:w-[300px] h-[300px] bg-pink-400 opacity-70 blur-[100px] absolute top-28 left-20" />
           <div className="w-[200px] md:w-[300px] h-[300px] bg-blue-400 opacity-70 blur-[100px] absolute bottom-10 right-20 " />
         </div>
 

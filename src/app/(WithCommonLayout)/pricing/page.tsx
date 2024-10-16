@@ -1,7 +1,9 @@
+import PricingPlan from "../_component/module/pricing";
+
 const page = () => {
   return (
     <div>
-      <h1>this is pricing page</h1>
+      <PricingPlan />
     </div>
   );
 };
