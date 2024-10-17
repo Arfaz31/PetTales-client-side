@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
+      <Toaster richColors position="top-right" />
       {children}
     </QueryClientProvider>
   );
