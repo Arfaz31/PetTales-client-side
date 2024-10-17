@@ -54,9 +54,11 @@ const LgNav = () => {
           </div>
 
           <div>
-            <button className="bg-pink-600 hover:bg-pink-500 text-white py-[5px] px-4 text-lg rounded-sm">
-              Login
-            </button>
+            <Link href={"/login"}>
+              <button className="bg-pink-600 hover:bg-pink-500 text-white py-[5px] px-4 text-lg rounded-sm">
+                Login
+              </button>
+            </Link>
           </div>
         </div>
       </div>
