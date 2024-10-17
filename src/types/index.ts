@@ -24,3 +24,12 @@ export type TUser = {
   about?: string;
   isDeleted?: boolean;
 };
+
+export type IUser = {
+  _id?: string;
+  name: string;
+  email: string;
+  role: keyof typeof USER_Role;
+  status: keyof typeof USER_STATUS;
+  profilePhoto: string;
+};

@@ -5,8 +5,11 @@ import logo from "@/assets/logo.png";
 import Image from "next/image";
 import Container from "@/components/Shared/Container";
 import { usePathname } from "next/navigation";
+import { useUser } from "@/context/user.provider";
+import NavbarDropdown from "./NavbarDropdown";
 const LgNav = () => {
   const currentPath = usePathname();
+  const { user } = useUser();
   const Links = [
     { name: "HOME", link: "/" },
     { name: "NEWSFEED", link: "/newsfeed" },
@@ -54,11 +57,15 @@ const LgNav = () => {
           </div>
 
           <div>
-            <Link href={"/login"}>
-              <button className="bg-pink-600 hover:bg-pink-500 text-white py-[5px] px-4 text-lg rounded-sm">
-                Login
-              </button>
-            </Link>
+            {user?.email ? (
+              <NavbarDropdown />
+            ) : (
+              <Link href={"/login"}>
+                <button className="bg-pink-600 hover:bg-pink-500 text-white py-[5px] px-4 text-lg rounded-sm">
+                  Login
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
