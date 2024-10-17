@@ -54,7 +54,7 @@ const LgNav = () => {
           </div>
 
           <div>
-            <button className="bg-pink-600 hover:bg-pink-500 text-white py-2 px-5 text-lg rounded-sm">
+            <button className="bg-pink-600 hover:bg-pink-500 text-white py-[5px] px-4 text-lg rounded-sm">
               Login
             </button>
           </div>
