@@ -4,12 +4,14 @@ type TProps = {
   children: ReactNode;
 };
 
-const SidebarLayout = ({ children }: TProps) => {
+const DashboardLayout = ({ children }: TProps) => {
   return (
     <div>
+      leftsidebar
       <div>{children}</div>
+      rightsidebar
     </div>
   );
 };
 
-export default SidebarLayout;
+export default DashboardLayout;

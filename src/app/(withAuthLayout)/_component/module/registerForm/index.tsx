@@ -5,17 +5,18 @@ import { z } from "zod";
 import { registerSchema } from "@/schemas/auth.schema";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import Link from "next/link";
 import RegisterRightContent from "./registerRightContent";
+import { useUserRegistration } from "@/hooks/auth.hook";
+import GlassLoader from "@/components/Shared/Loading";
 
 type RegisterFormInputs = z.infer<typeof registerSchema>;
 
 const RegisterPage = () => {
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-
+  const { mutate: handleUserRegistration, isPending } = useUserRegistration();
   const {
     register,
     handleSubmit,
@@ -26,18 +27,15 @@ const RegisterPage = () => {
   });
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
-    try {
-      if (data) {
-        console.log(data);
-        toast.success("Register is successful");
-      }
-    } catch (err) {
-      toast.error("Failed to Register");
-      console.log(err);
-    } finally {
-      reset();
+    if (data) {
+      handleUserRegistration(data);
     }
+    reset();
   };
+
+  if (isPending) {
+    <GlassLoader />;
+  }
 
   return (
     <div className="w-full md:min-h-screen flex items-center justify-center max-w-7xl">
