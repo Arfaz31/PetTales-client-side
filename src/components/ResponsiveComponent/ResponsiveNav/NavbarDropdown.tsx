@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   DropdownMenu,
@@ -5,7 +7,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import userimage from "@/assets/user-2.png";
-import Link from "next/link";
 import { ChartNoAxesCombined, CircleUser, LogOut } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/context/user.provider";
@@ -27,38 +28,61 @@ const NavbarDropdown = () => {
     }
   };
 
+  const handleNavigation = (pathname: string) => {
+    router.push(pathname);
+  };
+
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className=" rounded-full border-2 border-pink-600 ">
+          <div className=" rounded-full border-2 border-pink-600 cursor-pointer">
             <Image
               src={user?.profilePhoto || userimage}
               alt="user profile picture"
-              width={40}
-              height={40}
-              className="rounded-full "
+              width={35}
+              height={35}
+              className="rounded-full"
             />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 bg-black/40 p-4">
-          <Link href={`/newsfeed/userprofile/${user?._id}`}>
+        <DropdownMenuContent className="w-56 bg-black/90 p-4 space-y-3">
+          {/* <Link href={`/newsfeed/userprofile/${user?._id}`}>
             <p className="flex items-center gap-3 text-white">
               <CircleUser className="text-white" />
               <p>Profile</p>
             </p>
-          </Link>
-          <Link href={`/dashboard/${user?.role}`}>
+          </Link> */}
+          {/* <Link href={`/dashboard/${user?.role}`}>
             <p className="flex items-center gap-3 text-white">
               <ChartNoAxesCombined className="text-white" />
               <p>Profile</p>
             </p>
-          </Link>
+          </Link> */}
+          <DropdownMenuItem
+            onClick={() =>
+              handleNavigation(`/newsfeed/userprofile/${user?._id}`)
+            }
+          >
+            <p className="flex items-center gap-3 text-white cursor-pointer p-2">
+              <CircleUser className="text-white" />
+              <p>Profile</p>
+            </p>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={() => handleNavigation(`/dashboard/${user?.role}`)}
+          >
+            <p className="flex items-center gap-3 text-white cursor-pointer p-2">
+              <ChartNoAxesCombined className="text-white" />
+              <p>Profile</p>
+            </p>
+          </DropdownMenuItem>
 
           <DropdownMenuItem onClick={() => handleLogout()}>
-            <p className="flex items-center gap-3 text-white">
+            <p className="flex items-center gap-3 text-white cursor-pointer p-2">
               <LogOut className="text-white" />
-              <p>Profile</p>
+              <p>Logout</p>
             </p>
           </DropdownMenuItem>
         </DropdownMenuContent>

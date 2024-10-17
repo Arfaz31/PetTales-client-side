@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo.png";
@@ -12,8 +13,11 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { AlignJustify } from "lucide-react";
+import NavbarDropdown from "./NavbarDropdown";
+import { useUser } from "@/context/user.provider";
 
 const SmNav = () => {
+  const { user } = useUser();
   const Links = [
     { name: "HOME", link: "/" },
     { name: "NEWSFEED", link: "/newsfeed" },
@@ -67,10 +71,17 @@ const SmNav = () => {
           </span>
         </Link>
       </div>
+
       <div>
-        <button className="bg-pink-600 hover:bg-pink-500 text-white py-1 px-4 text-base rounded-sm">
-          Login
-        </button>
+        {user?.email ? (
+          <NavbarDropdown />
+        ) : (
+          <Link href={"/login"}>
+            <button className="bg-pink-600 hover:bg-pink-500 text-white py-1 px-4 text-base rounded-sm">
+              Login
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );
