@@ -1,9 +1,10 @@
 import React from "react";
+import ForgotPassword from "../_component/module/forgotPasswordForm";
 
 const ForgotPasswordPage = () => {
   return (
     <div>
-      <h1>forgotpass</h1>
+      <ForgotPassword />
     </div>
   );
 };

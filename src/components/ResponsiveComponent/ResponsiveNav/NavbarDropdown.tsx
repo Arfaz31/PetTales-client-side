@@ -47,18 +47,6 @@ const NavbarDropdown = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 bg-black/90 p-4 space-y-3">
-          {/* <Link href={`/newsfeed/userprofile/${user?._id}`}>
-            <p className="flex items-center gap-3 text-white">
-              <CircleUser className="text-white" />
-              <p>Profile</p>
-            </p>
-          </Link> */}
-          {/* <Link href={`/dashboard/${user?.role}`}>
-            <p className="flex items-center gap-3 text-white">
-              <ChartNoAxesCombined className="text-white" />
-              <p>Profile</p>
-            </p>
-          </Link> */}
           <DropdownMenuItem
             onClick={() =>
               handleNavigation(`/newsfeed/userprofile/${user?._id}`)

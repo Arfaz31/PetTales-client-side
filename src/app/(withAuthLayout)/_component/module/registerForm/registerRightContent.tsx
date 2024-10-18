@@ -1,16 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 export default function RegisterRightContent() {
-  //   const { data: usersData } = useGetAllUsersQuery(undefined);
-  //   const users = usersData?.data as TUser[];
-  const users: any[] = []; // or your actual fetched data
-  // Replace with actual users data when ready
+  // Static users array for now
+  const users: any[] = [
+    {
+      _id: "641b9b8f42e5f1a1f3341a1a",
+      name: "John Doe",
+      profilePhoto: "", // No image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1b",
+      name: "Jane Smith",
+      profilePhoto: "", // No image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1c",
+      name: "Alice Johnson",
+      profilePhoto: "", // Example image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1d",
+      name: "Bob Williams",
+      profilePhoto: "", // No image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1e",
+      name: "Charlie Brown",
+      profilePhoto: "", // Example image
+    },
+  ];
 
   return (
     <div className="w-full md:w-[500px] xl:w-[530px] p-8 flex flex-col justify-center items-center rounded-r-lg relative overflow-hidden shadow-lg mb-10 md:mb-0">
-      {/* Foreground Content */}
       <div className="relative text-center z-10">
         <h2 className="text-3xl font-bold text-default-900 flex flex-wrap items-center justify-center text-white">
           Join Our<p className="text-pink-600 px-1">PetTales</p> Community
@@ -26,16 +49,23 @@ export default function RegisterRightContent() {
           <div className="flex -space-x-3">
             {users &&
               users.slice(0, 4).map((user: any) => (
-                <Avatar
-                  key={user?._id}
-                  className="w-10 h-10 rounded-full border-2 border-white"
+                <div
+                  key={user._id}
+                  className="relative rounded-full border-2 border-pink-600 cursor-pointer flex items-center justify-center bg-gray-200 text-pink-600 font-bold"
+                  style={{ width: 35, height: 35 }}
                 >
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                  {user?.profilePhoto ? (
+                    <Image
+                      src={user.profilePhoto}
+                      alt={user.name}
+                      width={35}
+                      height={35}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <span>{user.name.charAt(0).toUpperCase()}</span>
+                  )}
+                </div>
               ))}
           </div>
           <span className="text-default-500 text-sm text-white">

@@ -28,7 +28,7 @@ export const loginSchema = z.object({
     .max(16, "Password must not exceed 16 characters"),
 });
 
-export const forgotPassword = z.object({
+export const forgotPasswordSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
 export const resetPasswordSchema = z.object({

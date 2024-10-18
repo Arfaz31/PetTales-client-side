@@ -39,7 +39,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   //When isLoading changes: The component will re-fetch user data if isLoading is set to true again.
 
   return (
-    //This wraps the child components and provides the user, setUser, isLoading, and setIsLoading values to any component that consumes the context via useUser.
+    //This wraps the child components and provides the user, setUser, isLoading, and setIsLoading values to any component that consumes the context via useUser. double curly braces are used to interpolate the values into the JSX code. This shorthand is called object shorthand notation, commonly used when the variable names and the property names are the same.
     <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
       {children}
     </UserContext.Provider>

@@ -36,6 +36,37 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
+export const forgetPassword = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/auth/forget-password",
+      userData
+    );
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const resetPassword = async (resetPasswordData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/auth/reset-password",
+      resetPasswordData
+    );
+
+    // if (data.success) {
+    //   cookies().set("accessToken", data?.data?.accessToken);
+    //   cookies().set("refreshToken", data?.data?.refreshToken);
+    // }
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 export const logout = () => {
   cookies().delete("accessToken");
   cookies().delete("refreshToken");
