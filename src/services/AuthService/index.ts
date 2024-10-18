@@ -53,18 +53,25 @@ export const resetPassword = async (resetPasswordData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       "/auth/reset-password",
-      resetPasswordData
+      {
+        newPassword: resetPasswordData.newPassword,
+        email: resetPasswordData.email,
+      },
+      {
+        headers: {
+          Authorization: resetPasswordData.token,
+        },
+      }
     );
-
-    // if (data.success) {
-    //   cookies().set("accessToken", data?.data?.accessToken);
-    //   cookies().set("refreshToken", data?.data?.refreshToken);
-    // }
 
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
+  // catch (error: any) {
+  //   console.error(error.response?.data); // Log the exact response from the server
+  //   throw new Error(error.response?.data?.message || error.message);
+  // }
 };
 
 export const logout = () => {
@@ -92,4 +99,25 @@ export const getCurrentUser = async () => {
   }
 
   return decodedToken;
+};
+
+//get new access token from refresh token
+export const getNewAccessToken = async () => {
+  try {
+    const refreshToken = cookies().get("refreshToken")?.value;
+
+    const res = await axiosInstance({
+      url: "/auth/refresh-token",
+      method: "POST",
+      withCredentials: true,
+      headers: {
+        cookie: `refreshToken=${refreshToken}`,
+      },
+    });
+
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error("Failed to get new access token");
+  }
 };

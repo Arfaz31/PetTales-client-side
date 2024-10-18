@@ -1,19 +1,21 @@
 "use client";
+
+import { useEffect } from "react";
 import { resetPasswordSchema } from "@/schemas/auth.schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useResetPassword } from "@/hooks/auth.hook";
 import GlassLoader from "@/components/Shared/Loading";
-import { useUser } from "@/context/user.provider";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type ResetPasswordFormInputs = z.infer<typeof resetPasswordSchema>;
 
 const ResetPassword = () => {
   const { mutate: resetPassword, isPending, isSuccess } = useResetPassword();
-  const { user } = useUser();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const resetToken = searchParams.get("token");
   const router = useRouter();
   const {
     register,
@@ -27,9 +29,11 @@ const ResetPassword = () => {
   const onSubmit: SubmitHandler<ResetPasswordFormInputs> = async (data) => {
     const resetPasswordData = {
       ...data,
-      _id: user?._id,
+      email: email,
+      token: resetToken,
     };
-    if (data) {
+
+    if (resetPasswordData) {
       resetPassword(resetPasswordData);
     }
     reset();
@@ -61,16 +65,16 @@ const ResetPassword = () => {
               {/* Email Input */}
               <div className="flex flex-col gap-1">
                 <input
-                  {...register("password")}
+                  {...register("newPassword")}
                   type="password"
                   placeholder="Password"
                   className={`w-full h-12 px-3 border ${
-                    errors.password ? "border-red-500" : "border-gray-300"
+                    errors.newPassword ? "border-red-500" : "border-gray-300"
                   } focus:outline-none  focus:ring-2 focus:ring-blue-500 rounded`}
                 />
-                {errors.password && (
+                {errors.newPassword && (
                   <p className="text-red-500 text-sm">
-                    {errors.password.message}
+                    {errors.newPassword.message}
                   </p>
                 )}
               </div>

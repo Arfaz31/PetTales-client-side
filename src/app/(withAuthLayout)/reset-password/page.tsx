@@ -1,11 +1,12 @@
 import React from "react";
+import ResetPassword from "../_component/module/resetPasswordForm";
 
-const ResetPassword = () => {
+const ResetPasswordPage = () => {
   return (
     <div>
-      <h1>reset pass</h1>
+      <ResetPassword />
     </div>
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordPage;

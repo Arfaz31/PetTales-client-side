@@ -52,7 +52,7 @@ const NavbarDropdown = () => {
               handleNavigation(`/newsfeed/userprofile/${user?._id}`)
             }
           >
-            <p className="flex items-center gap-3 text-white cursor-pointer p-2">
+            <p className="flex items-center gap-3 text-white cursor-pointer p-2 ">
               <CircleUser className="text-white" />
               <p>Profile</p>
             </p>
