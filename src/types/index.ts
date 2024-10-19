@@ -11,6 +11,7 @@ export const USER_STATUS = {
 export type TUser = {
   _id?: string;
   name: string;
+  username?: string;
   email: string;
   password: string;
   mobileNumber: string;
@@ -28,6 +29,7 @@ export type TUser = {
 export type IUser = {
   _id?: string;
   name: string;
+  username: string;
   email: string;
   role: keyof typeof USER_Role;
   status: keyof typeof USER_STATUS;

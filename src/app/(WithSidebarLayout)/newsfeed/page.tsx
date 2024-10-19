@@ -1,7 +1,9 @@
+import MiddlePost from "@/components/NewsFeed-Compo/MiddlePost/MiddlePost";
+
 const page = () => {
   return (
     <div>
-      <h1>this is newsfeed page</h1>
+      <MiddlePost />
     </div>
   );
 };

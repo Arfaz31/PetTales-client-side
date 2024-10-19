@@ -56,8 +56,8 @@ const LoginPage = () => {
   return (
     <>
       {isPending && <GlassLoader />}
-      <div className="w-full  h-screen flex items-center justify-center max-w-7xl">
-        <div className=" md:flex-row bg-white bg-opacity-10 backdrop-blur-lg rounded-lg shadow-lg w-full overflow-hidden my-5">
+      <div className="w-full md:min-h-screen flex items-center justify-center max-w-6xl mx-auto">
+        <div className=" flex flex-col-reverse md:flex-row bg-white bg-opacity-10 backdrop-blur-lg rounded-lg shadow-lg w-full overflow-hidden my-5">
           {/* Left side - Form Section */}
           <div className="w-full md:w-[500px] xl:w-[530px] flex flex-col justify-center p-6 md:p-16">
             <h2 className="text-2xl font-bold text-center mb-2 text-white">

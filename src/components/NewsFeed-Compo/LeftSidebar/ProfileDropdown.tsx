@@ -7,21 +7,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import userimage from "@/assets/user-2.png";
-import { ChartNoAxesCombined, CircleUser, LogOut } from "lucide-react";
+import { CircleUser, LogOut } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/context/user.provider";
 import { logout } from "@/services/AuthService";
 import { protectedRoutes } from "@/constant";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
-const NavbarDropdown = () => {
+
+const ProfileDropdown = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading: userLoading } = useUser();
 
   const handleLogout = () => {
     logout();
-    userLoading(true); //the re-fetch triggered by userLoading(true) will get the latest user data (i.e., the logged-in user's data). Without this mechanism, the app might not fetch the latest user data after a login, leaving the context unaware of the login state change.
+    userLoading(true);
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
       router.push("/"); //protected route gulo te thaka obosthai logout korle homepage redirect korbe only.
@@ -36,39 +37,47 @@ const NavbarDropdown = () => {
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className=" rounded-full border-2 border-pink-600 cursor-pointer">
-            <Image
-              src={user?.profilePhoto || userimage}
-              alt="user profile picture"
-              width={35}
-              height={35}
-              className="rounded-full object-cover object-center w-10 h-10 "
-            />
+          <div className=" rounded-3xl w-3/4 hover:bg-[#16181C] cursor-pointer p-2 flex items-center gap-2">
+            <div className="rounded-full border-2 border-pink-600 cursor-pointer">
+              <Image
+                src={user?.profilePhoto || userimage}
+                alt="user profile picture"
+                width={35}
+                height={35}
+                className="rounded-full object-cover object-center w-10 h-10"
+              />
+            </div>
+            <p className="flex flex-col ">
+              <span className="text-base text-white font-semibold ">
+                {user?.name}
+              </span>
+              <span className="text-sm text-gray-500">
+                {user?.username || "@username"}
+              </span>
+            </p>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 bg-black/90 p-4 space-y-3">
+        <DropdownMenuContent
+          className="w-56 bg-black shadow-lg shadow-gray-600 p-3 space-y-3 "
+          side="top"
+        >
           <DropdownMenuItem
             onClick={() =>
               handleNavigation(`/newsfeed/userprofile/${user?._id}`)
             }
+            className="w-full hover:bg-[#16181C] cursor-pointer p-2"
           >
-            <p className="flex items-center gap-3 text-white cursor-pointer p-2 ">
+            <p className="flex items-center gap-3 text-white text-lg">
               <CircleUser className="text-white" />
               <p>Profile</p>
             </p>
           </DropdownMenuItem>
 
           <DropdownMenuItem
-            onClick={() => handleNavigation(`/dashboard/${user?.role}`)}
+            onClick={() => handleLogout()}
+            className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none"
           >
-            <p className="flex items-center gap-3 text-white cursor-pointer p-2">
-              <ChartNoAxesCombined className="text-white" />
-              <p>Profile</p>
-            </p>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem onClick={() => handleLogout()}>
-            <p className="flex items-center gap-3 text-white cursor-pointer p-2">
+            <p className="flex items-center gap-3 text-white text-lg">
               <LogOut className="text-white" />
               <p>Logout</p>
             </p>
@@ -79,4 +88,4 @@ const NavbarDropdown = () => {
   );
 };
 
-export default NavbarDropdown;
+export default ProfileDropdown;
