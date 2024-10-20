@@ -1,12 +1,8 @@
-"use client";
-
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaEllipsis } from "react-icons/fa6";
-import WhoToFollow from "./WhoToFollow";
-import Link from "next/link";
 
-const RightSideContent = () => {
+const FriendsRightSideContent = () => {
   const trendsData = [
     {
       id: 1,
@@ -74,32 +70,7 @@ const RightSideContent = () => {
         </div>
       </div>
 
-      <div className="border border-gray-600 rounded-lg p-3 my-5">
-        <h2 className="text-2xl font-bold text-white">Subscribe to Premium</h2>
-        <p className="text-white py-2">
-          Subscribe to unlock new features and if eligible, receive a share of
-          ads revenue
-        </p>
-        <button className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 text-lg font-bold  text-white text-center px-4 py-2 w-2/3">
-          Subscribe
-        </button>
-      </div>
-
-      <div className="border border-gray-600 rounded-lg p-3 mb-5">
-        <h2 className="text-2xl font-bold text-white pb-5">Who to follow</h2>
-        <div className="pb-10">
-          <WhoToFollow />
-        </div>
-        <div className=" cursor-pointer pb-2">
-          <Link href={"/friends"}>
-            <span className="text-pink-600 hover:text-pink-300 text-lg  font-semibold">
-              See More
-            </span>
-          </Link>
-        </div>
-      </div>
-
-      <div className="border border-gray-600 rounded-lg p-3">
+      <div className="border border-gray-600 rounded-lg p-3 mt-5">
         <h2 className="text-2xl font-bold text-white pb-5">Trends for you</h2>
         <div className="space-y-5">
           {trendsData.map((trend) => (
@@ -148,4 +119,4 @@ const RightSideContent = () => {
   );
 };
 
-export default RightSideContent;
+export default FriendsRightSideContent;

@@ -58,7 +58,7 @@ const SideNavbar = () => {
     },
     {
       name: "Follow",
-      link: "/newsfeed/friends",
+      link: "/friends",
       icon: <FaUserFriends />,
     },
     {
@@ -72,8 +72,8 @@ const SideNavbar = () => {
   const isActive = (link: string): boolean => pathname === link;
 
   return (
-    <div className="min-h-screen flex flex-col  bg-black text-white sticky top-0 py-2">
-      <div className="pb-2">
+    <div className=" min-h-screen sticky overflow-y-auto top-0 left-0  bg-black text-white py-2">
+      <div className="pb-2 ">
         {/* Logo */}
         <Link className="flex items-center gap-1 p-4" href="/">
           <Image className="xl:w-[35px] w-[35px]" src={logo} alt="logo" />
@@ -110,7 +110,7 @@ const SideNavbar = () => {
       <button className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 text-lg font-bold text-white text-center px-4 py-2 w-3/4">
         Post
       </button>
-      <div className="pt-16">
+      <div className="pt-12">
         <ProfileDropdown />
       </div>
     </div>

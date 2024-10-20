@@ -6,7 +6,7 @@ import { TUser } from "@/types";
 import { useGetAllUser } from "@/hooks/user.hook";
 
 const WhoToFollow = () => {
-  const { data, isLoading } = useGetAllUser(); // Fetching data through the hook
+  const { data, isLoading } = useGetAllUser();
 
   // Get all users from the data array or use an empty array if no data exists
   const users = data?.data || [];
@@ -45,7 +45,7 @@ const WhoToFollow = () => {
           ))}
         </div>
       ) : (
-        <p>No users found</p>
+        <p className="text-gray-400 text-lg font-semibold">No users found</p>
       )}
     </>
   );

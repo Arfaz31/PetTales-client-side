@@ -43,12 +43,12 @@ const MenuDropdown = () => {
           </DropdownMenuItem>
 
           <DropdownMenuItem
-            onClick={() => handleNavigation(`/newsfeed/settings`)}
+            onClick={() => handleNavigation(`/settings`)}
             className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none"
           >
             <p className="flex items-center gap-3 text-white text-lg">
               <IoSettingsOutline className="text-white" />
-              <p>Logout</p>
+              <p>Settings & Privacy</p>
             </p>
           </DropdownMenuItem>
           <DropdownMenuItem
