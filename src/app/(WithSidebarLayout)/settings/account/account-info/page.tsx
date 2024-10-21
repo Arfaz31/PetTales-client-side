@@ -10,7 +10,7 @@ const AccountInfo = () => {
   const { data, isLoading } = useGetMe();
   const user = data?.data;
   return (
-    <div className="border border-gray-600 min-h-screen border-y-0 border-l-0 bg-black py-2">
+    <div className="border border-gray-600 min-h-screen border-y-0 lg:border-l-0 border-l bg-black py-2">
       <div className="flex items-center gap-6 px-3 pb-4">
         <Link href="/settings/account">
           <span>

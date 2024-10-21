@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { FaKey, FaUserAlt } from "react-icons/fa";
+import { FaArrowLeft, FaKey, FaUserAlt } from "react-icons/fa";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { PiHeartBreakFill } from "react-icons/pi";
 const AccountPage = () => {
@@ -34,10 +34,21 @@ const AccountPage = () => {
   // Explicitly type 'link' as a string in isActive function
   const isActive = (link: string): boolean => pathname === link;
   return (
-    <div className=" border border-gray-600 min-h-screen border-y-0 border-l-0 bg-black py-2">
-      <h1 className="text-2xl font-bold text-white pb-6 px-4 pt-2 ">
+    <div className=" border border-gray-600 min-h-screen border-y-0 lg:border-l-0 border-l bg-black py-2">
+      <div className="lg:hidden block">
+        <div className="flex items-center gap-6 px-3 pb-4 ">
+          <Link href="/settings">
+            <span>
+              <FaArrowLeft />
+            </span>
+          </Link>
+          <h1 className="text-2xl font-bold text-white">Your Account</h1>
+        </div>
+      </div>
+      <h1 className="text-2xl font-bold text-white pb-6 px-4 pt-2 lg:block hidden">
         Your Account
       </h1>
+
       <p className="text-gray-500 px-4 pb-8">
         See information about your account, download an archive of your data, or
         learn about your account deactivation options

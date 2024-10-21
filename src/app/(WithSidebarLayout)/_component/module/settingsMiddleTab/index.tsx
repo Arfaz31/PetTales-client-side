@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaArrowLeft, FaSearch } from "react-icons/fa";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 
 const SettingsMiddleTab = () => {
@@ -37,11 +37,21 @@ const SettingsMiddleTab = () => {
   };
 
   return (
-    <div className=" border border-gray-600 min-h-screen border-y-0 bg-black py-2">
-      <div className=" sticky top-0 z-50 bg-black w-full">
+    <div className=" border border-gray-600 min-h-screen md:border-y-0  bg-black py-2">
+      <div className=" md:sticky static top-0 z-50 bg-black w-full">
         <div className=" w-full px-2 pb-2">
           <div>
-            <h2 className="px-3 py-2 text-2xl font-bold text-white ">
+            <div className="lg:hidden block">
+              <div className="flex items-center gap-6 px-3 pb-4 ">
+                <Link href="/newsfeed">
+                  <span>
+                    <FaArrowLeft />
+                  </span>
+                </Link>
+                <h1 className="text-2xl font-bold text-white">Settings</h1>
+              </div>
+            </div>
+            <h2 className="px-3 py-2 text-2xl font-bold text-white lg:block hidden">
               Settings
             </h2>
             <div className="w-full pt-3 px-3">
@@ -52,7 +62,7 @@ const SettingsMiddleTab = () => {
                 type="search"
                 name="search"
                 placeholder="Search settings"
-                className="bg-[#202327] h-10 px-10 pr-5 w-full rounded-full text-sm focus:bg-pink-600  shadow border-0"
+                className="bg-[#202327] h-10 px-10 pr-5 w-full rounded-full text-sm focus:ring-blue-500  shadow focus:ring-2"
               />
             </div>
           </div>

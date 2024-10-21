@@ -17,10 +17,10 @@ const Friends = () => {
     data?.data?.filter((user: TUser) => user._id !== loggedInUser?._id) || []; // Get all users from the data array or use an empty array if no data exists
   return (
     <div className=" border border-gray-600 min-h-screen border-y-0 bg-black py-2">
-      <div className=" sticky top-0 z-50 bg-black w-full">
-        <div className="flex items-center w-full justify-between px-4 pt-2 pb-4">
+      <div className=" md:sticky static top-0 z-50 bg-black w-full">
+        <div className="flex items-center w-full justify-between px-4  pb-4">
           <div>
-            <div className="lg:block hidden">
+            <div>
               <h2 className="  text-2xl font-bold text-white ">Connect</h2>
             </div>
           </div>

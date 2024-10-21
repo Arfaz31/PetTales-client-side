@@ -33,7 +33,7 @@ const WhoToFollow = () => {
           {users?.slice(0, 6).map((user: TUser) => (
             <div key={user._id} className=" flex items-center justify-between ">
               <div className="flex items-center gap-2">
-                <div className="rounded-full border-2 w-10 h-10 border-pink-600 cursor-pointer">
+                <div className="rounded-full border-2 xl:w-10 w-9 xl:h-10 h-9 border-pink-600 cursor-pointer">
                   <Image
                     src={user?.profilePhoto || userimage}
                     alt="user profile picture"
@@ -43,16 +43,16 @@ const WhoToFollow = () => {
                   />
                 </div>
                 <p className="flex flex-col ">
-                  <span className="text-base text-white font-semibold ">
+                  <span className="xl:text-base text-xs text-white font-semibold ">
                     {user?.name}
                   </span>
-                  <span className="text-sm text-gray-500">
+                  <span className="xl:text-sm text-xs text-gray-500">
                     {user?.username || "@username"}
                   </span>
                 </p>
               </div>
 
-              <button className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 text-base font-bold text-white text-center px-4 py-2">
+              <button className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 xl:text-base text-xs font-bold text-white text-center xl:px-4 px-2 py-2">
                 Follow
               </button>
             </div>

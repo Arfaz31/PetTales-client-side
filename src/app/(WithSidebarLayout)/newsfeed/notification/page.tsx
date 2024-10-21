@@ -4,7 +4,7 @@ import { IoIosNotifications } from "react-icons/io";
 const Notification = () => {
   return (
     <div>
-      <WorkingPage pageName="Bookmark" icon={<IoIosNotifications />} />
+      <WorkingPage pageName="Notification" icon={<IoIosNotifications />} />
     </div>
   );
 };

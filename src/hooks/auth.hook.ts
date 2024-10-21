@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  changePassword,
   forgetPassword,
   loginUser,
   registerUser,
@@ -55,6 +56,19 @@ export const useResetPassword = () => {
       await resetPassword(resetPasswordData),
     onSuccess: () => {
       toast.success("Password reset is successful.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUserChangePassword = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationKey: ["CHANGE_PASSWORD"],
+    mutationFn: async (userData) => await changePassword(userData),
+    onSuccess: () => {
+      toast.success("Password Change is successful.");
     },
     onError: (error) => {
       toast.error(error.message);
