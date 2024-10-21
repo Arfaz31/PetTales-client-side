@@ -31,7 +31,17 @@ export const loginSchema = z.object({
 export const forgotPasswordSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
+
 export const resetPasswordSchema = z.object({
+  newPassword: z
+    .string()
+    .min(6, "Password must be at least 6 characters long")
+    .max(16, "Password must not exceed 16 characters"),
+});
+export const changePasswordSchema = z.object({
+  oldPassword: z.string({
+    required_error: "Old password is required",
+  }),
   newPassword: z
     .string()
     .min(6, "Password must be at least 6 characters long")

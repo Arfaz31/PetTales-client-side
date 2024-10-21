@@ -14,6 +14,7 @@ import { logout } from "@/services/AuthService";
 import { protectedRoutes } from "@/constant";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const ProfileDropdown = () => {
   const router = useRouter();
@@ -58,7 +59,7 @@ const ProfileDropdown = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-black shadow-lg shadow-gray-600 p-3 space-y-3 "
+          className="w-56 bg-black shadow-lg shadow-gray-600 p-3 space-y-2 "
           side="top"
         >
           <DropdownMenuItem
@@ -70,6 +71,16 @@ const ProfileDropdown = () => {
             <p className="flex items-center gap-3 text-white text-lg">
               <CircleUser className="text-white" />
               <p>Profile</p>
+            </p>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={() => handleNavigation(`/settings`)}
+            className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none"
+          >
+            <p className="flex items-center gap-3 text-white text-lg">
+              <IoSettingsOutline className="text-white" />
+              <p>Settings & Privacy</p>
             </p>
           </DropdownMenuItem>
 

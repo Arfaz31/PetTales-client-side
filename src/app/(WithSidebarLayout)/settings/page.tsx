@@ -1,9 +1,10 @@
 import React from "react";
+import AccountPage from "./account/page";
 
 const Settings = () => {
   return (
     <div>
-      <h1>this is settings</h1>
+      <AccountPage />
     </div>
   );
 };

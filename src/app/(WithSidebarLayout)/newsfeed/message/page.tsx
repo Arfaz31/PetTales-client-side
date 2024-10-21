@@ -1,9 +1,11 @@
+import WorkingPage from "@/components/Shared/WorkingPage";
 import React from "react";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const Message = () => {
   return (
     <div>
-      <h1>message page</h1>
+      <WorkingPage pageName="Message" icon={<FaFacebookMessenger />} />
     </div>
   );
 };

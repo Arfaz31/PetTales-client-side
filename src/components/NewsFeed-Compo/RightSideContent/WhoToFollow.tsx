@@ -4,6 +4,7 @@ import Image from "next/image";
 import userimage from "@/assets/user-2.png";
 import { TUser } from "@/types";
 import { useGetAllUser } from "@/hooks/user.hook";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const WhoToFollow = () => {
   const { data, isLoading } = useGetAllUser();
@@ -13,7 +14,20 @@ const WhoToFollow = () => {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        [...Array(6)].map((_, index) => (
+          <div key={index} className="mb-5 ">
+            <div className="flex items-center justify-between ">
+              <div className="flex items-center gap-3">
+                <Skeleton className="h-10 w-10 rounded-full bg-gray-600" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-[120px] bg-gray-600" />
+                  <Skeleton className="h-4 w-[120px] bg-gray-600" />
+                </div>
+              </div>
+              <Skeleton className="h-9 w-20 rounded-3xl bg-gray-600" />
+            </div>
+          </div>
+        ))
       ) : users.length > 0 ? (
         <div className="space-y-6">
           {users?.slice(0, 6).map((user: TUser) => (

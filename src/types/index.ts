@@ -24,6 +24,7 @@ export type TUser = {
   passwordChangedAt?: Date;
   about?: string;
   isDeleted?: boolean;
+  createdAt?: string;
 };
 
 export type IUser = {

@@ -1,9 +1,11 @@
+import WorkingPage from "@/components/Shared/WorkingPage";
 import React from "react";
+import { FaBookmark } from "react-icons/fa";
 
 const Bookmark = () => {
   return (
     <div>
-      <h1>this is Bookmark</h1>
+      <WorkingPage pageName="Bookmark" icon={<FaBookmark />} />
     </div>
   );
 };

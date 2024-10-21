@@ -63,7 +63,7 @@ const NavbarDropdown = () => {
           >
             <p className="flex items-center gap-3 text-white cursor-pointer p-2">
               <ChartNoAxesCombined className="text-white" />
-              <p>Profile</p>
+              <p>Dashboard</p>
             </p>
           </DropdownMenuItem>
 

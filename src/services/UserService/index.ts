@@ -10,3 +10,11 @@ export const getAllUser = async () => {
   const { data } = await axiosInstance.get("/user", fetchOptions);
   return data;
 };
+export const getme = async () => {
+  let fetchOptions = {};
+  fetchOptions = {
+    cache: "no-store",
+  };
+  const { data } = await axiosInstance.get("/user/me", fetchOptions);
+  return data;
+};

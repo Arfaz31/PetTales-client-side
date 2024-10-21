@@ -69,13 +69,18 @@ const SideNavbar = () => {
   ];
 
   // Explicitly type 'link' as a string in isActive function
-  const isActive = (link: string): boolean => pathname === link;
+  const isActive = (link: string): boolean => {
+    if (pathname === "/newsfeed") {
+      return link === "/newsfeed";
+    }
+    return pathname === link;
+  };
 
   return (
-    <div className=" min-h-screen sticky overflow-y-auto top-0 left-0  bg-black text-white py-2">
-      <div className="pb-2 ">
+    <div className=" min-h-screen sticky overflow-y-auto top-0 left-0  bg-black text-white py-4">
+      <div className="pb-4 ">
         {/* Logo */}
-        <Link className="flex items-center gap-1 p-4" href="/">
+        <Link className="flex items-center gap-1 " href="/">
           <Image className="xl:w-[35px] w-[35px]" src={logo} alt="logo" />
           <span className="xl:text-3xl text-2xl text-white font-bold">
             PET<span className="text-pink-600">TALES</span>

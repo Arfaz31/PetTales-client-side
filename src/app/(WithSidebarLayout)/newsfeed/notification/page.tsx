@@ -1,9 +1,10 @@
+import WorkingPage from "@/components/Shared/WorkingPage";
 import React from "react";
-
+import { IoIosNotifications } from "react-icons/io";
 const Notification = () => {
   return (
     <div>
-      <h1>Notification page</h1>
+      <WorkingPage pageName="Bookmark" icon={<IoIosNotifications />} />
     </div>
   );
 };

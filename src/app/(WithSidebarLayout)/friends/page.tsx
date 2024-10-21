@@ -5,11 +5,16 @@ import Image from "next/image";
 import userimage from "@/assets/user-2.png";
 import { TUser } from "@/types";
 import { useGetAllUser } from "@/hooks/user.hook";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useUser } from "@/context/user.provider";
+
 const Friends = () => {
   const { data, isLoading } = useGetAllUser();
 
-  // Get all users from the data array or use an empty array if no data exists
-  const users = data?.data || [];
+  const { user: loggedInUser } = useUser(); // Get the logged-in user
+  // Filter out the logged-in user from the list of users
+  const filteredUsers =
+    data?.data?.filter((user: TUser) => user._id !== loggedInUser?._id) || []; // Get all users from the data array or use an empty array if no data exists
   return (
     <div className=" border border-gray-600 min-h-screen border-y-0 bg-black py-2">
       <div className=" sticky top-0 z-50 bg-black w-full">
@@ -30,10 +35,23 @@ const Friends = () => {
       <div className="p-4">
         <>
           {isLoading ? (
-            <p>Loading...</p>
-          ) : users.length > 0 ? (
+            [...Array(9)].map((_, index) => (
+              <div key={index} className="mb-5">
+                <div className="flex items-center justify-between ">
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="h-12 w-12 rounded-full bg-gray-600" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-[250px] bg-gray-600" />
+                      <Skeleton className="h-4 w-[200px] bg-gray-600" />
+                    </div>
+                  </div>
+                  <Skeleton className="h-12 w-28 rounded-3xl bg-gray-600" />
+                </div>
+              </div>
+            ))
+          ) : filteredUsers.length > 0 ? (
             <div className="space-y-7">
-              {users?.map((user: TUser) => (
+              {filteredUsers?.map((user: TUser) => (
                 <div key={user._id}>
                   <div className=" flex items-center justify-between ">
                     <div className="flex items-center gap-2">
