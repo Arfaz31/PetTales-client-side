@@ -4,7 +4,6 @@ import React from "react";
 import {
   FaChartPie,
   FaFacebookMessenger,
-  FaHome,
   FaRegBell,
   FaUserFriends,
 } from "react-icons/fa";
@@ -13,6 +12,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/context/user.provider";
+import { MdDynamicFeed } from "react-icons/md";
 
 const BottomNav = () => {
   const { user } = useUser();
@@ -24,7 +24,7 @@ const BottomNav = () => {
     {
       name: "Newsfeed",
       link: "/newsfeed",
-      icon: <FaHome />,
+      icon: <MdDynamicFeed />,
     },
     ...(user
       ? [
@@ -68,9 +68,9 @@ const BottomNav = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 lg:hidden border-t border-gray-600 bg-black ">
+    <div className="fixed bottom-0 left-0 right-0 lg:hidden border-t border-gray-600 bg-black">
       <div className="flex w-full justify-between py-4 px-2">
-        <ul className="flex items-center gap-8">
+        <ul className="flex items-center justify-between  w-full">
           {Links.map((link) => (
             <li key={link.name}>
               <Link

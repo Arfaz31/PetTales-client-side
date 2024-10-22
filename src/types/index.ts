@@ -36,3 +36,25 @@ export type IUser = {
   status: keyof typeof USER_STATUS;
   profilePhoto: string;
 };
+
+export type TPost = {
+  _id?: string;
+  title: string;
+  content: string;
+  user?: TUser;
+  images?: string[];
+  category: "Tip" | "Story";
+  contentType: "basic" | "premium";
+  price?: number; // Price for premium posts
+  isPublished?: boolean;
+  createdAt?: string;
+};
+
+export type TUnlockPost = {
+  _id?: string;
+  userId: TUser;
+  postId: TPost;
+  amount: number;
+  paymentStatus: "Pending" | "Paid" | "Failed";
+  transactionId: string;
+};

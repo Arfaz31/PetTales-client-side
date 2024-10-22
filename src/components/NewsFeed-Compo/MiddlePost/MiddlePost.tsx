@@ -2,6 +2,9 @@ import Link from "next/link";
 import React from "react";
 
 import { FaEllipsisVertical } from "react-icons/fa6";
+import CreatePost from "./CreatePost";
+import Post from "./Posts/Post";
+
 const MiddlePost = () => {
   return (
     <div className=" md:border-x border-gray-600 min-h-screen  bg-black py-2">
@@ -20,6 +23,12 @@ const MiddlePost = () => {
           </div>
         </div>
         <hr className="border-gray-600" />
+      </div>
+      <div className="pt-3 md:px-2 px-0">
+        <CreatePost />
+      </div>
+      <div>
+        <Post />
       </div>
     </div>
   );

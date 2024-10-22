@@ -92,10 +92,10 @@ const Drawer = () => {
                       className="rounded-full object-cover border-2 border-pink-600 cursor-pointer object-center w-10 h-10 "
                     />
                   </div>
-                  <p className="text-base font-bold text-white pt-2">
+                  <p className="text-base text-start font-bold text-white pt-2">
                     {user?.name}
                   </p>
-                  <p className="text-sm  text-gray-500 pb-5">
+                  <p className="text-sm text-start text-gray-500 pb-5">
                     {user?.username}
                   </p>
                   <p className="flex items-center gap-20 pb-6">
