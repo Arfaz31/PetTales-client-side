@@ -18,6 +18,8 @@ export type TUser = {
   gender: "Male" | "Female" | "Other";
   role: keyof typeof USER_Role;
   status: keyof typeof USER_STATUS;
+  follower: string[];
+  following: string[];
   address?: string;
   profilePhoto?: string;
   coverImg?: string;

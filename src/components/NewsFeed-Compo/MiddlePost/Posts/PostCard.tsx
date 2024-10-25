@@ -7,6 +7,7 @@ import userimage from "@/assets/user-2.png";
 import PostDropDown from "../PostDropdown/PostDropDown";
 import ImageGallery from "./PostImage";
 import { FaLock } from "react-icons/fa";
+import PostAction from "./PostAction";
 
 const PostCard = ({
   post,
@@ -64,7 +65,7 @@ const PostCard = ({
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <button className="bg-pink-600 text-white text-base font-medium w-[50%]  py-2 px-4 rounded-3xl flex items-center justify-between">
+              <button className="bg-pink-600 text-white text-base font-medium w-[70%]  py-2 px-4 rounded-3xl flex items-center justify-between">
                 <span>Unlock Post</span>
                 <span>
                   {" "}
@@ -78,6 +79,11 @@ const PostCard = ({
           <>
             <p className="text-gray-300 text-base pt-3 pb-6">{post?.content}</p>
             <ImageGallery images={post?.images ?? []} />
+            <hr className="border-gray-600 mt-10" />
+            <div className="py-1">
+              <PostAction />
+            </div>
+            <hr className="border-gray-600" />
           </>
         )}
       </div>
