@@ -11,7 +11,6 @@ export const useUserFollow = () => {
     onSuccess: () => {
       toast.success("User followed successfully");
 
-      // Pass the query key as an array for better typing support
       queryClient.invalidateQueries({ queryKey: ["GET_ALL_USER"] });
       queryClient.invalidateQueries({ queryKey: ["GET_SINGLE_USER"] });
     },
@@ -29,7 +28,6 @@ export const useUserUnFollow = () => {
     onSuccess: () => {
       toast.success("User unfollowed successfully");
 
-      // Pass the query key as an array for better typing support
       queryClient.invalidateQueries({ queryKey: ["GET_ALL_USER"] });
       queryClient.invalidateQueries({ queryKey: ["GET_SINGLE_USER"] });
     },

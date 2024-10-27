@@ -60,3 +60,11 @@ export type TUnlockPost = {
   paymentStatus: "Pending" | "Paid" | "Failed";
   transactionId: string;
 };
+
+export type TLike = {
+  _id?: string;
+  user: TUser;
+  post: TPost;
+  upvotes?: number;
+  downvotes?: number;
+};

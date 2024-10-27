@@ -81,9 +81,8 @@ const PostCard = ({
             <ImageGallery images={post?.images ?? []} />
             <hr className="border-gray-600 mt-10" />
             <div className="py-1">
-              <PostAction />
+              <PostAction post={post} />
             </div>
-            <hr className="border-gray-600" />
           </>
         )}
       </div>

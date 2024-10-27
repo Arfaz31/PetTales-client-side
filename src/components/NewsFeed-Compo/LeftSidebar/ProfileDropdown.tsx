@@ -19,6 +19,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 const ProfileDropdown = () => {
   const router = useRouter();
   const pathname = usePathname();
+  console.log(pathname);
   const { user, setIsLoading: userLoading } = useUser();
 
   const handleLogout = () => {
