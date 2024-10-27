@@ -68,3 +68,10 @@ export type TLike = {
   upvotes?: number;
   downvotes?: number;
 };
+
+export type TComment = {
+  _id?: string;
+  post: TPost;
+  user?: TUser;
+  content: string;
+};

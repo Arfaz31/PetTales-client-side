@@ -2,11 +2,15 @@
 "use server";
 
 import axiosInstance from "@/AxiosInstance";
+import { TComment } from "@/types";
 import { revalidateTag } from "next/cache";
 
-export const createComment = async () => {
+export const createComment = async (commentData: TComment) => {
   try {
-    const { data } = await axiosInstance.post("/comment/create-comment");
+    const { data } = await axiosInstance.post(
+      "/comment/create-comment",
+      commentData
+    );
     revalidateTag("comment");
     return data;
   } catch (error: any) {
@@ -37,6 +41,7 @@ export const deleteCommentByAuthor = async (commentId: string) => {
     throw new Error(error);
   }
 };
+
 export const deleteCommentByPostOwner = async (
   postId: string,
   commentId: string
@@ -64,7 +69,7 @@ export const getAllComments = async (postId: string) => {
   return data;
 };
 
-export const getTotalComments = async (postId: string) => {
+export const getTotalCommentsCount = async (postId: string) => {
   let fetchOptions = {};
   fetchOptions = {
     cache: "no-store",
