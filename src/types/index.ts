@@ -74,4 +74,11 @@ export type TComment = {
   post: TPost;
   user?: TUser;
   content: string;
+  createdAt?: string;
+};
+
+export type TCommentResponse = {
+  _id?: string;
+  post: string;
+  content: string;
 };

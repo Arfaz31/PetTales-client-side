@@ -7,12 +7,12 @@ import {
   getTotalCommentsCount,
   updateComment,
 } from "@/services/CommentServices";
-import { TComment } from "@/types";
+import { TComment, TCommentResponse } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export const useUserComment = () => {
-  return useMutation<any, Error, TComment>({
+export const useUserCreateComment = () => {
+  return useMutation<any, Error, TCommentResponse>({
     mutationKey: ["USER_COMMENT"],
     mutationFn: async (commentData) => await createComment(commentData),
     onError: (error) => {
@@ -63,14 +63,14 @@ export const useDeleteCommentByPostOwner = () => {
 
 export const useGetAllComments = (postId: string) => {
   return useQuery<any, Error, { data: TComment[] }>({
-    queryKey: ["GET_ALL_COMMENTS", postId],
+    queryKey: ["GET_ALL_COMMENTS_BY_POSTID", postId],
     queryFn: async () => await getAllComments(postId),
   });
 };
 
 export const useGetTotalCommentsCount = (postId: string) => {
   return useQuery<any, Error, { data: number }>({
-    queryKey: ["GET_TOTAL_COMMENTS_COUNT", postId],
+    queryKey: ["GET_TOTAL_COMMENTS_COUNT_BY_POSTID", postId],
     queryFn: async () => await getTotalCommentsCount(postId),
   });
 };

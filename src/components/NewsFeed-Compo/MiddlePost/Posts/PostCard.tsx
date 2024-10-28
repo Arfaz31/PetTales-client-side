@@ -8,6 +8,7 @@ import PostDropDown from "../PostDropdown/PostDropDown";
 import ImageGallery from "./PostImage";
 import { FaLock } from "react-icons/fa";
 import PostAction from "./PostAction";
+import CommentCard from "../Comment/CommentCard";
 
 const PostCard = ({
   post,
@@ -82,6 +83,9 @@ const PostCard = ({
             <hr className="border-gray-600 mt-10" />
             <div className="py-1">
               <PostAction post={post} />
+            </div>
+            <div>
+              <CommentCard postId={post._id} />
             </div>
           </>
         )}

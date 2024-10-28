@@ -2,10 +2,10 @@
 "use server";
 
 import axiosInstance from "@/AxiosInstance";
-import { TComment } from "@/types";
+import { TCommentResponse } from "@/types";
 import { revalidateTag } from "next/cache";
 
-export const createComment = async (commentData: TComment) => {
+export const createComment = async (commentData: TCommentResponse) => {
   try {
     const { data } = await axiosInstance.post(
       "/comment/create-comment",
