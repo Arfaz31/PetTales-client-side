@@ -2,7 +2,7 @@
 "use server";
 
 import axiosInstance from "@/AxiosInstance";
-import { TCommentResponse } from "@/types";
+import { TCommentResponse, TUpdateComment } from "@/types";
 import { revalidateTag } from "next/cache";
 
 export const createComment = async (commentData: TCommentResponse) => {
@@ -18,10 +18,11 @@ export const createComment = async (commentData: TCommentResponse) => {
   }
 };
 
-export const updateComment = async (commentId: string) => {
+export const updateComment = async (updateCommentData: TUpdateComment) => {
   try {
     const { data } = await axiosInstance.patch(
-      `/comment/update-comment/${commentId}`
+      `/comment/update-comment/${updateCommentData.commentId}`,
+      { content: updateCommentData.content }
     );
     revalidateTag("comment");
     return data;

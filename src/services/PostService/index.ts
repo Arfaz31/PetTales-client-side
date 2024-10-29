@@ -6,6 +6,6 @@ export const getAllPosts = async () => {
   fetchOptions = {
     cache: "no-store",
   };
-  const { data } = await axiosInstance.get("/post", fetchOptions);
+  const { data } = await axiosInstance.get("/posts", fetchOptions);
   return data;
 };

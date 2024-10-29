@@ -75,6 +75,7 @@ export const resetPassword = async (resetPasswordData: FieldValues) => {
 };
 
 export const logout = () => {
+  // console.log("logout");
   cookies().delete("accessToken");
   cookies().delete("refreshToken");
 };

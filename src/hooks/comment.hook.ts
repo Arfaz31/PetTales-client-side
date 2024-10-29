@@ -7,7 +7,7 @@ import {
   getTotalCommentsCount,
   updateComment,
 } from "@/services/CommentServices";
-import { TComment, TCommentResponse } from "@/types";
+import { TComment, TCommentResponse, TUpdateComment } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -15,15 +15,19 @@ export const useUserCreateComment = () => {
   return useMutation<any, Error, TCommentResponse>({
     mutationKey: ["USER_COMMENT"],
     mutationFn: async (commentData) => await createComment(commentData),
+    onSuccess: () => {
+      toast.success("Comment is created successfully");
+    },
     onError: (error) => {
       toast.error(error.message);
     },
   });
 };
 export const useUserUpdateComment = () => {
-  return useMutation<any, Error, string>({
+  return useMutation<any, Error, TUpdateComment>({
     mutationKey: ["USER_UPDATE_COMMENT"],
-    mutationFn: async (commentId: string) => await updateComment(commentId),
+    mutationFn: async (updateCommentData) =>
+      await updateComment(updateCommentData),
     onSuccess: () => {
       toast.success("Comment is updated successfully");
     },

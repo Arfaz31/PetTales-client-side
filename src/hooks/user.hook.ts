@@ -7,8 +7,6 @@ export const useGetAllUser = () => {
   return useQuery<any, Error, { data: TUser[] }>({
     queryKey: ["GET_ALL_USER"],
     queryFn: async () => await getAllUser(),
-
-    // meta: { tag: "user" },
   });
 };
 export const useGetMe = () => {

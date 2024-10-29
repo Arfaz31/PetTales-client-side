@@ -13,7 +13,7 @@ const CommentInput = ({ postId }: { postId?: string }) => {
 
   const onSubmit: SubmitHandler<TCommentResponse> = (data) => {
     createComment({ ...data, post: postId ?? " " });
-    console.log(data);
+    // console.log(data);
     reset();
   };
 

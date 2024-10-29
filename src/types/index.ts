@@ -82,3 +82,8 @@ export type TCommentResponse = {
   post: string;
   content: string;
 };
+
+export type TUpdateComment = {
+  commentId: string;
+  content: string;
+};
