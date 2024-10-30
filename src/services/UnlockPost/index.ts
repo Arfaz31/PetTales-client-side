@@ -7,6 +7,11 @@ export const getAllUnlockPost = async () => {
   fetchOptions = {
     cache: "no-store",
   };
-  const { data } = await axiosInstance.get("/unlockPost", fetchOptions);
-  return data;
+  try {
+    const { data } = await axiosInstance.get("/unlockPost", fetchOptions);
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch unlock posts:", error);
+    return { data: [] }; // Fallback to an empty array if there's an error
+  }
 };

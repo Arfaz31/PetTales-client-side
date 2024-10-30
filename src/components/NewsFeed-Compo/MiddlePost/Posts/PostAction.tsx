@@ -10,14 +10,13 @@ import {
   usePostDisLike,
   usePostLike,
 } from "@/hooks/like.hook";
-import { useGetTotalCommentsCount } from "@/hooks/comment.hook";
+
 // import { useUser } from "@/context/user.provider";
 
 const PostAction = ({ post }: { post: TPost }) => {
   const { mutate: like } = usePostLike();
   const { mutate: disLike } = usePostDisLike();
 
-  const { data: totalCommentData } = useGetTotalCommentsCount(post._id!);
   const { data: totalLikesData } = useGetTotalLike(post._id!);
   const { data: totalDislikesData } = useGetTotalDisLike(post._id!);
   const { data: likeCheckData } = useCheckPostLike(post._id!);
@@ -102,7 +101,7 @@ const PostAction = ({ post }: { post: TPost }) => {
 
         <div className="flex items-center gap-1">
           <FaRegComment />
-          <p>{totalCommentData?.data}</p>
+          <p>{post?.comments.length}</p>
         </div>
 
         <FaShare />

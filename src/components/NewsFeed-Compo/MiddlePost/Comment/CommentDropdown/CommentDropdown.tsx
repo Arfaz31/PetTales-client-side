@@ -20,9 +20,14 @@ import UpdateCommentModal from "./UpdateCommentModal";
 const CommentDropdown = ({ comment }: { comment: TComment }) => {
   const { user } = useUser();
 
-  const { mutate: deleteCommentAsAuthor, isPending } =
-    useDeleteCommentByAuthor();
-  const { mutate: deleteCommentAsPostOwner } = useDeleteCommentByPostOwner();
+  const {
+    mutate: deleteCommentAsAuthor,
+    isPending: isPendingForDeleteAuthorComment,
+  } = useDeleteCommentByAuthor();
+  const {
+    mutate: deleteCommentAsPostOwner,
+    isPending: isPendingForDeleteCommentAsPostOwner,
+  } = useDeleteCommentByPostOwner();
 
   const handleDeleteCommentForAuthor = () => {
     deleteCommentAsAuthor(comment._id!);
@@ -41,7 +46,8 @@ const CommentDropdown = ({ comment }: { comment: TComment }) => {
   return (
     <div>
       {/* Show GlassLoader as a full-screen overlay when loading */}
-      {isPending && <GlassLoader />}
+      {isPendingForDeleteAuthorComment ||
+        (isPendingForDeleteCommentAsPostOwner && <GlassLoader />)}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

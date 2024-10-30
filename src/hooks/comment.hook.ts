@@ -3,12 +3,10 @@ import {
   createComment,
   deleteCommentByAuthor,
   deleteCommentByPostOwner,
-  getAllComments,
-  getTotalCommentsCount,
   updateComment,
 } from "@/services/CommentServices";
-import { TComment, TCommentResponse, TUpdateComment } from "@/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { TCommentResponse, TUpdateComment } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useUserCreateComment = () => {
@@ -65,16 +63,16 @@ export const useDeleteCommentByPostOwner = () => {
   });
 };
 
-export const useGetAllComments = (postId: string) => {
-  return useQuery<any, Error, { data: TComment[] }>({
-    queryKey: ["GET_ALL_COMMENTS_BY_POSTID", postId],
-    queryFn: async () => await getAllComments(postId),
-  });
-};
+// export const useGetAllComments = (postId: string) => {
+//   return useQuery<any, Error, { data: TComment[] }>({
+//     queryKey: ["GET_ALL_COMMENTS_BY_POSTID", postId],
+//     queryFn: async () => await getAllComments(postId),
+//   });
+// };
 
-export const useGetTotalCommentsCount = (postId: string) => {
-  return useQuery<any, Error, { data: number }>({
-    queryKey: ["GET_TOTAL_COMMENTS_COUNT_BY_POSTID", postId],
-    queryFn: async () => await getTotalCommentsCount(postId),
-  });
-};
+// export const useGetTotalCommentsCount = (postId: string) => {
+//   return useQuery<any, Error, { data: number }>({
+//     queryKey: ["GET_TOTAL_COMMENTS_COUNT_BY_POSTID", postId],
+//     queryFn: async () => await getTotalCommentsCount(postId),
+//   });
+// };

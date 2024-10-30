@@ -1,5 +1,5 @@
 import envConfig from "@/config/envConfig";
-import { getNewAccessToken } from "@/services/AuthService";
+// import { getNewAccessToken } from "@/services/AuthService";
 import axios from "axios";
 import { cookies } from "next/headers";
 
@@ -29,23 +29,25 @@ axiosInstance.interceptors.response.use(
   function (response) {
     return response; // If the response is okay, return it as is
   },
-  async function (error) {
-    const originalRequest = error.config;
+  function (error) {
+    return Promise.reject(error);
 
-    if (error?.response?.status === 401 && !originalRequest?.sent) {
-      originalRequest.sent = true; // Mark the request as sent to prevent infinite loops
+    // const originalRequest = error.config;
 
-      // Attempt to get a new access token using the refresh token
-      const res = await getNewAccessToken();
-      const accessToken = res.data.accessToken;
+    // if (error?.response?.status === 401 && !originalRequest?.sent) {
+    //   originalRequest.sent = true; // Mark the request as sent to prevent infinite loops
 
-      originalRequest.headers["Authorization"] = accessToken;
-      cookies().set("accessToken", accessToken);
+    //   // Attempt to get a new access token using the refresh token
+    //   const res = await getNewAccessToken();
+    //   const accessToken = res.data.accessToken;
 
-      return axiosInstance(originalRequest);
-    } else {
-      return Promise.reject(error);
-    }
+    //   originalRequest.headers["Authorization"] = accessToken;
+    //   cookies().set("accessToken", accessToken);
+
+    //   return axiosInstance(originalRequest);
+    // } else {
+    //   return Promise.reject(error);
+    // }
   }
 );
 

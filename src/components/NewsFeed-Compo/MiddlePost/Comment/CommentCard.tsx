@@ -1,18 +1,24 @@
-import { useGetAllComments } from "@/hooks/comment.hook";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// import { useGetAllComments } from "@/hooks/comment.hook";
+
 import Image from "next/image";
 import React from "react";
 import userimage from "@/assets/user-2.png";
 import CommentDropdown from "./CommentDropdown/CommentDropdown";
 import CommentInput from "./Comment-Input/CommentInput";
+// import { getAllComments } from "@/services/CommentServices";
+import { TPost } from "@/types";
 
-const CommentCard = ({ postId }: { postId?: string }) => {
-  const { data: allcommentData } = useGetAllComments(postId!);
-  const comments = allcommentData?.data || [];
+const CommentCard = async ({ post }: { post: TPost }) => {
+  // const { data: allcommentData } = useGetAllComments(postId!);
+  // const { data: allcommentData } = await getAllComments(postId!);
+  // console.log("allCommentdata", allcommentData);
+  // const comments = allcommentData?.data || [];
   return (
     <div>
       <p className="text-base font-medium text-white py-2">Comments</p>
       <div>
-        {allcommentData?.data?.slice(0, 2).map((comment) => (
+        {post?.comments?.slice(0, 2).map((comment: any) => (
           <div key={comment._id} className="flex items-center  gap-3 space-y-4">
             <div className="rounded-full border-2 border-pink-600 cursor-pointer">
               <Image
@@ -36,12 +42,12 @@ const CommentCard = ({ postId }: { postId?: string }) => {
         ))}
       </div>
 
-      {comments.length > 2 && (
+      {post?.comments.length > 2 && (
         <p className="text-base text-pink-600 font-medium py-3">View More</p>
       )}
 
       <div className="mt-6">
-        <CommentInput postId={postId} />
+        <CommentInput postId={post._id} />
       </div>
     </div>
   );

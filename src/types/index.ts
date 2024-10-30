@@ -48,7 +48,9 @@ export type TPost = {
   category: "Tip" | "Story";
   contentType: "basic" | "premium";
   price?: number; // Price for premium posts
+  comments: string[];
   isPublished?: boolean;
+  isUnlockedBy: string[];
   createdAt?: string;
 };
 

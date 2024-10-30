@@ -3,11 +3,7 @@
 import axiosInstance from "@/AxiosInstance";
 
 export const getAllUser = async () => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-  const { data } = await axiosInstance.get("/user", fetchOptions);
+  const { data } = await axiosInstance.get("/user");
   return data;
 };
 

@@ -58,26 +58,26 @@ export const deleteCommentByPostOwner = async (
   }
 };
 
-export const getAllComments = async (postId: string) => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-  const { data } = await axiosInstance.get(
-    `/comment/get-all-comment/${postId}`,
-    fetchOptions
-  );
-  return data;
-};
+// export const getAllComments = async (postId: string) => {
+//   let fetchOptions = {};
+//   fetchOptions = {
+//     cache: "no-store",
+//   };
+//   const { data } = await axiosInstance.get(
+//     `/comment/get-all-comment/${postId}`,
+//     fetchOptions
+//   );
+//   return data;
+// };
 
-export const getTotalCommentsCount = async (postId: string) => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-  const { data } = await axiosInstance.get(
-    `/comment/get-total-comment/${postId}`,
-    fetchOptions
-  );
-  return data;
-};
+// export const getTotalCommentsCount = async (postId: string) => {
+//   let fetchOptions = {};
+//   fetchOptions = {
+//     cache: "no-store",
+//   };
+//   const { data } = await axiosInstance.get(
+//     `/comment/get-total-comment/${postId}`,
+//     fetchOptions
+//   );
+//   return data;
+// };

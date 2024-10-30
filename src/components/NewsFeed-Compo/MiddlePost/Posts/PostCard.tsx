@@ -7,7 +7,7 @@ import userimage from "@/assets/user-2.png";
 import PostDropDown from "../PostDropdown/PostDropDown";
 import ImageGallery from "./PostImage";
 import { FaLock } from "react-icons/fa";
-import PostAction from "./PostAction";
+// import PostAction from "./PostAction";
 import CommentCard from "../Comment/CommentCard";
 
 const PostCard = ({
@@ -81,11 +81,9 @@ const PostCard = ({
             <p className="text-gray-300 text-base pt-3 pb-6">{post?.content}</p>
             <ImageGallery images={post?.images ?? []} />
             <hr className="border-gray-600 mt-10" />
-            <div className="py-1">
-              <PostAction post={post} />
-            </div>
+            <div className="py-1">{/* <PostAction post={post} /> */}</div>
             <div>
-              <CommentCard postId={post._id} />
+              <CommentCard post={post} />
             </div>
           </>
         )}

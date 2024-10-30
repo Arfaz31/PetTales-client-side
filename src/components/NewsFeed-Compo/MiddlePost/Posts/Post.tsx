@@ -1,24 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
+// "use client";
+"use server";
 import { TPost } from "@/types";
 import React from "react";
 import PostFilter from "../PostFilter";
 import PostCard from "./PostCard";
-import { useGetAllPost } from "@/hooks/post.hook";
-import { useGetAllUnlockPost } from "@/hooks/unlockPost.hook";
+// import { useGetAllPost } from "@/hooks/post.hook";
+// import { useGetAllUnlockPost } from "@/hooks/unlockPost.hook";
+// import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
+import { getAllPosts } from "@/services/PostService";
+import { getme } from "@/services/UserService";
 import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
 
-const Post = () => {
-  const { data: postsData, isLoading: loadingPosts } = useGetAllPost();
-  const { data: unlockPostsData, isLoading: loadingUnlockPosts } =
-    useGetAllUnlockPost();
+const Post = async () => {
+  // const { data: postsData, isLoading: loadingPosts } = useGetAllPost();
+  // const { data: unlockPostsData, isLoading: loadingUnlockPosts } =
+  //   useGetAllUnlockPost();
+  const { data: postsData, isLoading: loadingPosts } = await getAllPosts();
 
-  const posts = postsData?.data || [];
-  const unlockedPostIds =
-    unlockPostsData?.data.map((unlock: any) => unlock.postId) || [];
+  const { data: user } = await getme();
 
-  if (loadingPosts || loadingUnlockPosts) {
+  const { _id } = user;
+  if (loadingPosts) {
     return (
       <div>
         <div className="py-10 ps-4">
@@ -43,14 +46,14 @@ const Post = () => {
       <hr className="border-gray-600" />
 
       <div className="pb-5">
-        {posts.length === 0 ? (
+        {postsData.length === 0 ? (
           <p className="text-gray-300 text-lg">No posts available.</p>
         ) : (
-          posts.map((post: TPost) => (
+          postsData.map((post: TPost) => (
             <PostCard
               key={post?._id}
               post={post}
-              isUnlocked={unlockedPostIds?.includes(post._id!)}
+              isUnlocked={post.isUnlockedBy?.includes(_id)} // Check if unlocked
             />
           ))
         )}
