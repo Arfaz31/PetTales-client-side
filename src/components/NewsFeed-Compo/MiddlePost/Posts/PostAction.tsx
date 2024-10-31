@@ -1,150 +1,108 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaRegComment, FaShare } from "react-icons/fa";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { TPost } from "@/types";
 import {
-  useCheckPostDislike,
-  useCheckPostLike,
-  useGetTotalDisLike,
-  useGetTotalLike,
   usePostDisLike,
   usePostLike,
+  usePostUnlike,
+  usePostUnDislike,
 } from "@/hooks/like.hook";
+import { useUser } from "@/context/user.provider";
 
-// import { useUser } from "@/context/user.provider";
+interface PostActionProps {
+  post: TPost;
+}
 
-const PostAction = ({ post }: { post: TPost }) => {
-  const { mutate: like } = usePostLike();
-  const { mutate: disLike } = usePostDisLike();
+const PostAction = ({ post }: PostActionProps) => {
+  const { _id = "", like = [], disLike = [] } = post;
+  const { user } = useUser();
+  const userId = user?._id ?? "";
 
-  const { data: totalLikesData } = useGetTotalLike(post._id!);
-  const { data: totalDislikesData } = useGetTotalDisLike(post._id!);
-  const { data: likeCheckData } = useCheckPostLike(post._id!);
-  const { data: dislikeCheckData } = useCheckPostDislike(post._id!);
+  // Check if the current user has liked or disliked the post
+  const likeExists = like.some((user) => user._id === userId);
+  const dislikeExists = disLike.some((user) => user._id === userId);
 
-  const [localLikes, setLocalLikes] = useState(totalLikesData?.data ?? 0);
-  const [localDislikes, setLocalDislikes] = useState(
-    totalDislikesData?.data ?? 0
-  );
-  const [isLiked, setIsLiked] = useState(likeCheckData?.data ?? false);
-  const [isDisliked, setIsDisliked] = useState(dislikeCheckData?.data ?? false);
-
-  useEffect(() => {
-    setLocalLikes(totalLikesData?.data ?? 0);
-    setLocalDislikes(totalDislikesData?.data ?? 0);
-    setIsLiked(likeCheckData?.data ?? false);
-    setIsDisliked(dislikeCheckData?.data ?? false);
-  }, [totalLikesData, totalDislikesData, likeCheckData, dislikeCheckData]);
+  const { mutate: likeFn } = usePostLike();
+  const { mutate: unLikeFn } = usePostUnlike();
+  const { mutate: disLikeFn } = usePostDisLike();
+  const { mutate: unDislikeFn } = usePostUnDislike();
 
   const handleLike = () => {
-    // Toggle like state instantly
-    if (isLiked) {
-      setLocalLikes(localLikes - 1);
-      setIsLiked(false);
+    if (likeExists) {
+      unLikeFn(_id, {});
     } else {
-      setLocalLikes(localLikes + 1);
-      setIsLiked(true);
-      if (isDisliked) {
-        setLocalDislikes(localDislikes - 1);
-        setIsDisliked(false);
-      }
+      likeFn(_id, {
+        onSuccess: () => {
+          if (dislikeExists) {
+            unDislikeFn(_id); // Removes dislike if it exists
+          }
+        },
+      });
     }
-
-    // Mutate without showing server interaction in UI
-    like(post._id!, {
-      onError: () => {
-        // Revert local state if error occurs
-        setLocalLikes(isLiked ? localLikes : localLikes - 1);
-        setIsLiked(isLiked);
-      },
-    });
   };
 
   const handleDislike = () => {
-    // Toggle dislike state instantly
-    if (isDisliked) {
-      setLocalDislikes(localDislikes - 1);
-      setIsDisliked(false);
+    if (dislikeExists) {
+      unDislikeFn(_id, {});
     } else {
-      setLocalDislikes(localDislikes + 1);
-      setIsDisliked(true);
-      if (isLiked) {
-        setLocalLikes(localLikes - 1);
-        setIsLiked(false);
-      }
+      disLikeFn(_id, {
+        onSuccess: () => {
+          if (likeExists) {
+            unLikeFn(_id); // Removes like if it exists
+          }
+        },
+      });
     }
-
-    // Mutate without showing server interaction in UI
-    disLike(post._id!, {
-      onError: () => {
-        // Revert local state if error occurs
-        setLocalDislikes(isDisliked ? localDislikes : localDislikes - 1);
-        setIsDisliked(isDisliked);
-      },
-    });
   };
 
   return (
     <div>
       <div className="flex items-center justify-between px-3 py-2 text-white">
         <div className="flex items-center gap-1">
-          <p>
-            <AiOutlineLike className={isLiked ? "text-blue-600" : ""} />
-          </p>
-          <p>{localLikes}</p>
+          <AiOutlineLike className={likeExists ? "text-blue-600" : ""} />
+          <p>{like.length}</p>
         </div>
-
         <div className="flex items-center gap-1">
-          <AiOutlineDislike className={isDisliked ? "text-red-600" : ""} />
-          <p>{localDislikes}</p>
+          <AiOutlineDislike className={dislikeExists ? "text-red-600" : ""} />
+          <p>{disLike.length}</p>
         </div>
-
         <div className="flex items-center gap-1">
           <FaRegComment />
-          <p>{post?.comments.length}</p>
+          <p>{post.comments.length}</p>
         </div>
-
         <FaShare />
       </div>
-
       <hr className="border-gray-600" />
 
       <div className="flex items-center justify-between pt-4 pb-6">
         <button
           onClick={handleLike}
           className={`flex items-center justify-between gap-1 border-none transition-all ease-in-out duration-500 hover:scale-110 ${
-            isLiked ? "text-blue-600" : "hover:text-blue-600"
+            likeExists ? "text-blue-600" : "text-white hover:text-blue-600"
           }`}
         >
-          <span>
-            <AiOutlineLike />
-          </span>
-          <span>Like</span>
+          <AiOutlineLike />
+          Like
         </button>
 
         <button
           onClick={handleDislike}
           className={`flex items-center justify-between gap-1 border-none transition-all ease-in-out duration-500 hover:scale-110 ${
-            isDisliked ? "text-red-600" : "hover:text-red-600"
+            dislikeExists ? "text-red-600" : "text-white hover:text-red-600"
           }`}
         >
-          <span>
-            <AiOutlineDislike />
-          </span>
-          <span>Dislike</span>
+          <AiOutlineDislike />
+          Dislike
         </button>
 
         <button className="flex items-center justify-between gap-1 text-white bg-transparent border-none hover:text-blue-600 transition-all ease-in-out duration-500 hover:scale-110">
-          <span>
-            <FaRegComment />
-          </span>
+          <FaRegComment />
           <span>Comment</span>
         </button>
 
         <button className="flex items-center justify-between gap-1 text-white bg-transparent border-none hover:text-blue-600 transition-all ease-in-out duration-500 hover:scale-110">
-          <span>
-            <FaShare />
-          </span>
+          <FaShare />
           <span>Share</span>
         </button>
       </div>

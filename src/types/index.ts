@@ -39,6 +39,12 @@ export type IUser = {
   profilePhoto: string;
 };
 
+export type TUserLikeDislike = {
+  _id: string;
+  name: string;
+  profilePhoto: string;
+};
+
 export type TPost = {
   _id?: string;
   title: string;
@@ -49,6 +55,8 @@ export type TPost = {
   contentType: "basic" | "premium";
   price?: number; // Price for premium posts
   comments: string[];
+  like: TUserLikeDislike[]; // Updated type for likes
+  disLike: TUserLikeDislike[]; // Updated type for dislikes
   isPublished?: boolean;
   isUnlockedBy: string[];
   createdAt?: string;

@@ -7,14 +7,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { MdDelete, MdMoreVert, MdReportProblem } from "react-icons/md";
-import { TbListDetails } from "react-icons/tb";
 import { FaCopy, FaRegEdit } from "react-icons/fa";
 import { RiUserUnfollowFill } from "react-icons/ri";
 import { TPost } from "@/types";
 import { useUser } from "@/context/user.provider";
-import Link from "next/link";
 
-const PostDropDown = ({ post }: { post: TPost }) => {
+const PostDetailDropDown = ({ post }: { post: TPost }) => {
   const { user } = useUser();
 
   // Condition to check if the current user is the owner of the post
@@ -31,13 +29,6 @@ const PostDropDown = ({ post }: { post: TPost }) => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-65 bg-black shadow-lg shadow-gray-600 p-3 space-y-2">
-          <DropdownMenuItem className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
-            <p className="flex items-center gap-3 text-white text-sm">
-              <TbListDetails className="text-white" />
-              <Link href={`/newsfeed/posts/${post?._id}`}>View Details</Link>
-            </p>
-          </DropdownMenuItem>
-
           <DropdownMenuItem className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
             <p className="flex items-center gap-3 text-white text-sm">
               <FaCopy className="text-white" />
@@ -84,4 +75,4 @@ const PostDropDown = ({ post }: { post: TPost }) => {
   );
 };
 
-export default PostDropDown;
+export default PostDetailDropDown;

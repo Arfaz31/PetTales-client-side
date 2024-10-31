@@ -1,87 +1,28 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// likeServices
 "use server";
-
 import axiosInstance from "@/AxiosInstance";
 import { revalidateTag } from "next/cache";
 
 export const like = async (postId: string) => {
-  try {
-    const { data } = await axiosInstance.post(`/like/upvote/${postId}`);
-    revalidateTag("postAction");
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
-export const disLike = async (postId: string) => {
-  try {
-    const { data } = await axiosInstance.post(`/like/downvote/${postId}`);
-    revalidateTag("postAction");
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
-  }
+  const { data } = await axiosInstance.patch(`/postAction/like/${postId}`);
+  revalidateTag("postAction");
+  return data;
 };
 
-export const getTotalLike = async (postId: string) => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-  try {
-    const { data } = await axiosInstance.get(
-      `/like/upvotesCount/${postId}`,
-      fetchOptions
-    );
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-};
-export const getTotalDisLike = async (postId: string) => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-  try {
-    const { data } = await axiosInstance.get(
-      `/like/downvotesCount/${postId}`,
-      fetchOptions
-    );
-    return data;
-  } catch (error: any) {
-    throw new Error(error);
-  }
+export const dislike = async (postId: string) => {
+  const { data } = await axiosInstance.patch(`/postAction/dislike/${postId}`);
+  revalidateTag("postAction");
+  return data;
 };
 
-export const postLikeCheck = async (postId: string) => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-  try {
-    const { data } = await axiosInstance.get(
-      `/like/check-post-like/${postId}`,
-      fetchOptions
-    );
-    return data;
-  } catch (error: any) {
-    throw new Error(error.message || "Error checking post like status");
-  }
+export const unLike = async (postId: string) => {
+  const { data } = await axiosInstance.patch(`/postAction/unlike/${postId}`);
+  revalidateTag("postAction");
+  return data;
 };
 
-export const postDislikeCheck = async (postId: string) => {
-  let fetchOptions = {};
-  fetchOptions = {
-    cache: "no-store",
-  };
-  try {
-    const { data } = await axiosInstance.get(
-      `/like/check-post-dislike/${postId}`,
-      fetchOptions
-    );
-    return data;
-  } catch (error: any) {
-    throw new Error(error.message || "Error checking post dislike status");
-  }
+export const unDislike = async (postId: string) => {
+  const { data } = await axiosInstance.patch(`/postAction/undislike/${postId}`);
+  revalidateTag("postAction");
+  return data;
 };

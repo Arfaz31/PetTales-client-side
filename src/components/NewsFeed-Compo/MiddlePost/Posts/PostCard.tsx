@@ -7,8 +7,10 @@ import userimage from "@/assets/user-2.png";
 import PostDropDown from "../PostDropdown/PostDropDown";
 import ImageGallery from "./PostImage";
 import { FaLock } from "react-icons/fa";
-// import PostAction from "./PostAction";
+
 import CommentCard from "../Comment/CommentCard";
+import PostAction from "./PostAction";
+import Link from "next/link";
 
 const PostCard = ({
   post,
@@ -57,7 +59,10 @@ const PostCard = ({
             <div className="relative my-5">
               {/* Blurred image with lock icon */}
               <div className="blur-xl">
-                <ImageGallery images={post?.images ?? []} />
+                <ImageGallery
+                  images={post?.images ?? []}
+                  postId={post?._id ?? ""}
+                />
               </div>
               <div className="absolute inset-0 flex justify-center items-center cursor-pointer">
                 <span className="text-gray-400 bg-white rounded-full p-4 border border-pink-500 text-lg font-bold ">
@@ -78,10 +83,21 @@ const PostCard = ({
         ) : (
           // Post is unlocked or it's a basic post
           <>
-            <p className="text-gray-300 text-base pt-3 pb-6">{post?.content}</p>
-            <ImageGallery images={post?.images ?? []} />
+            <p className="text-gray-300 text-base pt-3 pb-6">
+              {post?.content?.slice(0, 300)}.....
+              <Link
+                className="text-pink-600"
+                href={`/newsfeed/posts/${post?._id}`}
+              >
+                See more
+              </Link>
+            </p>
+            <ImageGallery
+              images={post?.images ?? []}
+              postId={post?._id ?? ""}
+            />
             <hr className="border-gray-600 mt-10" />
-            <div className="py-1">{/* <PostAction post={post} /> */}</div>
+            <div className="py-1">{<PostAction post={post} />}</div>
             <div>
               <CommentCard post={post} />
             </div>

@@ -13,9 +13,6 @@ import { getme } from "@/services/UserService";
 import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
 
 const Post = async () => {
-  // const { data: postsData, isLoading: loadingPosts } = useGetAllPost();
-  // const { data: unlockPostsData, isLoading: loadingUnlockPosts } =
-  //   useGetAllUnlockPost();
   const { data: postsData, isLoading: loadingPosts } = await getAllPosts();
 
   const { data: user } = await getme();

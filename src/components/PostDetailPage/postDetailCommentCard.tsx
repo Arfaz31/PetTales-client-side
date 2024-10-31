@@ -3,16 +3,16 @@
 import Image from "next/image";
 import React from "react";
 import userimage from "@/assets/user-2.png";
-import CommentDropdown from "./CommentDropdown/CommentDropdown";
-import CommentInput from "./Comment-Input/CommentInput";
 import { TPost } from "@/types";
+import CommentDropdown from "../NewsFeed-Compo/MiddlePost/Comment/CommentDropdown/CommentDropdown";
+import CommentInput from "../NewsFeed-Compo/MiddlePost/Comment/Comment-Input/CommentInput";
 
-const CommentCard = async ({ post }: { post: TPost }) => {
+const PostDetailCommentCard = async ({ post }: { post: TPost }) => {
   return (
     <div>
       <p className="text-base font-medium text-white py-2">Comments</p>
       <div>
-        {post?.comments?.slice(0, 2).map((comment: any) => (
+        {post?.comments?.map((comment: any) => (
           <div key={comment._id} className="flex items-center  gap-3 space-y-4">
             <div className="rounded-full border-2 border-pink-600 cursor-pointer">
               <Image
@@ -47,4 +47,4 @@ const CommentCard = async ({ post }: { post: TPost }) => {
   );
 };
 
-export default CommentCard;
+export default PostDetailCommentCard;

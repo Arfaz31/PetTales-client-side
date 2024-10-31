@@ -9,10 +9,6 @@ export const getAllUser = async () => {
 
 export const getSingleUser = async (userId: string) => {
   try {
-    // let fetchOptions = {};
-    // fetchOptions = {
-    //   cache: "no-store",
-    // };
     const { data } = await axiosInstance.get(`/user/${userId}`);
     return data;
   } catch (error: any) {
@@ -21,10 +17,6 @@ export const getSingleUser = async (userId: string) => {
 };
 
 export const getme = async () => {
-  // let fetchOptions = {};
-  // fetchOptions = {
-  //   cache: "no-store",
-  // };
   const { data } = await axiosInstance.get("/user/me");
   return data;
 };
