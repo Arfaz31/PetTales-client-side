@@ -9,6 +9,7 @@ import {
   usePostUnDislike,
 } from "@/hooks/like.hook";
 import { useUser } from "@/context/user.provider";
+import Link from "next/link";
 
 interface PostActionProps {
   post: TPost;
@@ -96,10 +97,12 @@ const PostAction = ({ post }: PostActionProps) => {
           Dislike
         </button>
 
-        <button className="flex items-center justify-between gap-1 text-white bg-transparent border-none hover:text-blue-600 transition-all ease-in-out duration-500 hover:scale-110">
-          <FaRegComment />
-          <span>Comment</span>
-        </button>
+        <Link href={`/newsfeed/posts/${post?._id}`}>
+          <button className="flex items-center justify-between gap-1 text-white bg-transparent border-none hover:text-blue-600 transition-all ease-in-out duration-500 hover:scale-110">
+            <FaRegComment />
+            <span>Comment</span>
+          </button>
+        </Link>
 
         <button className="flex items-center justify-between gap-1 text-white bg-transparent border-none hover:text-blue-600 transition-all ease-in-out duration-500 hover:scale-110">
           <FaShare />

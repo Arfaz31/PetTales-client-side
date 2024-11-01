@@ -13,12 +13,26 @@ import { RiUserUnfollowFill } from "react-icons/ri";
 import { TPost } from "@/types";
 import { useUser } from "@/context/user.provider";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const PostDropDown = ({ post }: { post: TPost }) => {
   const { user } = useUser();
 
   // Condition to check if the current user is the owner of the post
   const isPostOwner = post?.user?._id === user?._id;
+
+  const handleCopyLink = () => {
+    const postUrl = `${window.location.origin}/newsfeed/posts/${post?._id}`;
+    navigator.clipboard
+      .writeText(postUrl)
+      .then(() => {
+        toast.success("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to copy: ");
+      });
+  };
 
   return (
     <div>
@@ -38,7 +52,10 @@ const PostDropDown = ({ post }: { post: TPost }) => {
             </p>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
+          <DropdownMenuItem
+            onClick={handleCopyLink}
+            className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none"
+          >
             <p className="flex items-center gap-3 text-white text-sm">
               <FaCopy className="text-white" />
               <p>Copy Link</p>

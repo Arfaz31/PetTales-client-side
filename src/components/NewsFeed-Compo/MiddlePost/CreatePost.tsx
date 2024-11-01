@@ -5,24 +5,39 @@ import React from "react";
 import Image from "next/image";
 import userimage from "@/assets/user-2.png";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import FXForm from "@/components/Shared/Form/FXForm";
 import FXInput from "@/components/Shared/Form/FXInput";
-import { SubmitHandler } from "react-hook-form";
-import FXSelect from "@/components/Shared/Form/FXSelect";
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-type TPost = {
-  _id?: string;
-  title: string;
-  content: string;
-  images?: string[];
-  category: "Tip" | "Story";
-  contentType: "basic" | "premium";
-  price?: number;
-};
+import FXSelect from "@/components/Shared/Form/FXSelect";
+import FXTextArea from "@/components/Shared/Form/FXTextarea";
+
+// type TPost = {
+//   _id?: string;
+//   title: string;
+//   content: string;
+//   images?: string[];
+//   category: "Tip" | "Story";
+//   contentType: "basic" | "premium";
+//   price?: number;
+// };
 
 const CreatePost = () => {
   const { user } = useUser();
-  const onSubmit: SubmitHandler<TPost> = (data) => {
+  const methods = useForm();
+
+  const { handleSubmit } = methods;
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (data) {
       console.log(data);
     }
@@ -95,43 +110,93 @@ const CreatePost = () => {
 
                 <div className="pt-5">
                   <div>
-                    <FXForm onSubmit={onSubmit}>
-                      <div className="py-3">
-                        <FXInput
-                          label="Title"
-                          name="title"
-                          placeholder="Title"
-                          type="text"
-                          className="min-w-fit "
-                        />
-                      </div>
-                      <div className="py-3 mb-4">
-                        <FXInput
-                          label="Price"
-                          name="Price"
-                          placeholder="Price"
-                          type="number"
-                          className="min-w-fit "
-                        />
-                      </div>
-                      <div className=" mb-4">
-                        <FXSelect
-                          name="category"
-                          label="Select Category"
-                          options={[
-                            { key: "Tip", label: "Tip" },
-                            { key: "Story", label: "Story" },
-                          ]}
-                        />
-                      </div>
+                    <FormProvider {...methods}>
+                      <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="my-7">
+                          <FXInput
+                            label="Title"
+                            name="title"
+                            placeholder="Title"
+                            type="text"
+                            className="min-w-fit "
+                          />
+                        </div>
+                        <div className="mb-7">
+                          <FXTextArea
+                            name="content"
+                            label="Content"
+                            placeholder="Write your post here"
+                            className="min-w-fit "
+                          />
+                        </div>
 
-                      <button
-                        type="submit"
-                        className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 text-base font-semibold text-white text-center px-8 py-2 "
-                      >
-                        Submit
-                      </button>
-                    </FXForm>
+                        <div className=" mb-7">
+                          <FXSelect
+                            name="category"
+                            label="Select Category"
+                            options={[
+                              { key: "Tip", label: "Tip" },
+                              { key: "Story", label: "Story" },
+                            ]}
+                          />
+                        </div>
+                        <div className="mb-7">
+                          <TooltipProvider>
+                            {user?.status === "basic" ? (
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <div>
+                                    <FXSelect
+                                      name="contentType"
+                                      label="Select Content Type"
+                                      options={[
+                                        { key: "basic", label: "Basic" },
+                                        {
+                                          key: "premium",
+                                          label: "Premium",
+                                          disabled: true, // Disable premium for basic users
+                                        },
+                                      ]}
+                                    />
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    Upgrade your status to post premium content
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            ) : (
+                              <FXSelect
+                                name="contentType"
+                                label="Select Content Type"
+                                options={[
+                                  { key: "basic", label: "Basic" },
+                                  { key: "premium", label: "Premium" },
+                                ]}
+                              />
+                            )}
+                          </TooltipProvider>
+                        </div>
+
+                        <div className=" mb-7">
+                          <FXInput
+                            label="Price"
+                            name="Price"
+                            placeholder="Price"
+                            type="number"
+                            className="min-w-fit "
+                          />
+                        </div>
+
+                        <button
+                          type="submit"
+                          className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 text-base font-semibold text-white text-center px-8 py-2 "
+                        >
+                          Submit
+                        </button>
+                      </form>
+                    </FormProvider>
                   </div>
                 </div>
               </div>

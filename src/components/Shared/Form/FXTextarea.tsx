@@ -3,20 +3,20 @@
 import { useFormContext } from "react-hook-form";
 import React from "react";
 
-interface FormInputProps {
+interface FormTextAreaProps {
   name: string;
   label?: string;
-  type?: string; // Input type (text, password, etc.)
   placeholder?: string;
   className?: string;
+  rows?: number; // Number of rows for textarea
 }
 
-const FXInput: React.FC<FormInputProps> = ({
+const FXTextArea: React.FC<FormTextAreaProps> = ({
   name,
   label,
-  type = "text",
   placeholder,
   className = "",
+  rows = 4, // Default rows if not specified
 }) => {
   const {
     register,
@@ -30,12 +30,12 @@ const FXInput: React.FC<FormInputProps> = ({
           {label}
         </label>
       )}
-      <input
+      <textarea
         {...register(name)}
         id={name}
-        type={type}
+        rows={rows}
         placeholder={placeholder}
-        className={`bg-transparent text-gray-400 h-12 px-3 border ${
+        className={`bg-transparent text-gray-400 p-3 border ${
           errors[name] ? "border-red-500" : "border-gray-400"
         } focus:outline-none focus:ring-2 focus:ring-blue-500 rounded ${className}`}
       />
@@ -48,4 +48,4 @@ const FXInput: React.FC<FormInputProps> = ({
   );
 };
 
-export default FXInput;
+export default FXTextArea;

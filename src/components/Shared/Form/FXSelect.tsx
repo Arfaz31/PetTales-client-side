@@ -5,13 +5,13 @@ import { useFormContext } from "react-hook-form";
 interface IOption {
   key: string;
   label: string;
+  disabled?: boolean;
 }
 
 interface IProps {
   name: string;
   label?: string;
   options: IOption[];
-  disabled?: boolean;
   className?: string;
 }
 
@@ -19,7 +19,6 @@ const FXSelect: React.FC<IProps> = ({
   options,
   name,
   label,
-  disabled,
   className = "",
 }) => {
   const {
@@ -37,18 +36,19 @@ const FXSelect: React.FC<IProps> = ({
       <select
         {...register(name)}
         id={name}
-        className={`bg-transparent border  ${
+        className={`bg-transparent border ${
           errors[name] ? "border-red-500" : "border-gray-400"
-        } focus:outline-none focus:ring-2 focus:ring-blue-500 rounded text-gray-400 h-12 px-3 ${className}`}
-        disabled={disabled}
+        }
+          focus:outline-none focus:ring-2 focus:ring-blue-500 rounded text-gray-400 h-12 px-3 ${className}`}
       >
-        <option value="" disabled className="bg-black text-gray-600 ">
+        <option value="" disabled className="bg-black text-gray-600">
           Select an option
         </option>
         {options.map((option) => (
           <option
             key={option.key}
             value={option.key}
+            disabled={option.disabled}
             className="bg-black text-gray-600 hover:bg-[#16181c]"
           >
             {option.label}

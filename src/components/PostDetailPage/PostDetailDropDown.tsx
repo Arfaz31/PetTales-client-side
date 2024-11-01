@@ -18,6 +18,19 @@ const PostDetailDropDown = ({ post }: { post: TPost }) => {
   // Condition to check if the current user is the owner of the post
   const isPostOwner = post?.user?._id === user?._id;
 
+  const handleCopyLink = () => {
+    const postUrl = `${window.location.origin}/newsfeed/posts/${post?._id}`;
+    navigator.clipboard
+      .writeText(postUrl)
+      .then(() => {
+        toast.success("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Failed to copy: ");
+      });
+  };
+
   return (
     <div>
       <DropdownMenu>
@@ -29,7 +42,10 @@ const PostDetailDropDown = ({ post }: { post: TPost }) => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-65 bg-black shadow-lg shadow-gray-600 p-3 space-y-2">
-          <DropdownMenuItem className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
+          <DropdownMenuItem
+            onClick={handleCopyLink}
+            className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none"
+          >
             <p className="flex items-center gap-3 text-white text-sm">
               <FaCopy className="text-white" />
               <p>Copy Link</p>
