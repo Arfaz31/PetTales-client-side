@@ -60,7 +60,7 @@ const RightSideContent = () => {
   const currentYear = new Date().getFullYear();
   return (
     <div className="h-screen overflow-y-auto top-0 block sticky  bg-black ps-4 w-full">
-      <div className="flex sticky top-0 z-50 bg-black ">
+      <div className="flex sticky top-0 z-50 bg-black   pb-4">
         <div className="w-full   pt-3">
           <button type="submit" className="absolute ml-4 mt-3 mr-4">
             <FaSearch />
@@ -69,7 +69,7 @@ const RightSideContent = () => {
             type="search"
             name="search"
             placeholder="Search Post"
-            className="bg-[#202327] h-10 px-10 pr-5 w-full rounded-full text-sm focus:bg-pink-600  shadow border-0"
+            className="bg-[#202327] h-10 px-10 pr-5 w-full rounded-full text-sm   shadow border-0"
           />
         </div>
       </div>

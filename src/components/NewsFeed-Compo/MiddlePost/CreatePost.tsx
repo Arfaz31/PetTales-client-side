@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@/context/user.provider";
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import Image from "next/image";
 import userimage from "@/assets/user-2.png";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -21,6 +21,8 @@ import {
 
 import FXSelect from "@/components/Shared/Form/FXSelect";
 import FXTextArea from "@/components/Shared/Form/FXTextarea";
+import { IoIosImages } from "react-icons/io";
+import { FaX } from "react-icons/fa6";
 
 // type TPost = {
 //   _id?: string;
@@ -33,6 +35,8 @@ import FXTextArea from "@/components/Shared/Form/FXTextarea";
 // };
 
 const CreatePost = () => {
+  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
   const { user } = useUser();
   const methods = useForm();
 
@@ -41,6 +45,36 @@ const CreatePost = () => {
     if (data) {
       console.log(data);
     }
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files; // Get all selected files
+    if (files) {
+      const newFiles = Array.from(files); // Convert FileList to an array
+
+      // Update imageFiles state with all selected files
+      setImageFiles((prev) => [...prev, ...newFiles]);
+
+      // Create image previews for all selected files
+      const newPreviews: string[] = [];
+      newFiles.forEach((file) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          newPreviews.push(reader.result as string); // Collect the image previews
+          // Update state with previews after all files are read
+          if (newPreviews.length === newFiles.length) {
+            setImagePreviews((prev) => [...prev, ...newPreviews]);
+          }
+        };
+        reader.readAsDataURL(file); // Read the file as data URL
+      });
+    }
+  };
+
+  const handleRemoveImagePreview = (index: number) => {
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
+    //For every item in prev, it checks if i (the current index) matches index. If it doesn’t match, it keeps the item; if it does, it removes it.
   };
 
   const petTags = [
@@ -112,7 +146,7 @@ const CreatePost = () => {
                   <div>
                     <FormProvider {...methods}>
                       <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="my-7">
+                        <div className="my-6">
                           <FXInput
                             label="Title"
                             name="title"
@@ -121,7 +155,7 @@ const CreatePost = () => {
                             className="min-w-fit "
                           />
                         </div>
-                        <div className="mb-7">
+                        <div className="mb-6">
                           <FXTextArea
                             name="content"
                             label="Content"
@@ -130,7 +164,7 @@ const CreatePost = () => {
                           />
                         </div>
 
-                        <div className=" mb-7">
+                        <div className=" mb-6">
                           <FXSelect
                             name="category"
                             label="Select Category"
@@ -140,7 +174,7 @@ const CreatePost = () => {
                             ]}
                           />
                         </div>
-                        <div className="mb-7">
+                        <div className="mb-6">
                           <TooltipProvider>
                             {user?.status === "basic" ? (
                               <Tooltip>
@@ -161,9 +195,7 @@ const CreatePost = () => {
                                   </div>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  <p>
-                                    Upgrade your status to post premium content
-                                  </p>
+                                  <p>Get verified to post premium content</p>
                                 </TooltipContent>
                               </Tooltip>
                             ) : (
@@ -179,7 +211,7 @@ const CreatePost = () => {
                           </TooltipProvider>
                         </div>
 
-                        <div className=" mb-7">
+                        <div className=" mb-6">
                           <FXInput
                             label="Price"
                             name="Price"
@@ -187,6 +219,43 @@ const CreatePost = () => {
                             type="number"
                             className="min-w-fit "
                           />
+                        </div>
+
+                        {/* Image Upload */}
+                        <div className="pb-6 ">
+                          <label className=" cursor-pointer text-xs text-pink-400 my-5 flex gap-2 items-center ">
+                            <IoIosImages className="text-2xl" />
+                            <p>Upload Images</p>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              id="image"
+                              multiple
+                              className="hidden"
+                              onChange={handleImageChange}
+                            />
+                          </label>
+                          <div className="flex flex-wrap mt-2">
+                            {imagePreviews.map((preview, index) => (
+                              <div key={index} className="relative mr-2 mb-2">
+                                <Image
+                                  src={preview}
+                                  alt="Image Preview"
+                                  width={100}
+                                  height={100}
+                                  className="rounded w-[100px] h-[80px] object-cover"
+                                />
+                                <button
+                                  className="absolute top-1 right-1 bg-pink-500 text-white rounded-full p-1 text-[8px]"
+                                  onClick={() =>
+                                    handleRemoveImagePreview(index)
+                                  }
+                                >
+                                  <FaX />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
                         </div>
 
                         <button
