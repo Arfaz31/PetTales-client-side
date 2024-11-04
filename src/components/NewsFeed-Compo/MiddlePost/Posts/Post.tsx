@@ -5,15 +5,14 @@ import { TPost } from "@/types";
 import React from "react";
 import PostFilter from "../PostFilter";
 import PostCard from "./PostCard";
-// import { useGetAllPost } from "@/hooks/post.hook";
-// import { useGetAllUnlockPost } from "@/hooks/unlockPost.hook";
-// import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
+
 import { getAllPosts } from "@/services/PostService";
 import { getme } from "@/services/UserService";
 import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
 
 const Post = async () => {
   const { data: postsData, isLoading: loadingPosts } = await getAllPosts();
+  // console.log(postsData);
 
   const { data: user } = await getme();
 

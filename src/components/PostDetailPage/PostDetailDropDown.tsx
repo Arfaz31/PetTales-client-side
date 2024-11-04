@@ -11,6 +11,7 @@ import { FaCopy, FaRegEdit } from "react-icons/fa";
 import { RiUserUnfollowFill } from "react-icons/ri";
 import { TPost } from "@/types";
 import { useUser } from "@/context/user.provider";
+import { toast } from "sonner";
 
 const PostDetailDropDown = ({ post }: { post: TPost }) => {
   const { user } = useUser();

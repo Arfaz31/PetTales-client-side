@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+"use client";
 import Image from "next/image";
 import React from "react";
 import userimage from "@/assets/user-2.png";
@@ -7,7 +7,7 @@ import CommentDropdown from "./CommentDropdown/CommentDropdown";
 import CommentInput from "./Comment-Input/CommentInput";
 import { TPost } from "@/types";
 
-const CommentCard = async ({ post }: { post: TPost }) => {
+const CommentCard = ({ post }: { post: TPost }) => {
   return (
     <div>
       <p className="text-base font-medium text-white py-2">Comments</p>

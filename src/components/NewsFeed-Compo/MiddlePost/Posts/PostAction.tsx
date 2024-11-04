@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { FaRegComment, FaShare } from "react-icons/fa";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useUser } from "@/context/user.provider";
 import { useUserCreateComment } from "@/hooks/comment.hook";
 import { TCommentResponse } from "@/types";
