@@ -44,6 +44,16 @@ export const updatePost = async (
   }
 };
 
+export const deletePost = async (postId: string) => {
+  try {
+    const { data } = await axiosInstance.delete(`/posts/delete/${postId}`);
+    revalidateTag("posts");
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 export const getAllPosts = async () => {
   const { data } = await axiosInstance.get("/posts");
   return data;

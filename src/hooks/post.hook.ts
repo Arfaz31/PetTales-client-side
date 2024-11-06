@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createPost, getAllPosts, updatePost } from "@/services/PostService";
+import {
+  createPost,
+  deletePost,
+  getAllPosts,
+  updatePost,
+} from "@/services/PostService";
 import { TPost } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -31,6 +36,19 @@ export const useUpdatePost = (onSuccessCallback?: () => void) => {
     onSuccess: () => {
       toast.success("Post updated successfully");
       if (onSuccessCallback) onSuccessCallback();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUserDeletePost = () => {
+  return useMutation<any, Error, string>({
+    mutationKey: ["DELETE_POST"],
+    mutationFn: async (postId: string) => await deletePost(postId),
+    onSuccess: () => {
+      toast.success("Post is deleted successfully");
     },
     onError: (error) => {
       toast.error(error.message);
