@@ -8,6 +8,7 @@ interface FormInputProps {
   label?: string;
   type?: string; // Input type (text, password, etc.)
   placeholder?: string;
+  // defaultValue?:
   className?: string;
 }
 

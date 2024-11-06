@@ -20,12 +20,11 @@ import {
 } from "@/components/ui/tooltip";
 
 import FXSelect from "@/components/Shared/Form/FXSelect";
-// import FXTextArea from "@/components/Shared/Form/FXTextarea";
+import FXTextArea from "@/components/Shared/Form/FXTextarea";
 import { IoIosImages } from "react-icons/io";
 import { FaX } from "react-icons/fa6";
 import { useCreatePost } from "@/hooks/post.hook";
 import GlassLoader from "@/components/Shared/Loading";
-import FXTextArea from "@/components/Shared/Form/FXTextarea";
 // import dynamic from "next/dynamic"; // Import dynamic from Next.js
 // // Dynamically import ReactQuill to load it only on the client side
 // const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -61,6 +60,7 @@ const CreatePost = () => {
     for (let image of imageFiles) {
       formData.append("postImages", image);
     }
+    //is a loop that iterates through each item in imageFiles (an array or iterable containing image file objects) and appends each image file to formData with the key "postImages".
 
     handleCreatePost(formData);
   };

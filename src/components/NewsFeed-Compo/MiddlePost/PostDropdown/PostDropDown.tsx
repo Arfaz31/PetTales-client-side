@@ -8,12 +8,13 @@ import {
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { MdDelete, MdMoreVert, MdReportProblem } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
-import { FaCopy, FaRegEdit } from "react-icons/fa";
+import { FaCopy } from "react-icons/fa";
 import { RiUserUnfollowFill } from "react-icons/ri";
 import { TPost } from "@/types";
 import { useUser } from "@/context/user.provider";
 import Link from "next/link";
 import { toast } from "sonner";
+import EditPost from "../PostModal/EditPost";
 
 const PostDropDown = ({ post }: { post: TPost }) => {
   const { user } = useUser();
@@ -65,12 +66,9 @@ const PostDropDown = ({ post }: { post: TPost }) => {
           {/* Conditionally rendering the menu items based on the post owner */}
           {isPostOwner ? (
             <div>
-              <DropdownMenuItem className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
-                <p className="flex items-center gap-3 text-white text-sm">
-                  <FaRegEdit className="text-white" />
-                  <p>Edit Post</p>
-                </p>
-              </DropdownMenuItem>
+              <div className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
+                <EditPost post={post} />
+              </div>
               <DropdownMenuItem className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
                 <p className="flex items-center gap-3 text-white text-sm">
                   <MdDelete className="text-white" />

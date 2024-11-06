@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 import { FaEllipsisVertical } from "react-icons/fa6";
-import CreatePost from "./CreatePost";
+import CreatePost from "./PostModal/CreatePost";
 import Post from "./Posts/Post";
 
 const MiddlePost = () => {
