@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 import axiosInstance from "@/AxiosInstance";
+import { revalidateTag } from "next/cache";
 
 export const getAllUser = async () => {
   const { data } = await axiosInstance.get("/user");
@@ -23,4 +24,25 @@ export const getSingleUser = async (userId: string) => {
 export const getme = async () => {
   const { data } = await axiosInstance.get("/user/me");
   return data;
+};
+
+export const updateUser = async (formData: FormData): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/user/update-profile`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    revalidateTag("user");
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to update user");
+  }
 };

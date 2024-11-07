@@ -13,7 +13,7 @@ interface UserId {
 }
 
 const UserProfile = async ({ params }: UserId) => {
-  console.log("Fetching data for user ID:", params.userId);
+  // console.log("Fetching data for user ID:", params.userId);
   const { data: user } = await getSingleUser(params.userId);
 
   const { data: myPostData } = await getMyAllPost(params.userId);

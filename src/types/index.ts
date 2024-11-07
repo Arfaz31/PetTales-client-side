@@ -62,6 +62,15 @@ export type TPost = {
   createdAt?: string;
 };
 
+export type TUpdateUser = {
+  name?: string;
+  about?: string;
+  mobileNumber?: string;
+  address?: string;
+  profilePhoto?: string;
+  coverImg?: string;
+};
+
 export type TUnlockPost = {
   _id?: string;
   userId: TUser;

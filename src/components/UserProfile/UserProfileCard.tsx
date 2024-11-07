@@ -14,6 +14,7 @@ import Link from "next/link";
 import ImageGallery from "../NewsFeed-Compo/MiddlePost/Posts/PostImage";
 import PostAction from "../NewsFeed-Compo/MiddlePost/Posts/PostAction";
 import CommentCard from "../NewsFeed-Compo/MiddlePost/Comment/CommentCard";
+import EditProfileDropdown from "./EditProfileDropdown";
 
 const UserProfileCard = ({
   user,
@@ -51,9 +52,9 @@ const UserProfileCard = ({
           </div>
 
           {isCurrentUser ? (
-            <button className="border rounded-3xl px-3 py-2 text-white text-base font-semibold ml-auto">
-              Edit Profile
-            </button>
+            <div className="ml-auto">
+              <EditProfileDropdown user={user} />
+            </div>
           ) : (
             <div className="ml-auto">
               <FollowButton
