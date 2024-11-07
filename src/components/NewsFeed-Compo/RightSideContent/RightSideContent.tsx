@@ -80,9 +80,11 @@ const RightSideContent = () => {
           Subscribe to unlock new features and if eligible, receive a share of
           ads revenue
         </p>
-        <button className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 text-lg font-bold  text-white text-center px-4 py-2 w-2/3">
-          Subscribe
-        </button>
+        <Link href={"/pricing"}>
+          <button className="rounded-3xl bg-pink-600 hover:bg-pink-500 transition-all ease-in-out duration-500 text-lg font-bold  text-white text-center px-4 py-2 w-2/3">
+            Subscribe
+          </button>
+        </Link>
       </div>
 
       <div className="border border-gray-600 rounded-lg p-3 mb-5">

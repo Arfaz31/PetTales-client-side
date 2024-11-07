@@ -3,6 +3,7 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getMyAllPost,
   updatePost,
 } from "@/services/PostService";
 import { TPost } from "@/types";
@@ -60,5 +61,11 @@ export const useGetAllPost = () => {
   return useQuery<any, Error, { data: TPost[] }>({
     queryKey: ["GET_ALL_POST"],
     queryFn: async () => await getAllPosts(),
+  });
+};
+export const useGetMyAllPost = (userId: string) => {
+  return useQuery<any, Error, { data: TPost[] }>({
+    queryKey: ["GET_MY_ALL_POST", userId],
+    queryFn: async () => await getMyAllPost(userId),
   });
 };

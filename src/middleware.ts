@@ -11,11 +11,13 @@ const roleBasedRoutes = {
     /^\/newsfeed(\/[a-zA-Z0-9-_]+)?$/, // Allows access to /newsfeed and /newsfeed/* (e.g., /newsfeed/user-profile/123)
     /^\/dashboard\/user(\/[a-zA-Z0-9-_]+)?$/, // Allows access to /dashboard/user and nested routes like /dashboard/user/manage-post
     /^\/newsfeed\/posts(\/[a-zA-Z0-9-_]+)?$/, // Allows access to /newsfeed/posts/:id
+    /^\/newsfeed\/userprofile(\/[a-zA-Z0-9-_]+)?$/,
   ],
   admin: [
     /^\/newsfeed(\/[a-zA-Z0-9-_]+)?$/,
     /^\/dashboard\/admin(\/[a-zA-Z0-9-_]+)?$/,
     /^\/newsfeed\/posts(\/[a-zA-Z0-9-_]+)?$/,
+    /^\/newsfeed\/userprofile(\/[a-zA-Z0-9-_]+)?$/,
   ],
 };
 

@@ -23,7 +23,10 @@ const PostCard = ({
     <div className="min-h-[400px] border-b border-gray-600 py-5">
       <div className="flex items-center justify-between px-3">
         <div className="flex items-center gap-3 xl:col-span-3 md:col-span-4 col-span-5">
-          <div className="rounded-full border-2 border-pink-600 cursor-pointer">
+          <Link
+            href={`/newsfeed/userprofile/${post?.user?._id}`}
+            className="rounded-full border-2 border-pink-600 cursor-pointer"
+          >
             <Image
               src={post?.user?.profilePhoto || userimage}
               alt="user profile picture"
@@ -31,15 +34,17 @@ const PostCard = ({
               height={35}
               className="rounded-full object-cover object-center w-10 h-10"
             />
-          </div>
-          <p className="flex flex-col">
-            <span className="text-sm text-white font-normal ">
-              {post?.user?.name}
-            </span>
+          </Link>
+          <div className="flex flex-col">
+            <Link href={`/newsfeed/userprofile/${post?.user?._id}`}>
+              <span className="text-sm text-white font-normal ">
+                {post?.user?.name}
+              </span>
+            </Link>
             <span className="text-sm text-gray-500">
               {post?.createdAt && new Date(post?.createdAt).toLocaleString()}
             </span>
-          </p>
+          </div>
         </div>
         <div>
           <PostDropDown post={post} />

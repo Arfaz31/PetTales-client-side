@@ -18,7 +18,7 @@ export const useGetMe = () => {
 
 export const useGetSingleUser = (userId: string) => {
   return useQuery<any, Error, { data: TUser }>({
-    queryKey: ["GET_SINGLE_USER"],
+    queryKey: ["GET_SINGLE_USER", userId],
     queryFn: async () => await getSingleUser(userId),
   });
 };

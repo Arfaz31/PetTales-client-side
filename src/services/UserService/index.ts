@@ -8,11 +8,15 @@ export const getAllUser = async () => {
 };
 
 export const getSingleUser = async (userId: string) => {
+  if (!userId) {
+    throw new Error("User ID is required");
+  }
   try {
     const { data } = await axiosInstance.get(`/user/${userId}`);
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    // console.error("Error fetching user:", error); // Log detailed error
+    throw new Error(error.response?.data?.message || "Failed to fetch user");
   }
 };
 

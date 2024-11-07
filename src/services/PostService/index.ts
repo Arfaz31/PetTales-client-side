@@ -62,3 +62,7 @@ export const getSinglePost = async (postId: string) => {
   const { data } = await axiosInstance.get(`/posts/${postId}`);
   return data;
 };
+export const getMyAllPost = async (userId: string) => {
+  const { data } = await axiosInstance.get(`/posts/my-posts/${userId}`);
+  return data;
+};

@@ -25,6 +25,7 @@ import { IoIosImages } from "react-icons/io";
 import { FaX } from "react-icons/fa6";
 import { useCreatePost } from "@/hooks/post.hook";
 import GlassLoader from "@/components/Shared/Loading";
+import Link from "next/link";
 // import dynamic from "next/dynamic"; // Import dynamic from Next.js
 // // Dynamically import ReactQuill to load it only on the client side
 // const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -116,7 +117,10 @@ const CreatePost = () => {
       <div>
         <div className="  p-2 grid grid-cols-12  gap-2">
           <div className="flex items-center gap-3 xl:col-span-3 md:col-span-4 col-span-5">
-            <div className="rounded-full border-2 border-pink-600 cursor-pointer">
+            <Link
+              href={`/newsfeed/userprofile/${user?._id}`}
+              className="rounded-full border-2 border-pink-600 cursor-pointer"
+            >
               <Image
                 src={user?.profilePhoto || userimage}
                 alt="user profile picture"
@@ -124,13 +128,16 @@ const CreatePost = () => {
                 height={35}
                 className="rounded-full object-cover object-center w-10 h-10"
               />
-            </div>
-            <p className="flex flex-col ">
-              <span className="text-sm text-white font-normal ">
-                {user?.name}
-              </span>
+            </Link>
+            <div className="flex flex-col ">
+              <Link href={`/newsfeed/userprofile/${user?._id}`}>
+                <span className="text-sm text-white font-normal ">
+                  {user?.name}
+                </span>
+              </Link>
+
               <span className="text-sm text-gray-500">Create post</span>
-            </p>
+            </div>
           </div>
 
           <div className="xl:col-span-9 md:col-span-8 col-span-7 w-full mx-auto md:ps-3 ps-0 pt-1">

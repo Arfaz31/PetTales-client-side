@@ -6,6 +6,7 @@ import { useGetAllUser } from "@/hooks/user.hook";
 import { Skeleton } from "@/components/ui/skeleton";
 import FollowButton from "@/components/Shared/Follow/FollowButton";
 import { useUser } from "@/context/user.provider";
+import Link from "next/link";
 
 const WhoToFollow = () => {
   const { data, isLoading } = useGetAllUser();
@@ -43,7 +44,10 @@ const WhoToFollow = () => {
                 className=" flex items-center justify-between "
               >
                 <div className="flex items-center gap-2">
-                  <div className="rounded-full border-2 xl:w-10 w-9 xl:h-10 h-9 border-pink-600 cursor-pointer">
+                  <Link
+                    href={`/newsfeed/userprofile/${user?._id}`}
+                    className="rounded-full border-2 xl:w-10 w-9 xl:h-10 h-9 border-pink-600 cursor-pointer"
+                  >
                     <Image
                       src={user?.profilePhoto || userimage}
                       alt="user profile picture"
@@ -51,11 +55,13 @@ const WhoToFollow = () => {
                       height={35}
                       className="rounded-full object-cover object-center w-10 h-10"
                     />
-                  </div>
+                  </Link>
                   <p className="flex flex-col ">
-                    <span className="xl:text-base text-xs text-white font-semibold ">
-                      {user?.name}
-                    </span>
+                    <Link href={`/newsfeed/userprofile/${user?._id}`}>
+                      <span className="xl:text-base text-xs text-white font-semibold ">
+                        {user?.name}
+                      </span>
+                    </Link>
                     <span className="xl:text-sm text-xs text-gray-500">
                       {user?.username || "@username"}
                     </span>
