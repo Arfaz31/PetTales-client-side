@@ -65,7 +65,6 @@ const EditProfileDropdown = ({ user }: { user: TUser }) => {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        // Set the profile image file and preview
         setProfileImageFile(file);
         setProfileImagePreviews(reader.result as string);
       };
@@ -76,16 +75,15 @@ const EditProfileDropdown = ({ user }: { user: TUser }) => {
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
+      const file = e.target.files[0]; //This line grabs the first file from the files list. Since users can only select one file in this input, e.target.files[0] contains the image file they selected.
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        // Set the cover image file and preview
         setCoverImageFile(file);
         setCoverImagePreviews(reader.result as string);
       };
 
-      reader.readAsDataURL(file); // Read the file as data URL
+      reader.readAsDataURL(file); // Read the file as data URL. which triggers the onloadend event once the reading is complete.
     }
   };
 

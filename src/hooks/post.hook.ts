@@ -57,12 +57,19 @@ export const useUserDeletePost = () => {
   });
 };
 
-export const useGetAllPost = () => {
-  return useQuery<any, Error, { data: TPost[] }>({
-    queryKey: ["GET_ALL_POST"],
-    queryFn: async () => await getAllPosts(),
+// export const useGetAllPost = () => {
+//   return useQuery<any, Error, { data: TPost[] }>({
+//     queryKey: ["GET_ALL_POST"],
+//     queryFn: async () => await getAllPosts(),
+//   });
+// };
+export const useGetAllPost = (searchTerm?: string) => {
+  return useQuery<{ data: TPost[] }, Error>({
+    queryKey: searchTerm ? ["GET_ALL_POST", searchTerm] : ["GET_ALL_POST"],
+    queryFn: () => getAllPosts(searchTerm || ""),
   });
 };
+
 export const useGetMyAllPost = (userId: string) => {
   return useQuery<any, Error, { data: TPost[] }>({
     queryKey: ["GET_MY_ALL_POST", userId],

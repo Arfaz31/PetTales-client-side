@@ -2,6 +2,7 @@
 import UserProfileCard from "@/components/UserProfile/UserProfileCard";
 import { getMyAllPost } from "@/services/PostService";
 import { getSingleUser } from "@/services/UserService";
+import Link from "next/link";
 
 import React from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -23,9 +24,9 @@ const UserProfile = async ({ params }: UserId) => {
       <div className=" sticky top-0 z-50 bg-black w-full md:block hidden">
         <div className="flex items-center gap-10 px-4  pt-1 pb-2">
           <div>
-            <span>
+            <Link href="/newsfeed">
               <FaArrowLeftLong className="text-white w-6 h-6" />
-            </span>
+            </Link>
           </div>
           <div className="flex flex-col items-start justify-start gap-1">
             <h2 className="  text-xl font-bold text-white ">{user?.name}</h2>

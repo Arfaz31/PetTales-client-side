@@ -54,10 +54,17 @@ export const deletePost = async (postId: string) => {
   }
 };
 
-export const getAllPosts = async () => {
-  const { data } = await axiosInstance.get("/posts");
+// export const getAllPosts = async () => {
+//   const { data } = await axiosInstance.get("/posts");
+//   return data;
+// };
+export const getAllPosts = async (searchTerm: string = "") => {
+  const { data } = await axiosInstance.get("/posts", {
+    params: searchTerm ? { searchTerm } : {},
+  });
   return data;
 };
+
 export const getSinglePost = async (postId: string) => {
   const { data } = await axiosInstance.get(`/posts/${postId}`);
   return data;

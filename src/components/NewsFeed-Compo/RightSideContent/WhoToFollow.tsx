@@ -15,6 +15,8 @@ const WhoToFollow = () => {
 
   // Get all users from the data array or use an empty array if no data exists
   const users = data?.data || [];
+  const filteredUsers =
+    data?.data?.filter((user: TUser) => user._id !== currentUserId) || [];
 
   return (
     <>
@@ -35,7 +37,7 @@ const WhoToFollow = () => {
         ))
       ) : users.length > 0 ? (
         <div className="space-y-6">
-          {users?.slice(0, 6).map((user: TUser) => {
+          {filteredUsers?.slice(0, 6).map((user: TUser) => {
             const isFollowing = user.follower?.includes(currentUserId); // Check if the current user is following
 
             return (

@@ -21,6 +21,7 @@ const ProfileDropdown = () => {
   const pathname = usePathname();
   // console.log(pathname);
   const { user, setIsLoading: userLoading } = useUser();
+  // console.log("user profilepic", user?.profilePhoto);
 
   const handleLogout = () => {
     logout();
