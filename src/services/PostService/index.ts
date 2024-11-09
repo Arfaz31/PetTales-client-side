@@ -54,14 +54,24 @@ export const deletePost = async (postId: string) => {
   }
 };
 
-// export const getAllPosts = async () => {
-//   const { data } = await axiosInstance.get("/posts");
+// export const getAllPosts = async (searchTerm?: string, category?: string) => {
+//   const params: Record<string, string> = {};
+
+//   // Only add parameters if they exist and are non-default
+//   if (searchTerm) params.searchTerm = searchTerm;
+//   if (category && category !== "All Post") params.category = category;
+
+//   const { data } = await axiosInstance.get("/posts", { params });
 //   return data;
 // };
-export const getAllPosts = async (searchTerm: string = "") => {
-  const { data } = await axiosInstance.get("/posts", {
-    params: searchTerm ? { searchTerm } : {},
-  });
+
+export const getAllPosts = async (searchTerm?: string, category?: string) => {
+  const params: Record<string, string> = {};
+
+  if (searchTerm) params.searchTerm = searchTerm;
+  if (category && category !== "All Post") params.category = category;
+
+  const { data } = await axiosInstance.get("/posts", { params });
   return data;
 };
 

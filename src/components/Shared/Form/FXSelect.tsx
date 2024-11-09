@@ -13,6 +13,7 @@ interface IProps {
   label?: string;
   options: IOption[];
   className?: string;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void; // Add onChange prop
 }
 
 const FXSelect: React.FC<IProps> = ({
@@ -20,6 +21,7 @@ const FXSelect: React.FC<IProps> = ({
   name,
   label,
   className = "",
+  onChange, // Accept onChange prop
 }) => {
   const {
     register,
@@ -36,6 +38,7 @@ const FXSelect: React.FC<IProps> = ({
       <select
         {...register(name)}
         id={name}
+        onChange={onChange} // Attach onChange handler
         className={`bg-transparent border ${
           errors[name] ? "border-red-500" : "border-gray-400"
         }

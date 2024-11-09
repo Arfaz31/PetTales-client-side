@@ -15,6 +15,11 @@ interface UpdatePostData {
   formData: FormData;
 }
 
+// interface IPostResponse {
+//   posts: TPost[];
+//   totalPages: number;
+// }
+
 export const useCreatePost = (onSuccessCallback?: () => void) => {
   return useMutation<any, Error, FormData>({
     mutationKey: ["CREATE_POST"],
@@ -57,18 +62,27 @@ export const useUserDeletePost = () => {
   });
 };
 
-// export const useGetAllPost = () => {
-//   return useQuery<any, Error, { data: TPost[] }>({
-//     queryKey: ["GET_ALL_POST"],
-//     queryFn: async () => await getAllPosts(),
-//   });
-// };
-export const useGetAllPost = (searchTerm?: string) => {
+export const useGetAllPost = (searchTerm?: string, category?: string) => {
   return useQuery<{ data: TPost[] }, Error>({
-    queryKey: searchTerm ? ["GET_ALL_POST", searchTerm] : ["GET_ALL_POST"],
-    queryFn: () => getAllPosts(searchTerm || ""),
+    queryKey: ["GET_ALL_POST", searchTerm || "", category],
+    queryFn: () => getAllPosts(searchTerm, category),
   });
 };
+
+// export const useGetAllPosts = (searchTerm?: string, category?: string) => {
+//   const limit = 6; // Define limit here or pass as a parameter if needed
+
+//   return useInfiniteQuery({
+//     queryKey: ["GET_ALL_POST", searchTerm, category],
+//     queryFn: ({ pageParam = 1 }) =>
+//       getAllPosts(searchTerm, category, pageParam, limit),
+//     getNextPageParam: (lastPage) => {
+//       const { totalPages } = lastPage; // Only use totalPages
+//       return totalPages > 1 ? lastPage.page + 1 : undefined; // Adjust based on totalPages
+//     },
+//     initialPageParam: 1, // Define the initial page parameter
+//   });
+// };
 
 export const useGetMyAllPost = (userId: string) => {
   return useQuery<any, Error, { data: TPost[] }>({

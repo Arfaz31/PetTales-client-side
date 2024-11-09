@@ -1,9 +1,8 @@
-"use server";
+"use client";
 import CommentCard from "@/components/NewsFeed-Compo/MiddlePost/Comment/CommentCard";
 import PostDropDown from "@/components/NewsFeed-Compo/MiddlePost/PostDropdown/PostDropDown";
 import PostAction from "@/components/NewsFeed-Compo/MiddlePost/Posts/PostAction";
 import ImageGallery from "@/components/NewsFeed-Compo/MiddlePost/Posts/PostImage";
-import { getAllPosts } from "@/services/PostService";
 import { TPost } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,18 +10,18 @@ import React from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import userimage from "@/assets/user-2.png";
 import { FaSearch } from "react-icons/fa";
+import { useGetAllPost } from "@/hooks/post.hook";
 
-const SearchFilterOutputPage = async ({
+const SearchFilterOutputPage = ({
   searchParams,
 }: {
   searchParams: { search?: string };
 }) => {
   // Extract search term from URL
   const searchTerm = searchParams.search || "";
-  // console.log("searchTerm", searchTerm);
 
   // Fetch posts with the search term
-  const { data } = await getAllPosts(searchTerm);
+  const { data } = useGetAllPost(searchTerm);
 
   return (
     <div className="md:border-x border-gray-600 min-h-screen bg-black py-2">
@@ -50,7 +49,7 @@ const SearchFilterOutputPage = async ({
       </div>
 
       <div className="py-3">
-        {data?.map((post: TPost) => (
+        {data?.data?.map((post: TPost) => (
           <div key={post?._id}>
             <div className="min-h-[400px] border-b border-gray-600 py-5">
               <div className="flex items-center justify-between px-3">

@@ -38,7 +38,7 @@ export default function ImageGallery({ images, postId }: IProps) {
           >
             <Image
               alt={`image-${index}`}
-              className="h-[400px] w-full object-cover"
+              className="lg:h-[350px] h-[320px] w-full object-cover"
               height={500}
               src={image}
               width={500}

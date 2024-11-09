@@ -4,6 +4,7 @@ import Link from "next/link";
 import logo from "@/assets/logo.png";
 import React from "react";
 import Drawer from "./Drawer";
+import PostSearchModal from "../MiddlePost/PostSearchFilter/PostSearchModal";
 
 const UpperNav = () => {
   return (
@@ -21,6 +22,10 @@ const UpperNav = () => {
               PET<span className="text-pink-600">TALES</span>
             </span>
           </Link>
+        </div>
+
+        <div>
+          <PostSearchModal />
         </div>
       </div>
     </div>

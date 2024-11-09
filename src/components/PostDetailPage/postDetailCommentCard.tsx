@@ -7,7 +7,7 @@ import { TPost } from "@/types";
 import CommentDropdown from "../NewsFeed-Compo/MiddlePost/Comment/CommentDropdown/CommentDropdown";
 import CommentInput from "../NewsFeed-Compo/MiddlePost/Comment/Comment-Input/CommentInput";
 
-const PostDetailCommentCard = async ({ post }: { post: TPost }) => {
+const PostDetailCommentCard = ({ post }: { post: TPost }) => {
   return (
     <div>
       <p className="text-base font-medium text-white py-2">Comments</p>

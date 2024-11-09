@@ -1,28 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// "use client";
-"use server";
+"use client";
 import { TPost } from "@/types";
 import React from "react";
-import PostFilter from "../PostFilter";
+import PostFilter from "../PostSearchFilter/PostFilter";
 import PostCard from "./PostCard";
-
-import { getAllPosts } from "@/services/PostService";
-import { getme } from "@/services/UserService";
+// import { getAllPosts } from "@/services/PostService";
+// import { getme } from "@/services/UserService";
 import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
+import { useGetMe } from "@/hooks/user.hook";
+import { useGetAllPost } from "@/hooks/post.hook";
+import { useSearchParams } from "next/navigation";
 
-const Post = async () => {
-  const { data: postsData, isLoading: loadingPosts } = await getAllPosts();
-  // console.log(postsData);
+const Post = () => {
+  const searchParams = useSearchParams(); // Use useSearchParams to get the current query params
+  const category = searchParams.get("category") || "All Post";
 
-  const { data: user } = await getme();
+  // console.log("Selected category:", category);
 
-  const { _id } = user;
+  const { data: postsData, isLoading: loadingPosts } = useGetAllPost(
+    undefined,
+    category
+  );
+  const { data: user } = useGetMe();
+  const userID = user?.data?._id;
+
   if (loadingPosts) {
     return (
       <div>
-        <div className="py-10 ps-4">
-          <PostFilter />
-        </div>
+        <div className="pb-10 "></div>
         <hr className="border-gray-600" />
 
         <div className="pb-5 space-y-5">
@@ -36,20 +41,21 @@ const Post = async () => {
 
   return (
     <div>
-      <div className="py-10 ps-4">
+      <div className="pb-10 lg:block hidden"></div>
+      <div className="py-8 lg:hidden block ms-2">
         <PostFilter />
       </div>
       <hr className="border-gray-600" />
 
       <div className="pb-5">
-        {postsData.length === 0 ? (
+        {postsData?.data?.length === 0 ? (
           <p className="text-gray-300 text-lg">No posts available.</p>
         ) : (
-          postsData.map((post: TPost) => (
+          postsData?.data?.map((post: TPost) => (
             <PostCard
               key={post?._id}
               post={post}
-              isUnlocked={post.isUnlockedBy?.includes(_id)} // Check if unlocked
+              isUnlocked={post.isUnlockedBy?.includes(userID!)} // Check if unlocked
             />
           ))
         )}

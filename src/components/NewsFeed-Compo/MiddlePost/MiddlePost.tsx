@@ -1,9 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
-
 import { FaEllipsisVertical } from "react-icons/fa6";
 import CreatePost from "./PostModal/CreatePost";
 import Post from "./Posts/Post";
+import PostSearchModal from "./PostSearchFilter/PostSearchModal";
 
 const MiddlePost = () => {
   return (
@@ -16,10 +18,13 @@ const MiddlePost = () => {
             </h2>
           </div>
 
-          <div>
-            <span className="text-white">
+          <div className="flex items-center gap-5">
+            <div className="lg:hidden md:block hidden">
+              <PostSearchModal />
+            </div>
+            <div className="text-white">
               <FaEllipsisVertical />
-            </span>
+            </div>
           </div>
         </div>
         <hr className="border-gray-600" />
