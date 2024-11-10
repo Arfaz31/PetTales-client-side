@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import FollowButton from "@/components/Shared/Follow/FollowButton";
 import { useUser } from "@/context/user.provider";
 import Link from "next/link";
+import { MdVerified } from "react-icons/md";
 
 const WhoToFollow = () => {
   const { data, isLoading } = useGetAllUser();
@@ -59,11 +60,21 @@ const WhoToFollow = () => {
                     />
                   </Link>
                   <p className="flex flex-col ">
-                    <Link href={`/newsfeed/userprofile/${user?._id}`}>
-                      <span className="xl:text-base text-xs text-white font-semibold ">
+                    <p className="flex items-center gap-1">
+                      <Link
+                        href={`/newsfeed/userprofile/${user?._id}`}
+                        className="text-base text-white font-semibold "
+                      >
                         {user?.name}
+                      </Link>
+                      <span>
+                        {user?.status === "premium" && (
+                          <span>
+                            <MdVerified className="text-blue-600 w-4 h-4" />
+                          </span>
+                        )}
                       </span>
-                    </Link>
+                    </p>
                     <span className="xl:text-sm text-xs text-gray-500">
                       {user?.username || "@username"}
                     </span>

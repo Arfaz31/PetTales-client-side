@@ -1,9 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useUserGetVerified } from "@/hooks/getVerified.hook";
 
+interface verifiedResponse {
+  amount: number;
+}
 export default function PricingPlan() {
+  const { mutate: handleVerified } = useUserGetVerified();
+  const [loadingButton, setLoadingButton] = useState<
+    "premium" | "premiumPlus" | null
+  >(null);
+
+  const handleUserVerifiedForPremiumPlan = (data: verifiedResponse) => {
+    setLoadingButton("premium"); // Set loading for Premium Plan button
+    handleVerified(data, {
+      onSettled: () => setLoadingButton(null), // Reset loading state after mutation completes
+    });
+  };
+
+  const handleUserVerifiedForPremiumPlusPlan = (data: verifiedResponse) => {
+    setLoadingButton("premiumPlus"); // Set loading for Premium+ Plan button
+    handleVerified(data, {
+      onSettled: () => setLoadingButton(null), // Reset loading state after mutation completes
+    });
+  };
+
   return (
     <div className="p-2 min-h-screen py-10">
       <motion.h1
@@ -49,8 +72,19 @@ export default function PricingPlan() {
             <li>Monetization enabled for your pet care posts</li>
             <li>Verified checkmark badge to build trust</li>
           </ul>
-          <button className="border-primaryColor text-default-50 bg-pink-600 rounded-md p-2 text-white">
-            Pay Now - BDT 445/month
+          <button
+            onClick={() => handleUserVerifiedForPremiumPlan({ amount: 445 })}
+            className={`border-primaryColor text-default-50 bg-pink-600 rounded-md p-2 text-white ${
+              loadingButton === "premium"
+                ? "cursor-not-allowed min-w-28 h-10 flex items-center justify-center"
+                : ""
+            }`}
+          >
+            {loadingButton === "premium" ? (
+              <div className="w-7 h-7 border-4 border-dashed  rounded-full animate-spin border-white"></div>
+            ) : (
+              "Pay Now - BDT 445/month"
+            )}
           </button>
         </motion.div>
 
@@ -75,8 +109,21 @@ export default function PricingPlan() {
             <li>Ability to write and publish exclusive articles</li>
             <li>Exclusive access to in-depth pet care guides</li>
           </ul>
-          <button className="border-primaryColor text-default-50 bg-pink-600 rounded-md p-2 text-white">
-            Pay Now - BDT 890/month
+          <button
+            onClick={() =>
+              handleUserVerifiedForPremiumPlusPlan({ amount: 890 })
+            }
+            className={`border-primaryColor text-default-50 bg-pink-600 rounded-md p-2 text-white ${
+              loadingButton === "premiumPlus"
+                ? "cursor-not-allowed min-w-28 h-10 flex items-center justify-center"
+                : ""
+            }`}
+          >
+            {loadingButton === "premiumPlus" ? (
+              <div className="w-7 h-7 border-4 border-dashed  rounded-full animate-spin border-white"></div>
+            ) : (
+              "Pay Now - BDT 890/month"
+            )}
           </button>
         </motion.div>
       </div>

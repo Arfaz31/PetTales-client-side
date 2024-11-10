@@ -132,7 +132,7 @@ const CreatePost = () => {
             <div className="flex flex-col ">
               <Link href={`/newsfeed/userprofile/${user?._id}`}>
                 <span className="text-sm text-white font-normal ">
-                  {user?.name}
+                  {user?.name?.split(" ")[0]}
                 </span>
               </Link>
 

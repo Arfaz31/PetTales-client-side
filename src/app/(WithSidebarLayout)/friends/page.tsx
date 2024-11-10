@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/context/user.provider";
 import FollowButton from "@/components/Shared/Follow/FollowButton";
 import Link from "next/link";
+import { MdVerified } from "react-icons/md";
 
 const Friends = () => {
   const { data, isLoading } = useGetAllUser();
@@ -72,17 +73,26 @@ const Friends = () => {
                             className="rounded-full object-cover object-center w-10 h-10"
                           />
                         </Link>
-                        <p className="flex flex-col ">
-                          <Link
-                            href={`/newsfeed/userprofile/${user?._id}`}
-                            className="text-base text-white font-semibold "
-                          >
-                            {user?.name}
-                          </Link>
+                        <div className="flex flex-col ">
+                          <p className="flex items-center gap-2">
+                            <Link
+                              href={`/newsfeed/userprofile/${user?._id}`}
+                              className="text-base text-white font-semibold "
+                            >
+                              {user?.name}
+                            </Link>
+                            <span>
+                              {user?.status === "premium" && (
+                                <span className="pt-1 ">
+                                  <MdVerified className="text-blue-600 w-5 h-5" />
+                                </span>
+                              )}
+                            </span>
+                          </p>
                           <span className="text-sm text-gray-500">
                             {user?.username || "@username"}
                           </span>
-                        </p>
+                        </div>
                       </div>
 
                       <FollowButton

@@ -70,14 +70,20 @@ const UserProfileCard = ({
           <p className="text-2xl font-bold text-white">{user?.name}</p>
           <p className="text-base text-gray-500 pt-1">{user?.username}</p>
         </div>
-        <Link href={"/pricing"}>
-          <button className="border rounded-3xl px-4  h-8 ">
-            <p className="flex items-center gap-2 text-white text-sm font-bold">
-              <MdVerified className="text-blue-600" />
-              <span>Get Verified</span>
-            </p>
-          </button>
-        </Link>
+        {user?.status === "premium" ? (
+          <p className="pt-1 ">
+            <MdVerified className="text-blue-600 w-6 h-6" />
+          </p>
+        ) : (
+          <Link href={"/pricing"}>
+            <button className="border rounded-3xl px-4  h-8 ">
+              <p className="flex items-center gap-2 text-white text-sm font-bold">
+                <MdVerified className="text-blue-600" />
+                <span>Get Verified</span>
+              </p>
+            </button>
+          </Link>
+        )}
       </div>
       <p className="py-4 text-gray-200 text-base px-3">
         {user?.about || "Not Added"}
@@ -127,7 +133,7 @@ const UserProfileCard = ({
       <hr className="border-gray-600" />
       <div className="pt-5">
         {myPostData.length === 0 ? (
-          <p className="text-gray-300 text-lg">No posts available.</p>
+          <p className="text-gray-300 text-lg ps-3 pb-5">No posts available.</p>
         ) : (
           myPostData?.map((post: TPost) => (
             <div key={post?._id}>
