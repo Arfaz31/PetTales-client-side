@@ -19,11 +19,13 @@ import { CircleUser, LogOut } from "lucide-react";
 import { FaChartPie, FaHome, FaRegBookmark } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import Link from "next/link";
+import { useGetMe } from "@/hooks/user.hook";
 
 const Drawer = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading: userLoading } = useUser();
+  const { data: userdata } = useGetMe();
 
   const handleLogout = () => {
     logout();
@@ -99,8 +101,18 @@ const Drawer = () => {
                     {user?.username}
                   </p>
                   <p className="flex items-center gap-20 pb-6">
-                    <span className="text-gray-500 text-sm">Following</span>
-                    <span className="text-gray-500 text-sm">Followers</span>
+                    <span className="text-gray-500 text-sm">
+                      <span className="text-white text-base font-semibold">
+                        {userdata?.data?.following.length}
+                      </span>{" "}
+                      Following
+                    </span>
+                    <span className="text-gray-500 text-sm">
+                      <span className="text-white text-base font-semibold">
+                        {userdata?.data?.follower.length}
+                      </span>{" "}
+                      Followers
+                    </span>
                   </p>
                 </div>
               </SheetTitle>

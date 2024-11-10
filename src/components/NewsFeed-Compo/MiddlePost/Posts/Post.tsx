@@ -24,16 +24,11 @@ const Post = () => {
     isLoading: loadingPosts,
     isSuccess,
   } = useGetAllPost(undefined, category, page);
-
   const { data: user } = useGetMe();
   const userID = user?.data?._id;
 
-  // Reset page and posts when category changes
-  useEffect(() => {
-    setPage(1);
-  }, [category]);
-
   // Load more posts when bottom is reached
+
   const loadMorePosts = () => {
     if (!isFetchingMore && postsData?.hasMore) {
       setIsFetchingMore(true);
@@ -41,17 +36,19 @@ const Post = () => {
     }
   };
 
+  // Reset posts and page when category changes
+  useEffect(() => {
+    setAllPosts([]); // Reset accumulated posts
+    setPage(1); // Reset page to 1
+  }, [category]);
+
   // Append new posts when data is fetched successfully
   useEffect(() => {
     if (isSuccess && postsData?.posts) {
-      if (page === 1) {
-        setAllPosts(postsData.posts); // Reset posts on category change
-      } else {
-        setAllPosts((prevPosts) => [...prevPosts, ...postsData.posts]); // Append posts
-      }
-      setIsFetchingMore(false); // Reset fetching state
+      setAllPosts((prevPosts) => [...prevPosts, ...postsData.posts]); // Append new posts
+      setIsFetchingMore(false); // Reset spinner after appending posts
     }
-  }, [postsData, isSuccess, page]);
+  }, [postsData, isSuccess]);
 
   // Display skeleton loaders while initial data loads
   if (loadingPosts && page === 1) {
@@ -82,9 +79,9 @@ const Post = () => {
         isFetchingMore={isFetchingMore} // if content is currently being fetched; it prevents duplicate fetch calls while new content is already loading.
       >
         {/* Render accumulated posts */}
-        {allPosts.map((post: TPost, index) => (
+        {allPosts.map((post: TPost) => (
           <PostCard
-            key={`${post._id}-${index}`} // Ensure the key is unique
+            key={post._id}
             post={post}
             isUnlocked={post.isUnlockedBy?.includes(userID!)} // Check if unlocked for current user
           />

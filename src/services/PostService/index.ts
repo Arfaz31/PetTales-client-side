@@ -79,7 +79,7 @@ export const getAllPosts = async (
   if (category && category !== "All Posts") params.category = category;
 
   const { data } = await axiosInstance.get("/posts", { params });
-  console.log("API Request Params:", params);
+  // console.log("API Request Params:", params);
   // console.log("API Response:", data);
   // The data object now has the structure { posts, hasMore, totalPages }
   return {
