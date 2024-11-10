@@ -57,7 +57,6 @@ export const deletePost = async (postId: string) => {
 // export const getAllPosts = async (searchTerm?: string, category?: string) => {
 //   const params: Record<string, string> = {};
 
-//   // Only add parameters if they exist and are non-default
 //   if (searchTerm) params.searchTerm = searchTerm;
 //   if (category && category !== "All Post") params.category = category;
 
@@ -65,14 +64,29 @@ export const deletePost = async (postId: string) => {
 //   return data;
 // };
 
-export const getAllPosts = async (searchTerm?: string, category?: string) => {
-  const params: Record<string, string> = {};
+export const getAllPosts = async (
+  searchTerm?: string,
+  category?: string,
+  page: number = 1,
+  limit: number = 8
+) => {
+  const params: Record<string, string> = {
+    page: page.toString(),
+    limit: limit.toString(),
+  };
 
   if (searchTerm) params.searchTerm = searchTerm;
-  if (category && category !== "All Post") params.category = category;
+  if (category && category !== "All Posts") params.category = category;
 
   const { data } = await axiosInstance.get("/posts", { params });
-  return data;
+  console.log("API Request Params:", params);
+  // console.log("API Response:", data);
+  // The data object now has the structure { posts, hasMore, totalPages }
+  return {
+    posts: data.data.posts,
+    hasMore: data.data.hasMore,
+    totalPages: data.data.totalPages,
+  };
 };
 
 export const getSinglePost = async (postId: string) => {

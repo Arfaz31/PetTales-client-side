@@ -12,7 +12,7 @@ const PostSearch = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const { data: allPostsData } = useGetAllPost(debouncedSearchTerm);
-  const posts = allPostsData?.data || [];
+  const posts = allPostsData?.posts || [];
 
   const router = useRouter();
 

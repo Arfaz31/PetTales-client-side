@@ -49,7 +49,7 @@ const SearchFilterOutputPage = ({
       </div>
 
       <div className="py-3">
-        {data?.data?.map((post: TPost) => (
+        {data?.posts?.map((post: TPost) => (
           <div key={post?._id}>
             <div className="min-h-[400px] border-b border-gray-600 py-5">
               <div className="flex items-center justify-between px-3">

@@ -8,6 +8,7 @@ import {
 } from "@/services/PostService";
 import { TPost } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
+
 import { toast } from "sonner";
 
 interface UpdatePostData {
@@ -15,10 +16,11 @@ interface UpdatePostData {
   formData: FormData;
 }
 
-// interface IPostResponse {
-//   posts: TPost[];
-//   totalPages: number;
-// }
+interface IPostResponse {
+  posts: TPost[];
+  hasMore: boolean;
+  totalPages: number;
+}
 
 export const useCreatePost = (onSuccessCallback?: () => void) => {
   return useMutation<any, Error, FormData>({
@@ -62,27 +64,31 @@ export const useUserDeletePost = () => {
   });
 };
 
-export const useGetAllPost = (searchTerm?: string, category?: string) => {
-  return useQuery<{ data: TPost[] }, Error>({
-    queryKey: ["GET_ALL_POST", searchTerm || "", category],
-    queryFn: () => getAllPosts(searchTerm, category),
-  });
-};
-
-// export const useGetAllPosts = (searchTerm?: string, category?: string) => {
-//   const limit = 6; // Define limit here or pass as a parameter if needed
-
-//   return useInfiniteQuery({
-//     queryKey: ["GET_ALL_POST", searchTerm, category],
-//     queryFn: ({ pageParam = 1 }) =>
-//       getAllPosts(searchTerm, category, pageParam, limit),
-//     getNextPageParam: (lastPage) => {
-//       const { totalPages } = lastPage; // Only use totalPages
-//       return totalPages > 1 ? lastPage.page + 1 : undefined; // Adjust based on totalPages
-//     },
-//     initialPageParam: 1, // Define the initial page parameter
+// export const useGetAllPost = (searchTerm?: string, category?: string) => {
+//   return useQuery<{ data: TPost[] }, Error>({
+//     queryKey: ["GET_ALL_POST", searchTerm || "", category],
+//     queryFn: () => getAllPosts(searchTerm, category),
 //   });
 // };
+
+export const useGetAllPost = (
+  searchTerm?: string,
+  category?: string,
+  page: number = 1
+) => {
+  return useQuery<IPostResponse, Error>({
+    queryKey: ["GET_ALL_POST", searchTerm || "", category],
+    queryFn: () => getAllPosts(searchTerm, category, page),
+
+    select: (data) => {
+      return {
+        posts: data.posts,
+        hasMore: data.hasMore,
+        totalPages: data.totalPages,
+      };
+    },
+  });
+};
 
 export const useGetMyAllPost = (userId: string) => {
   return useQuery<any, Error, { data: TPost[] }>({
