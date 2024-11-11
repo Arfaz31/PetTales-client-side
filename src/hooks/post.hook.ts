@@ -44,17 +44,19 @@ export const useUpdatePost = (onSuccessCallback?: () => void) => {
   const queryClient = useQueryClient();
   return useMutation<any, Error, UpdatePostData>({
     mutationKey: ["UPDATE_POST"],
-    // mutationFn: async ({ postId, formData }) =>
-    //   await updatePost(formData, postId), // Fix parameter order
-    mutationFn: async ({ postId, formData }) => {
-      const response = await updatePost(formData, postId);
-      console.log("Post updated:", response);
-      return response;
-    },
-    onSuccess: async () => {
+    mutationFn: async ({ postId, formData }) =>
+      await updatePost(formData, postId),
+
+    // mutationFn: async ({ postId, formData }) => {
+    //   const response = await updatePost(formData, postId);
+    //   console.log("Post updated:", response);
+    //   return response;
+    // },
+
+    onSuccess: () => {
       toast.success("Post updated successfully");
 
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["GET_ALL_POST"],
       });
 
@@ -89,13 +91,12 @@ export const useGetAllPost = (
   page: number = 1
 ) => {
   return useQuery<IPostResponse, Error>({
-    queryKey: ["GET_ALL_POST"],
-    // queryFn: () => getAllPosts(searchTerm, category, page),
-    queryFn: () => {
-      console.log("Fetching Allposts");
-
-      return getAllPosts(searchTerm, category, page);
-    },
+    queryKey: ["GET_ALL_POST", searchTerm || "", category, page],
+    queryFn: () => getAllPosts(searchTerm, category, page),
+    // queryFn: () => {
+    //   console.log("Fetching Allposts");
+    //   return getAllPosts(searchTerm, category, page);
+    // },
     select: (data) => {
       return {
         posts: data.posts,

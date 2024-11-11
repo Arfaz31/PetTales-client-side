@@ -7,13 +7,21 @@ import Image from "next/image";
 import { MdVerified } from "react-icons/md";
 import Link from "next/link";
 import { MdOutlinePayment } from "react-icons/md";
+import { useUserUnlockPost } from "@/hooks/unlockPost.hook";
 
 const UnlockPostDialog = ({ post }: { post: TPost }) => {
+  const { mutate: handleUnlockPost, isPending } = useUserUnlockPost();
+
+  const handleUnlockPostClick = () => {
+    const data = { postId: post?._id || " " };
+    handleUnlockPost(data);
+  };
+
   return (
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <button className="bg-pink-600 text-white text-base font-medium min-w-[300px] py-2 px-4 rounded-3xl flex items-center justify-between">
+          <button className="bg-pink-600 text-white text-base font-medium min-w-[340px] py-2 px-4 rounded-3xl flex items-center justify-between">
             <span>Unlock Post</span>
             <span>
               <FaLock />
@@ -96,8 +104,20 @@ const UnlockPostDialog = ({ post }: { post: TPost }) => {
               </ul>
             </div>
 
-            <button className="bg-pink-600 text-white text-base font-medium w-full py-2 px-4 rounded-3xl flex items-center justify-between">
-              <span>Pay Now</span>
+            <button
+              onClick={handleUnlockPostClick}
+              className={`bg-pink-600 text-white text-base font-medium w-full py-2 px-4 rounded-3xl flex items-center justify-between ${
+                isPending
+                  ? "cursor-not-allowed w-full flex items-center justify-center"
+                  : ""
+              }`}
+            >
+              {isPending ? (
+                <div className="w-7 h-7 border-4 border-dashed  rounded-full animate-spin border-white"></div>
+              ) : (
+                <span>Pay Now</span>
+              )}
+
               <span>
                 <MdOutlinePayment />
               </span>

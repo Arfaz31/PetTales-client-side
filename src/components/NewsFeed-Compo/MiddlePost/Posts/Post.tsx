@@ -13,10 +13,7 @@ import { FaSpinner } from "react-icons/fa";
 const Post = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "All Posts";
-  // console.log("selected category:", category);
-
   const [page, setPage] = useState(1);
-  const [allPosts, setAllPosts] = useState<TPost[]>([]); // Accumulated posts list
   const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   const {
@@ -24,11 +21,11 @@ const Post = () => {
     isLoading: loadingPosts,
     isSuccess,
   } = useGetAllPost(undefined, category, page);
+
   const { data: user } = useGetMe();
   const userID = user?.data?._id;
 
   // Load more posts when bottom is reached
-
   const loadMorePosts = () => {
     if (!isFetchingMore && postsData?.hasMore) {
       setIsFetchingMore(true);
@@ -36,21 +33,15 @@ const Post = () => {
     }
   };
 
-  // Reset posts and page when category changes
+  // Reset page when category changes
   useEffect(() => {
-    setAllPosts([]); // Reset accumulated posts
-    setPage(1); // Reset page to 1
+    setPage(1); // Reset page to 1 when category changes
   }, [category]);
 
   // Append new posts when data is fetched successfully
   useEffect(() => {
     if (isSuccess && postsData?.posts) {
-      setAllPosts((prevPosts) => [...prevPosts, ...postsData.posts]); // Append new posts
-      if (!postsData?.hasMore) {
-        setIsFetchingMore(false); // Stop fetching if no more posts
-      } else {
-        setIsFetchingMore(false); // Reset fetching state after appending posts
-      }
+      setIsFetchingMore(false); // Stop fetching if no more posts
     }
   }, [postsData, isSuccess]);
 
@@ -80,10 +71,10 @@ const Post = () => {
       <InfiniteScrollContainer
         className="pb-5"
         onBottomReached={loadMorePosts} // Call loadMorePosts when bottom is reached
-        isFetchingMore={isFetchingMore} // if content is currently being fetched; it prevents duplicate fetch calls while new content is already loading.
+        isFetchingMore={isFetchingMore} // Prevent duplicate fetch calls while new content is loading
       >
-        {/* Render accumulated posts */}
-        {allPosts.map((post: TPost, index) => (
+        {/* Render posts directly from postsData */}
+        {postsData?.posts?.map((post: TPost, index) => (
           <PostCard
             key={`${post._id}-${index}`} // Combines ID with index for uniqueness
             post={post}

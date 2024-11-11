@@ -8,6 +8,8 @@ import PostDetailDropDown from "./PostDetailDropDown";
 import PostAction from "../NewsFeed-Compo/MiddlePost/Posts/PostAction";
 import PostDetailCommentCard from "./postDetailCommentCard";
 import PostDetailImageGallery from "./PostDetailImge";
+import Link from "next/link";
+import { MdVerified } from "react-icons/md";
 
 const PostDetails = ({ post }: { post: TPost }) => {
   return (
@@ -23,14 +25,25 @@ const PostDetails = ({ post }: { post: TPost }) => {
               className="rounded-full object-cover object-center w-10 h-10"
             />
           </div>
-          <p className="flex flex-col">
-            <span className="text-sm text-white font-normal ">
-              {post?.user?.name}
-            </span>
+          <div className="flex flex-col">
+            <p className="flex items-center gap-2 ">
+              <Link href={`/newsfeed/userprofile/${post?.user?._id}`}>
+                <span className="text-sm text-white font-normal ">
+                  {post?.user?.name}
+                </span>
+              </Link>
+              <span>
+                {post?.user?.status === "premium" && (
+                  <span>
+                    <MdVerified className="text-blue-600 w-4 h-4" />
+                  </span>
+                )}
+              </span>
+            </p>
             <span className="text-sm text-gray-500">
               {post?.createdAt && new Date(post?.createdAt).toLocaleString()}
             </span>
-          </p>
+          </div>
         </div>
         <div>
           <PostDetailDropDown post={post} />

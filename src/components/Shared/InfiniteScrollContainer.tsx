@@ -15,7 +15,7 @@ export default function InfiniteScrollContainer({
   isFetchingMore,
 }: InfiniteScrollContainerProps) {
   const { ref } = useInView({
-    rootMargin: "80px",
+    rootMargin: "50px",
     onChange(inView: boolean) {
       if (inView && !isFetchingMore) {
         onBottomReached();

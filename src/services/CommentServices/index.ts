@@ -11,7 +11,7 @@ export const createComment = async (commentData: TCommentResponse) => {
       "/comment/create-comment",
       commentData
     );
-    revalidateTag("comment");
+    revalidateTag("posts");
     return data;
   } catch (error: any) {
     throw new Error(error);
@@ -24,7 +24,7 @@ export const updateComment = async (updateCommentData: TUpdateComment) => {
       `/comment/update-comment/${updateCommentData.commentId}`,
       { content: updateCommentData.content }
     );
-    revalidateTag("comment");
+    revalidateTag("posts");
     return data;
   } catch (error: any) {
     throw new Error(error);
@@ -36,7 +36,7 @@ export const deleteCommentByAuthor = async (commentId: string) => {
     const { data } = await axiosInstance.delete(
       `/comment/delete-comment/${commentId}`
     );
-    revalidateTag("comment");
+    revalidateTag("posts");
     return data;
   } catch (error: any) {
     throw new Error(error);
@@ -51,33 +51,9 @@ export const deleteCommentByPostOwner = async (
     const { data } = await axiosInstance.delete(
       `/comment/post-owner-delete/${postId}/${commentId}`
     );
-    revalidateTag("comment");
+    revalidateTag("posts");
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
 };
-
-// export const getAllComments = async (postId: string) => {
-//   let fetchOptions = {};
-//   fetchOptions = {
-//     cache: "no-store",
-//   };
-//   const { data } = await axiosInstance.get(
-//     `/comment/get-all-comment/${postId}`,
-//     fetchOptions
-//   );
-//   return data;
-// };
-
-// export const getTotalCommentsCount = async (postId: string) => {
-//   let fetchOptions = {};
-//   fetchOptions = {
-//     cache: "no-store",
-//   };
-//   const { data } = await axiosInstance.get(
-//     `/comment/get-total-comment/${postId}`,
-//     fetchOptions
-//   );
-//   return data;
-// };
