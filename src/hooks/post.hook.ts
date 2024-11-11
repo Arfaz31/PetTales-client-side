@@ -7,7 +7,7 @@ import {
   updatePost,
 } from "@/services/PostService";
 import { TPost } from "@/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { toast } from "sonner";
 
@@ -23,11 +23,15 @@ interface IPostResponse {
 }
 
 export const useCreatePost = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
   return useMutation<any, Error, FormData>({
     mutationKey: ["CREATE_POST"],
     mutationFn: async (postData) => await createPost(postData),
     onSuccess: () => {
       toast.success("Post created successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["GET_ALL_POST"],
+      });
       if (onSuccessCallback) onSuccessCallback();
     },
     onError: (error) => {
@@ -37,12 +41,23 @@ export const useCreatePost = (onSuccessCallback?: () => void) => {
 };
 
 export const useUpdatePost = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
   return useMutation<any, Error, UpdatePostData>({
     mutationKey: ["UPDATE_POST"],
-    mutationFn: async ({ postId, formData }) =>
-      await updatePost(formData, postId), // Fix parameter order
-    onSuccess: () => {
+    // mutationFn: async ({ postId, formData }) =>
+    //   await updatePost(formData, postId), // Fix parameter order
+    mutationFn: async ({ postId, formData }) => {
+      const response = await updatePost(formData, postId);
+      console.log("Post updated:", response);
+      return response;
+    },
+    onSuccess: async () => {
       toast.success("Post updated successfully");
+
+      await queryClient.invalidateQueries({
+        queryKey: ["GET_ALL_POST"],
+      });
+
       if (onSuccessCallback) onSuccessCallback();
     },
     onError: (error) => {
@@ -52,11 +67,15 @@ export const useUpdatePost = (onSuccessCallback?: () => void) => {
 };
 
 export const useUserDeletePost = () => {
+  const queryClient = useQueryClient();
   return useMutation<any, Error, string>({
     mutationKey: ["DELETE_POST"],
     mutationFn: async (postId: string) => await deletePost(postId),
     onSuccess: () => {
       toast.success("Post is deleted successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["GET_ALL_POST"],
+      });
     },
     onError: (error) => {
       toast.error(error.message);
@@ -64,22 +83,19 @@ export const useUserDeletePost = () => {
   });
 };
 
-// export const useGetAllPost = (searchTerm?: string, category?: string) => {
-//   return useQuery<{ data: TPost[] }, Error>({
-//     queryKey: ["GET_ALL_POST", searchTerm || "", category],
-//     queryFn: () => getAllPosts(searchTerm, category),
-//   });
-// };
-
 export const useGetAllPost = (
   searchTerm?: string,
   category?: string,
   page: number = 1
 ) => {
   return useQuery<IPostResponse, Error>({
-    queryKey: ["GET_ALL_POST", searchTerm || "", category],
-    queryFn: () => getAllPosts(searchTerm, category, page),
+    queryKey: ["GET_ALL_POST"],
+    // queryFn: () => getAllPosts(searchTerm, category, page),
+    queryFn: () => {
+      console.log("Fetching Allposts");
 
+      return getAllPosts(searchTerm, category, page);
+    },
     select: (data) => {
       return {
         posts: data.posts,

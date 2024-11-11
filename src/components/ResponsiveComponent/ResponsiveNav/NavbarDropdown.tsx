@@ -14,10 +14,12 @@ import { logout } from "@/services/AuthService";
 import { protectedRoutes } from "@/constant";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
+import { useGetMe } from "@/hooks/user.hook";
 const NavbarDropdown = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading: userLoading } = useUser();
+  const { data: userData } = useGetMe();
 
   const handleLogout = () => {
     logout();
@@ -38,7 +40,7 @@ const NavbarDropdown = () => {
         <DropdownMenuTrigger asChild>
           <div className=" rounded-full border-2 border-pink-600 cursor-pointer">
             <Image
-              src={user?.profilePhoto || userimage}
+              src={userData?.data?.profilePhoto || userimage}
               alt="user profile picture"
               width={35}
               height={35}

@@ -15,12 +15,15 @@ import { protectedRoutes } from "@/constant";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useGetMe } from "@/hooks/user.hook";
+import { MdVerified } from "react-icons/md";
 
 const ProfileDropdown = () => {
   const router = useRouter();
   const pathname = usePathname();
   // console.log(pathname);
   const { user, setIsLoading: userLoading } = useUser();
+  const { data: userData } = useGetMe();
   // console.log("user profilepic", user?.profilePhoto);
 
   const handleLogout = () => {
@@ -43,21 +46,30 @@ const ProfileDropdown = () => {
           <div className=" rounded-3xl w-3/4 hover:bg-[#16181C] cursor-pointer p-2 flex items-center gap-2">
             <div className="rounded-full border-2 border-pink-600 cursor-pointer">
               <Image
-                src={user?.profilePhoto || userimage}
+                src={userData?.data?.profilePhoto || userimage}
                 alt="user profile picture"
                 width={35}
                 height={35}
                 className="rounded-full object-cover object-center w-10 h-10"
               />
             </div>
-            <p className="flex flex-col ">
-              <span className="text-base text-white font-semibold ">
-                {user?.name}
-              </span>
+            <div className="flex flex-col ">
+              <p className="flex items-center gap-2 ">
+                <span className="text-base text-white font-semibold ">
+                  {userData?.data?.name}
+                </span>
+                <span>
+                  {userData?.data?.status === "premium" && (
+                    <span>
+                      <MdVerified className="text-blue-600 w-4 h-4" />
+                    </span>
+                  )}
+                </span>
+              </p>
               <span className="text-sm text-gray-500">
                 {user?.username || "@username"}
               </span>
-            </p>
+            </div>
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent

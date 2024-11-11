@@ -59,7 +59,7 @@ const WhoToFollow = () => {
                       className="rounded-full object-cover object-center w-10 h-10"
                     />
                   </Link>
-                  <p className="flex flex-col ">
+                  <div className="flex flex-col ">
                     <p className="flex items-center gap-1">
                       <Link
                         href={`/newsfeed/userprofile/${user?._id}`}
@@ -78,7 +78,7 @@ const WhoToFollow = () => {
                     <span className="xl:text-sm text-xs text-gray-500">
                       {user?.username || "@username"}
                     </span>
-                  </p>
+                  </div>
                 </div>
 
                 <FollowButton

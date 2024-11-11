@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 import axiosInstance from "@/AxiosInstance";
-import { revalidateTag } from "next/cache";
+// import { revalidateTag } from "next/cache";
 
 export const createPost = async (formData: FormData): Promise<any> => {
   try {
@@ -11,7 +11,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
       },
     });
 
-    revalidateTag("posts");
+    // revalidateTag("posts");
 
     return data;
   } catch (error) {
@@ -35,7 +35,7 @@ export const updatePost = async (
       }
     );
 
-    revalidateTag("posts");
+    // revalidateTag("posts");
 
     return data;
   } catch (error) {
@@ -47,22 +47,12 @@ export const updatePost = async (
 export const deletePost = async (postId: string) => {
   try {
     const { data } = await axiosInstance.delete(`/posts/delete/${postId}`);
-    revalidateTag("posts");
+    // revalidateTag("posts");
     return data;
   } catch (error: any) {
     throw new Error(error);
   }
 };
-
-// export const getAllPosts = async (searchTerm?: string, category?: string) => {
-//   const params: Record<string, string> = {};
-
-//   if (searchTerm) params.searchTerm = searchTerm;
-//   if (category && category !== "All Post") params.category = category;
-
-//   const { data } = await axiosInstance.get("/posts", { params });
-//   return data;
-// };
 
 export const getAllPosts = async (
   searchTerm?: string,

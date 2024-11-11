@@ -13,7 +13,7 @@ import { FaSpinner } from "react-icons/fa";
 const Post = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "All Posts";
-  console.log("selected category:", category);
+  // console.log("selected category:", category);
 
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState<TPost[]>([]); // Accumulated posts list
@@ -46,7 +46,11 @@ const Post = () => {
   useEffect(() => {
     if (isSuccess && postsData?.posts) {
       setAllPosts((prevPosts) => [...prevPosts, ...postsData.posts]); // Append new posts
-      setIsFetchingMore(false); // Reset spinner after appending posts
+      if (!postsData?.hasMore) {
+        setIsFetchingMore(false); // Stop fetching if no more posts
+      } else {
+        setIsFetchingMore(false); // Reset fetching state after appending posts
+      }
     }
   }, [postsData, isSuccess]);
 
@@ -79,10 +83,11 @@ const Post = () => {
         isFetchingMore={isFetchingMore} // if content is currently being fetched; it prevents duplicate fetch calls while new content is already loading.
       >
         {/* Render accumulated posts */}
-        {allPosts.map((post: TPost) => (
+        {allPosts.map((post: TPost, index) => (
           <PostCard
-            key={post._id}
+            key={`${post._id}-${index}`} // Combines ID with index for uniqueness
             post={post}
+            userId={userID!}
             isUnlocked={post.isUnlockedBy?.includes(userID!)} // Check if unlocked for current user
           />
         ))}

@@ -26,6 +26,7 @@ import { FaX } from "react-icons/fa6";
 import { useCreatePost } from "@/hooks/post.hook";
 import GlassLoader from "@/components/Shared/Loading";
 import Link from "next/link";
+import { useGetMe } from "@/hooks/user.hook";
 // import dynamic from "next/dynamic"; // Import dynamic from Next.js
 // // Dynamically import ReactQuill to load it only on the client side
 // const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -38,7 +39,7 @@ const CreatePost = () => {
   // const [description, setDescription] = useState(""); // State for React Quill
 
   const { user } = useUser();
-
+  const { data: userData } = useGetMe();
   const methods = useForm();
 
   const { handleSubmit, reset } = methods;
@@ -53,7 +54,12 @@ const CreatePost = () => {
   const { mutate: handleCreatePost, isPending: createPostPending } =
     useCreatePost(onSuccessCallback);
 
-  const onSubmit: SubmitHandler<FieldValues> = (postData) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const postData = {
+      ...data,
+      price: Number(data.price),
+    };
+    // console.log("postData", postData);
     const formData = new FormData();
     formData.append("data", JSON.stringify(postData));
 
@@ -122,7 +128,7 @@ const CreatePost = () => {
               className="rounded-full border-2 border-pink-600 cursor-pointer"
             >
               <Image
-                src={user?.profilePhoto || userimage}
+                src={userData?.data?.profilePhoto || userimage}
                 alt="user profile picture"
                 width={35}
                 height={35}
@@ -132,7 +138,7 @@ const CreatePost = () => {
             <div className="flex flex-col ">
               <Link href={`/newsfeed/userprofile/${user?._id}`}>
                 <span className="text-sm text-white font-normal ">
-                  {user?.name?.split(" ")[0]}
+                  {userData?.data?.name?.split(" ")[0]}
                 </span>
               </Link>
 
@@ -262,7 +268,7 @@ const CreatePost = () => {
                           <div className=" mb-6">
                             <FXInput
                               label="Price"
-                              name="Price"
+                              name="price"
                               placeholder="Price"
                               type="number"
                               className="min-w-fit "

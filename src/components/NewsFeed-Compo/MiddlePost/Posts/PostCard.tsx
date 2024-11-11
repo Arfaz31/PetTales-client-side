@@ -11,14 +11,21 @@ import { FaLock } from "react-icons/fa";
 import CommentCard from "../Comment/CommentCard";
 import PostAction from "./PostAction";
 import Link from "next/link";
+import { MdVerified } from "react-icons/md";
+import UnlockPostDialog from "../PostModal/UnlockPostDialog";
 
 const PostCard = ({
   post,
+  userId,
   isUnlocked,
 }: {
   post: TPost;
+  userId: string;
   isUnlocked: boolean;
 }) => {
+  // Check if the current user is the owner of the post
+  const isPostOwner = post?.user?._id === userId;
+
   return (
     <div className="min-h-[400px] border-b border-gray-600 py-5">
       <div className="flex items-center justify-between px-3">
@@ -36,11 +43,20 @@ const PostCard = ({
             />
           </Link>
           <div className="flex flex-col">
-            <Link href={`/newsfeed/userprofile/${post?.user?._id}`}>
-              <span className="text-sm text-white font-normal ">
-                {post?.user?.name}
+            <p className="flex items-center gap-2 ">
+              <Link href={`/newsfeed/userprofile/${post?.user?._id}`}>
+                <span className="text-sm text-white font-normal ">
+                  {post?.user?.name}
+                </span>
+              </Link>
+              <span>
+                {post?.user?.status === "premium" && (
+                  <span>
+                    <MdVerified className="text-blue-600 w-4 h-4" />
+                  </span>
+                )}
               </span>
-            </Link>
+            </p>
             <span className="text-sm text-gray-500">
               {post?.createdAt && new Date(post?.createdAt).toLocaleString()}
             </span>
@@ -54,8 +70,8 @@ const PostCard = ({
       <div className="px-3">
         <h1 className="text-white text-xl font-bold pt-4">{post?.title}</h1>
 
-        {post.contentType === "premium" && !isUnlocked ? (
-          // Premium post is locked and not unlocked by the current user
+        {/* Check if the post is premium, not unlocked, and the current user is not the owner */}
+        {post.contentType === "premium" && !isUnlocked && !isPostOwner ? (
           <>
             <p className="text-gray-300 text-base pt-3 pb-6">
               {post?.content?.slice(0, 100)}........
@@ -76,13 +92,14 @@ const PostCard = ({
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <button className="bg-pink-600 text-white text-base font-medium w-[70%]  py-2 px-4 rounded-3xl flex items-center justify-between">
+              {/* <button className="bg-pink-600 text-white text-base font-medium w-[70%]  py-2 px-4 rounded-3xl flex items-center justify-between">
                 <span>Unlock Post</span>
                 <span>
                   {" "}
                   <FaLock />
                 </span>
-              </button>
+              </button> */}
+              <UnlockPostDialog post={post} />
             </div>
           </>
         ) : (
