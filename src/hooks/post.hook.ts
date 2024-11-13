@@ -4,9 +4,11 @@ import {
   deletePost,
   getAllPosts,
   getMyAllPost,
+  getMyUnlockPosts,
+  getUnlockingUsersAndEarnings,
   updatePost,
 } from "@/services/PostService";
-import { TPost } from "@/types";
+import { TPost, TUnlockPost } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { toast } from "sonner";
@@ -26,6 +28,12 @@ interface MyPostDataResponse {
   data: {
     posts: TPost[];
     totalPages: number;
+  };
+}
+interface UnlockingUsersAndEarningsResponse {
+  data: {
+    totalEarnings: number;
+    unlockRecords: TUnlockPost[];
   };
 }
 
@@ -113,13 +121,19 @@ export const useGetMyAllPost = (
   return useQuery<MyPostDataResponse, Error>({
     queryKey: ["GET_MY_ALL_POST", userId, category, contentType],
     queryFn: async () => await getMyAllPost(userId, category, contentType),
-    // select: (data) => {
-    //   console.log("Mypostdatafromhook:", data);
-    //   console.log("postsdatafromhook:", data.posts);
-    //   return {
-    //     posts: data.posts,
-    //     totalPages: data.totalPages,
-    //   };
-    // },
+  });
+};
+
+export const useGetUnlockingUsersAndEarnings = () => {
+  return useQuery<UnlockingUsersAndEarningsResponse, Error>({
+    queryKey: ["GET_The_Users_who_Unlock_MY_POST"],
+    queryFn: async () => await getUnlockingUsersAndEarnings(),
+  });
+};
+
+export const useGetMyUnlockPosts = () => {
+  return useQuery<{ data: TUnlockPost[] }, Error>({
+    queryKey: ["GET_My_Unlock_POST"],
+    queryFn: async () => await getMyUnlockPosts(),
   });
 };

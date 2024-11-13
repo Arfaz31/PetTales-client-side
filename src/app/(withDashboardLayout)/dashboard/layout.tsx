@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: TProps) => {
       <div className="bg-[#2b2b5e] xl:col-span-2 col-span-3  w-full h-screen sticky top-0 left-0 overflow-auto   text-white shadow-xl lg:block hidden">
         <DashboardSidebar />
       </div>
-      <div className="xl:col-span-10 lg:col-span-9 col-span-full    w-full ">
+      <div className="xl:col-span-10 lg:col-span-9 col-span-full  min-h-screen  w-full ">
         <DashboardTopnav />
         {children}
       </div>

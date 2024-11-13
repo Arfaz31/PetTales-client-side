@@ -50,7 +50,7 @@ export type TPost = {
   title: string;
   content: string;
   user?: TUser;
-  images?: string[];
+  images: string[];
   category: "Tip" | "Story";
   contentType: "basic" | "premium";
   price?: number; // Price for premium posts
@@ -78,6 +78,7 @@ export type TUnlockPost = {
   amount: number;
   paymentStatus: "Pending" | "Paid" | "Failed";
   transactionId: string;
+  createdAt?: string;
 };
 
 export type TLike = {

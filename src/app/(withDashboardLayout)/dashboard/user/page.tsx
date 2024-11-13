@@ -10,7 +10,7 @@ import React from "react";
 import { BsFillPostcardHeartFill } from "react-icons/bs";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { MdVerified } from "react-icons/md";
-import MyPostsManagement from "../../_component/module/user-component/myPostsManagement";
+import MyPostsManagement from "./_component/myPostsManagement";
 const UserDashboardHome = async () => {
   const { data: user } = await getme();
   const userId = user?._id;

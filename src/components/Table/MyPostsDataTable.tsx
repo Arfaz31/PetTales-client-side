@@ -28,6 +28,9 @@ const MyPostsDataTable = () => {
     contentType
   );
 
+  console.log("mypostdata:", myPostData);
+  const { posts } = myPostData?.data || {};
+
   return (
     <div className="xl:w-full w-[900px] ">
       <Table>
@@ -56,41 +59,45 @@ const MyPostsDataTable = () => {
               </TableCell>
             </TableRow>
           ) : (
-            myPostData?.data?.posts?.map((post: TPost) => (
-              <TableRow key={post?._id}>
-                <TableCell>
-                  <Image
-                    src={post.images?.[0] ?? ""}
-                    width={80}
-                    height={80}
-                    className="w-12 h-12 rounded-xl"
-                    alt={`Image for ${post.title}`}
-                  />
-                </TableCell>
-                <TableCell>{post?.title}</TableCell>
-                <TableCell>{post?.category}</TableCell>
-                <TableCell>{post?.contentType}</TableCell>
-                <TableCell className="text-center">
-                  {post?.price || "0"} tk
-                </TableCell>
-                <TableCell>
-                  {post?.isPublished ? "Published" : "Unpublished"}
-                </TableCell>
-                <TableCell className="flex items-center">
-                  <DeletePost
-                    postId={post?._id ?? ""}
-                    triggerElement={
-                      <button
-                        className={` flex  items-center justify-center rounded-md  bg-[#ff3434] text-white  p-3 relative group overflow-hidden`}
-                      >
-                        <Trash2 className="text-white w-5 h-5 z-10" />
-                        <span className="absolute inset-0 bg-[#ff1717] transition-all duration-300 transform -translate-x-full group-hover:translate-x-0"></span>
-                      </button>
-                    }
-                  />
-                </TableCell>
-              </TableRow>
-            ))
+            user?._id &&
+            posts?.map((post: TPost) => {
+              // console.log("images:", post?.images.[0]);
+              return (
+                <TableRow key={post?._id}>
+                  <TableCell>
+                    <Image
+                      src={user._id! && post?.images[0]}
+                      width={80}
+                      height={80}
+                      className="w-12 h-12 rounded-xl"
+                      alt={`Image for ${post.title}`}
+                    />
+                  </TableCell>
+                  <TableCell>{post?.title}</TableCell>
+                  <TableCell>{post?.category}</TableCell>
+                  <TableCell>{post?.contentType}</TableCell>
+                  <TableCell className="text-center">
+                    {post?.price || "0"} tk
+                  </TableCell>
+                  <TableCell>
+                    {post?.isPublished ? "Published" : "Unpublished"}
+                  </TableCell>
+                  <TableCell className="flex items-center">
+                    <DeletePost
+                      postId={post?._id ?? ""}
+                      triggerElement={
+                        <button
+                          className={` flex  items-center justify-center rounded-md  bg-[#ff3434] text-white  p-3 relative group overflow-hidden`}
+                        >
+                          <Trash2 className="text-white w-5 h-5 z-10" />
+                          <span className="absolute inset-0 bg-[#ff1717] transition-all duration-300 transform -translate-x-full group-hover:translate-x-0"></span>
+                        </button>
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            })
           )}
         </TableBody>
       </Table>

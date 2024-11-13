@@ -6,7 +6,7 @@ import userimage from "@/assets/user-2.png";
 import { FaLock } from "react-icons/fa";
 
 import Link from "next/link";
-import { MdVerified } from "react-icons/md";
+import { MdVerified, MdWorkspacePremium } from "react-icons/md";
 import PostDropDown from "../NewsFeed-Compo/MiddlePost/PostDropdown/PostDropDown";
 import ImageGallery from "../NewsFeed-Compo/MiddlePost/Posts/PostImage";
 import UnlockPostDialog from "../NewsFeed-Compo/MiddlePost/PostModal/UnlockPostDialog";
@@ -61,8 +61,13 @@ const DataCard = ({
             </span>
           </div>
         </div>
-        <div>
-          <PostDropDown post={post} />
+        <div className="flex items-center gap-4">
+          {post?.contentType === "premium" && (
+            <p>
+              <MdWorkspacePremium className="w-7 h-7 text-[#ff2793]" />
+            </p>
+          )}
+          <PostDropDown post={post} isUnlocked={isUnlocked} />
         </div>
       </div>
 
@@ -70,7 +75,7 @@ const DataCard = ({
         <h1 className="text-white text-xl font-bold pt-4">{post?.title}</h1>
 
         {/* Check if the post is premium, not unlocked, and the current user is not the owner */}
-        {post.contentType === "premium" && !isUnlocked && !isPostOwner ? (
+        {post?.contentType === "premium" && !isUnlocked && !isPostOwner ? (
           <>
             <p className="text-gray-300 text-base pt-3 pb-6">
               {post?.content?.slice(0, 100)}........

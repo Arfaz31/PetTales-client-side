@@ -60,7 +60,7 @@ const MyPostsManagement = () => {
 
   return (
     <div className="bg-white shadow-md w-full  overflow-x-scroll  pb-24   relative">
-      <div className="flex items-center justify-between md:px-6 px-4 py-8 relative">
+      <div className=" flex md:flex-row flex-col md:gap-0 gap-5 items-center justify-between md:px-6 px-4 py-8 relative">
         <p className="sm:text-2xl text-xl  font-bold">My Posts List</p>
         <div className="flex items-center gap-8">
           <div>

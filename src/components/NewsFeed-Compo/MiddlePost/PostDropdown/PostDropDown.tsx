@@ -17,7 +17,13 @@ import { toast } from "sonner";
 import EditPost from "../PostModal/EditPost";
 import DeletePost from "../PostModal/DeletePost";
 
-const PostDropDown = ({ post }: { post: TPost }) => {
+const PostDropDown = ({
+  post,
+  isUnlocked,
+}: {
+  post: TPost;
+  isUnlocked: boolean;
+}) => {
   const { user } = useUser();
 
   // Condition to check if the current user is the owner of the post
@@ -47,13 +53,23 @@ const PostDropDown = ({ post }: { post: TPost }) => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-65 bg-black shadow-lg shadow-gray-600 p-3 space-y-2">
-          <DropdownMenuItem className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none">
+          <DropdownMenuItem
+            className={`w-full p-2 border-none ${
+              post.contentType === "premium" && !isUnlocked
+                ? "cursor-not-allowed opacity-50"
+                : "hover:bg-[#16181C] cursor-pointer"
+            }`}
+            disabled={post.contentType === "premium" && !isUnlocked}
+          >
             <p className="flex items-center gap-3 text-white text-sm">
               <TbListDetails className="text-white" />
-              <Link href={`/newsfeed/posts/${post?._id}`}>View Details</Link>
+              {post.contentType === "premium" && !isUnlocked ? (
+                <span>View Details (Locked)</span>
+              ) : (
+                <Link href={`/newsfeed/posts/${post?._id}`}>View Details</Link>
+              )}
             </p>
           </DropdownMenuItem>
-
           <DropdownMenuItem
             onClick={handleCopyLink}
             className="w-full hover:bg-[#16181C] cursor-pointer p-2 border-none"

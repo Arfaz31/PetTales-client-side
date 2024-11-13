@@ -14,7 +14,7 @@ const DashboardTopnav = () => {
   const { data: user } = useGetMe();
 
   return (
-    <div className="h-[80px] w-full bg-[#eff2f6]  shadow-md sticky top-0 z-50  pt-3">
+    <div className="h-[80px] w-full lg:bg-[#eff2f6] bg-black/90  shadow-md sticky top-0 z-50  pt-3">
       <div className="md:px-4 px-0">
         <div className="flex justify-between items-center ">
           <div className="lg:hidden block">
@@ -69,7 +69,7 @@ const DashboardTopnav = () => {
               </div>
               <div className="relative cursor-pointer bg-[#d5e0f0] rounded-full p-3 w-11 h-11 flex items-center justify-center">
                 <Mail className="w-6 h-6" />
-                <div className="absolute xl:-top-1 text-white -top-1 -right-1 bg-[#6783cc]  w-6 h-6 rounded-full flex items-center justify-center">
+                <div className="absolute xl:-top-1 text-white -top-1 -right-1 lg:bg-[#6783cc] bg-pink-600  w-6 h-6 rounded-full flex items-center justify-center">
                   <p className="text-center text-xs">6+</p>
                 </div>
               </div>

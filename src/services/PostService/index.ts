@@ -117,3 +117,8 @@ export const getUnlockingUsersAndEarnings = async () => {
 
   return data;
 };
+export const getMyUnlockPosts = async () => {
+  const { data } = await axiosInstance.get("/posts/myUnlockPosts");
+
+  return data;
+};
