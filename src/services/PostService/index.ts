@@ -81,7 +81,39 @@ export const getSinglePost = async (postId: string) => {
   const { data } = await axiosInstance.get(`/posts/${postId}`);
   return data;
 };
-export const getMyAllPost = async (userId: string) => {
-  const { data } = await axiosInstance.get(`/posts/my-posts/${userId}`);
+
+export const getMyAllPost = async (
+  userId: string,
+  category?: string,
+  contentType?: string
+  // page: number = 1,
+  // limit: number = 8
+) => {
+  const params: Record<string, string> = {
+    // page: page.toString(),
+    // limit: limit.toString(),
+  };
+
+  if (category && category !== "All Posts") params.category = category;
+  if (contentType && contentType !== "All Content")
+    params.contentType = contentType;
+
+  const { data } = await axiosInstance.get(`/posts/my-posts/${userId}`, {
+    params,
+  });
+  // console.log("API response data:", data);
+  return data;
+};
+
+export const getMyPremiumPosCount = async () => {
+  const { data } = await axiosInstance.get(`/posts/myPremium-postCount`);
+  return data;
+};
+
+export const getUnlockingUsersAndEarnings = async () => {
+  const { data } = await axiosInstance.get(
+    "/posts/unlocking-users-and-earnings"
+  );
+
   return data;
 };

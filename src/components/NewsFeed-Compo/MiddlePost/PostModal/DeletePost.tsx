@@ -1,4 +1,5 @@
-import React from "react";
+import React, { ReactNode } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -8,10 +9,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { MdDelete } from "react-icons/md";
 import { useUserDeletePost } from "@/hooks/post.hook";
 
-const DeletePost = ({ postId }: { postId: string }) => {
+type DeletePostProps = {
+  postId: string;
+  triggerElement: ReactNode;
+};
+
+const DeletePost = ({ postId, triggerElement }: DeletePostProps) => {
   const { mutate: handleDeletePost, isPending: deletePostPending } =
     useUserDeletePost();
 
@@ -23,14 +28,15 @@ const DeletePost = ({ postId }: { postId: string }) => {
     <div className=" w-full ">
       <Dialog>
         <DialogTrigger asChild>
-          <div>
+          {/* <div>
             <button className="text-sm ">
               <p className="flex items-center gap-3 text-white text-sm">
                 <MdDelete className="text-white" />
                 <p>Delete Post</p>
               </p>
             </button>
-          </div>
+          </div> */}
+          {triggerElement}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[490px] overflow-y-auto   bg-black ">
           <DialogHeader>

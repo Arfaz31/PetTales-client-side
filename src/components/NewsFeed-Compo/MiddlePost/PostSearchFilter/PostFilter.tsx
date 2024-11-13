@@ -8,14 +8,14 @@ import {
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { FaCheck } from "react-icons/fa"; // Import the check icon
+import { FaCheck } from "react-icons/fa";
 
 const PostFilter = () => {
   const router = useRouter();
   const [filterOption, setFilterOption] = useState<string>("All Post");
 
   const handleCategoryChange = (selectedCategory: string) => {
-    console.log("Selected category:", selectedCategory);
+    // console.log("Selected category:", selectedCategory);
 
     setFilterOption(selectedCategory); // Update the local state for the dropdown display
 
@@ -59,12 +59,12 @@ const PostFilter = () => {
           side="top"
         >
           <DropdownMenuItem
-            onClick={() => handleCategoryChange("All Post")}
+            onClick={() => handleCategoryChange("All Posts")}
             className="w-full hover:bg-[#16181C] cursor-pointer p-2"
           >
             <div className="flex items-center justify-between w-full text-white">
               <span>All Posts</span>
-              {filterOption === "All Post" && <FaCheck />}
+              {filterOption === "All Posts" && <FaCheck />}
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem

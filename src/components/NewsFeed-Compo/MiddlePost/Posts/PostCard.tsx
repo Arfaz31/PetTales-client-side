@@ -1,6 +1,6 @@
 // "use client";
 
-import DataCard from "@/components/Shared/DataCard";
+import DataCard from "@/components/Shared/PostDataCard";
 import { TPost } from "@/types";
 
 const PostCard = ({

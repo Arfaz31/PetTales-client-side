@@ -22,6 +22,13 @@ interface IPostResponse {
   totalPages: number;
 }
 
+interface MyPostDataResponse {
+  data: {
+    posts: TPost[];
+    totalPages: number;
+  };
+}
+
 export const useCreatePost = (onSuccessCallback?: () => void) => {
   const queryClient = useQueryClient();
   return useMutation<any, Error, FormData>({
@@ -46,12 +53,6 @@ export const useUpdatePost = (onSuccessCallback?: () => void) => {
     mutationKey: ["UPDATE_POST"],
     mutationFn: async ({ postId, formData }) =>
       await updatePost(formData, postId),
-
-    // mutationFn: async ({ postId, formData }) => {
-    //   const response = await updatePost(formData, postId);
-    //   console.log("Post updated:", response);
-    //   return response;
-    // },
 
     onSuccess: () => {
       toast.success("Post updated successfully");
@@ -93,10 +94,7 @@ export const useGetAllPost = (
   return useQuery<IPostResponse, Error>({
     queryKey: ["GET_ALL_POST", searchTerm || "", category, page],
     queryFn: () => getAllPosts(searchTerm, category, page),
-    // queryFn: () => {
-    //   console.log("Fetching Allposts");
-    //   return getAllPosts(searchTerm, category, page);
-    // },
+
     select: (data) => {
       return {
         posts: data.posts,
@@ -107,9 +105,21 @@ export const useGetAllPost = (
   });
 };
 
-export const useGetMyAllPost = (userId: string) => {
-  return useQuery<any, Error, { data: TPost[] }>({
-    queryKey: ["GET_MY_ALL_POST", userId],
-    queryFn: async () => await getMyAllPost(userId),
+export const useGetMyAllPost = (
+  userId: string,
+  category?: string,
+  contentType?: string
+) => {
+  return useQuery<MyPostDataResponse, Error>({
+    queryKey: ["GET_MY_ALL_POST", userId, category, contentType],
+    queryFn: async () => await getMyAllPost(userId, category, contentType),
+    // select: (data) => {
+    //   console.log("Mypostdatafromhook:", data);
+    //   console.log("postsdatafromhook:", data.posts);
+    //   return {
+    //     posts: data.posts,
+    //     totalPages: data.totalPages,
+    //   };
+    // },
   });
 };

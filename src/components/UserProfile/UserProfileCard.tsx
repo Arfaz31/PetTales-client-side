@@ -11,14 +11,19 @@ import { IoLocationSharp } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import Link from "next/link";
 import EditProfileDropdown from "./EditProfileDropdown";
-import DataCard from "../Shared/DataCard";
+import DataCard from "../Shared/PostDataCard";
+
+interface MyPostData {
+  posts: TPost[];
+  totalPages: number;
+}
 
 const UserProfileCard = ({
   user,
   myPostData,
 }: {
   user: TUser;
-  myPostData: TPost[];
+  myPostData: MyPostData;
 }) => {
   const { user: currentUser } = useUser();
   const isFollowing = user.follower?.includes(currentUser?._id || "");
@@ -130,15 +135,17 @@ const UserProfileCard = ({
       <hr className="border-gray-600" />
 
       <div className="pt-5">
-        {myPostData.length === 0 ? (
+        {myPostData?.posts?.length === 0 ? (
           <p className="text-gray-300 text-lg ps-3 pb-5">No posts available.</p>
         ) : (
-          myPostData?.map((post: TPost, index) => (
-            <div key={`${post._id}-${index}`}>
+          myPostData?.posts?.map((post: TPost, index) => (
+            <div key={`${post?._id}-${index}`}>
               <DataCard
                 post={post}
                 userId={currentUser?._id || ""}
-                isUnlocked={post.isUnlockedBy?.includes(currentUser?._id || "")}
+                isUnlocked={post?.isUnlockedBy?.includes(
+                  currentUser?._id || ""
+                )}
               />
             </div>
           ))

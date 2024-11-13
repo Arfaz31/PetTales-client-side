@@ -8,7 +8,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { useGetAllPost } from "@/hooks/post.hook";
 import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
-import DataCard from "@/components/Shared/DataCard";
+import DataCard from "@/components/Shared/PostDataCard";
 import { useGetMe } from "@/hooks/user.hook";
 
 const SearchFilterOutputPage = ({

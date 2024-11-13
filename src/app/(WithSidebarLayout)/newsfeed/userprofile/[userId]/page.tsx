@@ -30,7 +30,9 @@ const UserProfile = async ({ params }: UserId) => {
           </div>
           <div className="flex flex-col items-start justify-start gap-1">
             <h2 className="  text-xl font-bold text-white ">{user?.name}</h2>
-            <p className="text-gray-500 text-xs">{myPostData.length} Posts</p>
+            <p className="text-gray-500 text-xs">
+              {myPostData?.posts?.length || "0"} Posts
+            </p>
           </div>
         </div>
         <hr className="border-gray-600" />
