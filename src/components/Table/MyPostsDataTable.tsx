@@ -28,7 +28,7 @@ const MyPostsDataTable = () => {
     contentType
   );
 
-  console.log("mypostdata:", myPostData);
+  // console.log("mypostdata:", myPostData);
   const { posts } = myPostData?.data || {};
 
   return (
@@ -59,14 +59,16 @@ const MyPostsDataTable = () => {
               </TableCell>
             </TableRow>
           ) : (
-            user?._id &&
             posts?.map((post: TPost) => {
-              // console.log("images:", post?.images.[0]);
               return (
                 <TableRow key={post?._id}>
                   <TableCell>
                     <Image
-                      src={user._id! && post?.images[0]}
+                      key={post?._id}
+                      src={
+                        post.images[0] ||
+                        "https://static.thenounproject.com/png/4595376-200.png"
+                      }
                       width={80}
                       height={80}
                       className="w-12 h-12 rounded-xl"

@@ -21,7 +21,7 @@ interface Props {
   menuItemClassName?: string;
 }
 
-const PostFilter = ({
+const PostFilterDropdown = ({
   options,
   filterOption,
   handleCategoryChange,
@@ -66,4 +66,4 @@ const PostFilter = ({
   );
 };
 
-export default PostFilter;
+export default PostFilterDropdown;

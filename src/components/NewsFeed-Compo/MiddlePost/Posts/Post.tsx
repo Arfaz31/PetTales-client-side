@@ -1,52 +1,51 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { TPost } from "@/types";
-import PostFilter from "../PostSearchFilter/PostFilter";
-import PostCard from "./PostCard";
-import PostCardSkeleton from "@/components/Skeleton/PostSkeleton";
-import { useGetMe } from "@/hooks/user.hook";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect } from "react";
+import { useGetMe } from "@/hooks/user.hook"; // Adjust accordingly
 import { useGetAllPost } from "@/hooks/post.hook";
-import { useSearchParams } from "next/navigation";
-import InfiniteScrollContainer from "@/components/Shared/InfiniteScrollContainer";
+import { useSearchParams } from "next/navigation"; // Adjust the import accordingly
+import PostCard from "./PostCard"; // Adjust the import
+import PostCardSkeleton from "@/components/Skeleton/PostSkeleton"; // Adjust the import
+import InfiniteScrollContainer from "@/components/Shared/InfiniteScrollContainer"; // Adjust the import
 import { FaSpinner } from "react-icons/fa";
+import PostFilter from "../PostSearchFilter/PostFilter";
 
 const Post = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "All Posts";
-  const [page, setPage] = useState(1);
-  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   const {
     data: postsData,
     isLoading: loadingPosts,
-    isSuccess,
-  } = useGetAllPost(undefined, category, page);
+    fetchNextPage, // Function to fetch next page
+    hasNextPage, // Whether there are more pages
+    isFetchingNextPage, // Whether next page is currently being fetched
+  } = useGetAllPost(undefined, category);
+
+  // console.log("postsdata:", postsData);
+  // postsData return- pageParams and pages[]. and pages return posts, hasMore, totalPages
+  // pageParams: [1]
+  // pages: Array(1)
+  // 0: {posts: Array(8), hasMore: true, totalPages: 4}
+  // length: 1
 
   const { data: user } = useGetMe();
   const userID = user?.data?._id;
 
-  // Load more posts when bottom is reached
+  // Load more posts when the bottom is reached
   const loadMorePosts = () => {
-    if (!isFetchingMore && postsData?.hasMore) {
-      setIsFetchingMore(true);
-      setPage((prevPage) => prevPage + 1);
+    if (!isFetchingNextPage && hasNextPage) {
+      fetchNextPage(); // This fetches the next page of data
     }
   };
 
-  // Reset page when category changes
+  // Reset posts when category changes
   useEffect(() => {
-    setPage(1); // Reset page to 1 when category changes
+    if (postsData) {
+      fetchNextPage(); // Trigger a fetch when category changes
+    }
   }, [category]);
 
-  // Append new posts when data is fetched successfully
-  useEffect(() => {
-    if (isSuccess && postsData?.posts) {
-      setIsFetchingMore(false); // Stop fetching if no more posts
-    }
-  }, [postsData, isSuccess]);
-
-  // Display skeleton loaders while initial data loads
-  if (loadingPosts && page === 1) {
+  if (loadingPosts && !postsData) {
     return (
       <div>
         <div className="pb-10"></div>
@@ -70,22 +69,24 @@ const Post = () => {
 
       <InfiniteScrollContainer
         className="pb-5"
-        onBottomReached={loadMorePosts} // Call loadMorePosts when bottom is reached
-        isFetchingMore={isFetchingMore} // Prevent duplicate fetch calls while new content is loading
+        onBottomReached={loadMorePosts}
+        isFetchingMore={isFetchingNextPage} // Adjust fetching indicator
       >
-        {/* Render posts directly from postsData */}
-        {postsData?.posts?.map((post: TPost, index) => (
-          <PostCard
-            key={`${post._id}-${index}`} // Combines ID with index for uniqueness
-            post={post}
-            userId={userID!}
-            isUnlocked={post.isUnlockedBy?.includes(userID!)} // Check if unlocked for current user
-          />
-        ))}
+        {/* Render posts from pages */}
+        {postsData?.pages?.map((pageData, index) =>
+          pageData.posts.map((post: any) => (
+            <PostCard
+              key={`${post._id}-${index}`}
+              post={post}
+              userId={userID!}
+              isUnlocked={post.isUnlockedBy?.includes(userID!)}
+            />
+          ))
+        )}
 
         {/* Loading spinner when fetching more */}
-        {isFetchingMore && (
-          <div className="flex justify-center mt-5 mb-2">
+        {isFetchingNextPage && (
+          <div className="flex justify-center my-5 ">
             <div className="w-full h-[100px] flex items-start justify-center">
               <FaSpinner
                 className="animate-spin text-pink-500 ease-in-out duration-2000"

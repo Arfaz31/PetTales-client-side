@@ -1,5 +1,6 @@
 "use client";
-import PostFilter from "@/components/Shared/PostsFilter/PostFilter";
+
+import PostFilterDropdown from "@/components/Shared/PostsFilter/PostFilterDropdown";
 import MyPostsDataTable from "@/components/Table/MyPostsDataTable";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -64,7 +65,7 @@ const MyPostsManagement = () => {
         <p className="sm:text-2xl text-xl  font-bold">My Posts List</p>
         <div className="flex items-center gap-8">
           <div>
-            <PostFilter
+            <PostFilterDropdown
               options={contentTypeOptions}
               filterOption={contentFilterOption}
               handleCategoryChange={handleContentTypeChange}
@@ -74,7 +75,7 @@ const MyPostsManagement = () => {
             />
           </div>
           <div>
-            <PostFilter
+            <PostFilterDropdown
               options={categoryOptions}
               filterOption={categoryFilterOption}
               handleCategoryChange={handleCategoryChange}

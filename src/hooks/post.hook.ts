@@ -9,7 +9,12 @@ import {
   updatePost,
 } from "@/services/PostService";
 import { TPost, TUnlockPost } from "@/types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import { toast } from "sonner";
 
@@ -18,11 +23,11 @@ interface UpdatePostData {
   formData: FormData;
 }
 
-interface IPostResponse {
-  posts: TPost[];
-  hasMore: boolean;
-  totalPages: number;
-}
+// interface IPostResponse {
+//   posts: TPost[];
+//   hasMore: boolean;
+//   totalPages: number;
+// }
 
 interface MyPostDataResponse {
   data: {
@@ -94,22 +99,35 @@ export const useUserDeletePost = () => {
   });
 };
 
-export const useGetAllPost = (
-  searchTerm?: string,
-  category?: string,
-  page: number = 1
-) => {
-  return useQuery<IPostResponse, Error>({
-    queryKey: ["GET_ALL_POST", searchTerm || "", category, page],
-    queryFn: () => getAllPosts(searchTerm, category, page),
+// export const useGetAllPost = (
+//   searchTerm?: string,
+//   category?: string,
+//   page: number = 1
+// ) => {
+//   return useQuery<IPostResponse, Error>({
+//     queryKey: ["GET_ALL_POST", searchTerm || "", category, page],
+//     queryFn: () => getAllPosts(searchTerm, category, page),
 
-    select: (data) => {
-      return {
-        posts: data.posts,
-        hasMore: data.hasMore,
-        totalPages: data.totalPages,
-      };
+//     select: (data) => {
+//       return {
+//         posts: data.posts,
+//         hasMore: data.hasMore,
+//         totalPages: data.totalPages,
+//       };
+//     },
+//   });
+// };
+
+export const useGetAllPost = (searchTerm?: string, category?: string) => {
+  return useInfiniteQuery<any, Error>({
+    queryKey: ["GET_ALL_POST", searchTerm || "", category],
+    queryFn: ({ pageParam = 1 }) =>
+      getAllPosts(searchTerm, category, pageParam as number),
+    getNextPageParam: (lastPage, allPages) => {
+      // Check if there are more pages available
+      return lastPage.hasMore ? allPages.length + 1 : undefined;
     },
+    initialPageParam: 1, // Explicitly set initialPageParam to 1
   });
 };
 

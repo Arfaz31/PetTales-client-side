@@ -57,11 +57,11 @@ export const deletePost = async (postId: string) => {
 export const getAllPosts = async (
   searchTerm?: string,
   category?: string,
-  page: number = 1,
+  pageParam: number = 1,
   limit: number = 8
 ) => {
   const params: Record<string, string> = {
-    page: page.toString(),
+    page: pageParam.toString(),
     limit: limit.toString(),
   };
 

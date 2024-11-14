@@ -14,16 +14,16 @@ import { useGetMe } from "@/hooks/user.hook";
 const SearchFilterOutputPage = ({
   searchParams,
 }: {
-  searchParams: { search?: string };
+  searchParams: { searchTerm?: string };
 }) => {
   // Initialize search term state
-  const [searchTerm, setSearchTerm] = useState(searchParams.search || "");
+  const [searchTerm, setSearchTerm] = useState(searchParams.searchTerm || "");
   const [currentSearchTerm, setCurrentSearchTerm] = useState(
-    searchParams.search || ""
+    searchParams.searchTerm || ""
   );
 
   // Fetch posts with the current search term
-  const { data, isLoading } = useGetAllPost(currentSearchTerm);
+  const { data: postsData, isLoading } = useGetAllPost(currentSearchTerm);
   const { data: user } = useGetMe();
   const userId = user?.data?._id;
 
@@ -76,15 +76,17 @@ const SearchFilterOutputPage = ({
         </div>
       ) : (
         <div className="py-3">
-          {data?.posts?.map((post: TPost, index) => (
-            <div key={`${post._id}-${index}`}>
-              <DataCard
-                post={post}
-                userId={userId!}
-                isUnlocked={post.isUnlockedBy?.includes(userId!)}
-              />
-            </div>
-          ))}
+          {postsData?.pages?.map((pageData, index) =>
+            pageData.posts.map((post: TPost) => (
+              <div key={`${post._id}-${index}`}>
+                <DataCard
+                  post={post}
+                  userId={userId!}
+                  isUnlocked={post.isUnlockedBy?.includes(userId!)}
+                />
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>
