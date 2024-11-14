@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import React, { useState } from "react";
 import { FaRegComment, FaShare } from "react-icons/fa";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { TPost } from "@/types";
@@ -23,8 +21,15 @@ const PostAction = ({ post }: PostActionProps) => {
   const userId = user?._id ?? "";
 
   // Check if the current user has liked or disliked the post
+  //checks if any user in the like or dislike array has the same _id as the current user's userId.
   const likeExists = like.some((user) => user._id === userId);
   const dislikeExists = disLike.some((user) => user._id === userId);
+
+  // Local state for like and dislike
+  const [localLike, setLocalLike] = useState(likeExists);
+  const [localDislike, setLocalDislike] = useState(dislikeExists);
+  const [localLikeCount, setLocalLikeCount] = useState(like.length);
+  const [localDislikeCount, setLocalDislikeCount] = useState(disLike.length);
 
   const { mutate: likeFn } = usePostLike();
   const { mutate: unLikeFn } = usePostUnlike();
@@ -32,28 +37,72 @@ const PostAction = ({ post }: PostActionProps) => {
   const { mutate: unDislikeFn } = usePostUnDislike();
 
   const handleLike = () => {
-    if (likeExists) {
-      unLikeFn(_id, {});
+    if (localLike) {
+      //  Remove like
+      setLocalLike(false);
+      setLocalLikeCount(localLikeCount - 1);
+
+      // Call backend to unlike the post
+      unLikeFn(_id, {
+        onError: () => {
+          setLocalLike(true); // Revert on error
+          setLocalLikeCount(localLikeCount); // Revert like count
+        },
+      });
     } else {
+      //  Add like
+      setLocalLike(true);
+      setLocalLikeCount(localLikeCount + 1);
+
+      // Call backend to like the post
       likeFn(_id, {
         onSuccess: () => {
-          if (dislikeExists) {
-            unDislikeFn(_id); // Removes dislike if it exists
+          if (localDislike) {
+            // Remove dislike if it exists
+            setLocalDislike(false);
+            setLocalDislikeCount(localDislikeCount - 1);
+            unDislikeFn(_id); // Remove the dislike on server
           }
+        },
+        onError: () => {
+          setLocalLike(false); // Revert on error
+          setLocalLikeCount(localLikeCount); // Revert like count
         },
       });
     }
   };
 
   const handleDislike = () => {
-    if (dislikeExists) {
-      unDislikeFn(_id, {});
+    if (localDislike) {
+      //  Remove dislike
+      setLocalDislike(false);
+      setLocalDislikeCount(localDislikeCount - 1);
+
+      // Call backend to undislike the post
+      unDislikeFn(_id, {
+        onError: () => {
+          setLocalDislike(true); // Revert on error
+          setLocalDislikeCount(localDislikeCount); // Revert dislike count
+        },
+      });
     } else {
+      //  Add dislike
+      setLocalDislike(true);
+      setLocalDislikeCount(localDislikeCount + 1);
+
+      // Call backend to dislike the post
       disLikeFn(_id, {
         onSuccess: () => {
-          if (likeExists) {
-            unLikeFn(_id); // Removes like if it exists
+          if (localLike) {
+            // Remove like if it exists
+            setLocalLike(false);
+            setLocalLikeCount(localLikeCount - 1);
+            unLikeFn(_id); // Remove the like on server
           }
+        },
+        onError: () => {
+          setLocalDislike(false); // Revert on error
+          setLocalDislikeCount(localDislikeCount); // Revert dislike count
         },
       });
     }
@@ -63,12 +112,12 @@ const PostAction = ({ post }: PostActionProps) => {
     <div>
       <div className="flex items-center justify-between px-3 py-2 text-white">
         <div className="flex items-center gap-1">
-          <AiOutlineLike className={likeExists ? "text-blue-600" : ""} />
-          <p>{like.length}</p>
+          <AiOutlineLike className={localLike ? "text-blue-600" : ""} />
+          <p>{localLikeCount}</p>
         </div>
         <div className="flex items-center gap-1">
-          <AiOutlineDislike className={dislikeExists ? "text-red-600" : ""} />
-          <p>{disLike.length}</p>
+          <AiOutlineDislike className={localDislike ? "text-red-600" : ""} />
+          <p>{localDislikeCount}</p>
         </div>
         <div className="flex items-center gap-1">
           <FaRegComment />
@@ -82,7 +131,7 @@ const PostAction = ({ post }: PostActionProps) => {
         <button
           onClick={handleLike}
           className={`flex items-center justify-between gap-1 border-none transition-all ease-in-out duration-500 hover:scale-110 ${
-            likeExists ? "text-blue-600" : "text-white hover:text-blue-600"
+            localLike ? "text-blue-600" : "text-white hover:text-blue-600"
           }`}
         >
           <AiOutlineLike />
@@ -92,7 +141,7 @@ const PostAction = ({ post }: PostActionProps) => {
         <button
           onClick={handleDislike}
           className={`flex items-center justify-between gap-1 border-none transition-all ease-in-out duration-500 hover:scale-110 ${
-            dislikeExists ? "text-red-600" : "text-white hover:text-red-600"
+            localDislike ? "text-red-600" : "text-white hover:text-red-600"
           }`}
         >
           <AiOutlineDislike />

@@ -31,7 +31,8 @@ const PostFilterDropdown = ({
 }: Props) => {
   const selectedLabel =
     options.find((option) => option.value === filterOption)?.label ||
-    options[0].label; // Fallback to the first option's label
+    options[0].label;
+  // This find method checks if there is an option that matches the value of filterOption in the options array. If a match is found, it returns the label of that option. If no match is found, it uses the label of the first option in the array as a fallback.
   return (
     <div>
       <DropdownMenu>

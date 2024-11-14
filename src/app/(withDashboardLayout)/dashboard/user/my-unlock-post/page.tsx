@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Lottie from "lottie-react";
-import spinner from "@/assets/lottie/loading.json";
+import spinner from "@/assets/lottie/loading2.json";
 import Image from "next/image";
 import { TUnlockPost } from "@/types";
 import { useGetMyUnlockPosts } from "@/hooks/post.hook";

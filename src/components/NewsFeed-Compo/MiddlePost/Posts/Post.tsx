@@ -43,7 +43,7 @@ const Post = () => {
     if (postsData) {
       fetchNextPage(); // Trigger a fetch when category changes
     }
-  }, [category]);
+  }, [category, fetchNextPage, postsData]);
 
   if (loadingPosts && !postsData) {
     return (
@@ -72,7 +72,6 @@ const Post = () => {
         onBottomReached={loadMorePosts}
         isFetchingMore={isFetchingNextPage} // Adjust fetching indicator
       >
-        {/* Render posts from pages */}
         {postsData?.pages?.map((pageData, index) =>
           pageData.posts.map((post: any) => (
             <PostCard

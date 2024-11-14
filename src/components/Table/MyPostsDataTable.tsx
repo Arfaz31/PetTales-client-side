@@ -11,7 +11,7 @@ import { Trash2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useGetMyAllPost } from "@/hooks/post.hook";
 import Lottie from "lottie-react";
-import spinner from "@/assets/lottie/loading.json";
+import spinner from "@/assets/lottie/loading2.json";
 import { TPost } from "@/types";
 import Image from "next/image";
 import DeletePost from "@/components/NewsFeed-Compo/MiddlePost/PostModal/DeletePost";

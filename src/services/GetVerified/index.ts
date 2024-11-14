@@ -24,3 +24,14 @@ export const getVerified = async (verifiedData: IResponse) => {
     );
   }
 };
+
+export const getTotalVerifiedUsers = async () => {
+  const { data } = await axiosInstance.get("/statusUpgrade/allVerifiedUsers");
+  return data;
+};
+export const getTotalIncomeOfWebsite = async () => {
+  const { data } = await axiosInstance.get(
+    "/statusUpgrade/totalIncomeOfWebsite"
+  );
+  return data;
+};

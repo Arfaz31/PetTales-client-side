@@ -107,3 +107,8 @@ export type TUpdateComment = {
   commentId: string;
   content: string;
 };
+
+export type TUpdateUserRole = {
+  userId: string;
+  role: string;
+};

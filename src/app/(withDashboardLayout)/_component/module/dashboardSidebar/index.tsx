@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo2.png";
 import { useGetMe } from "@/hooks/user.hook";
 import { LineChart, SquarePen } from "lucide-react";
 import { FaUnlockAlt } from "react-icons/fa";
@@ -61,7 +61,7 @@ const DashboardSidebar = () => {
             <Link className="flex items-center gap-1" href="/newsfeed">
               <Image className="w-[35px]" src={logo} alt="logo" />
               <span className="text-2xl text-white font-bold">
-                PET<span className="text-[#fb5d70]">TALES</span>
+                PET<span>TALES</span>
               </span>
             </Link>
           </div>
@@ -94,7 +94,7 @@ const DashboardSidebar = () => {
           </ul>
           <div className="flex items-center justify-center pt-28 pb-3">
             <Link href="/newsfeed">
-              <button className="bg-[#ff5064] text-xs md:text-sm font-semibold text-white h-[40px] w-[100px] md:w-[130px] md:h-[42px]">
+              <button className="bg-[#268bff] text-xs md:text-sm font-semibold text-white h-[40px] w-[100px] md:w-[130px] md:h-[42px]">
                 Go To Newsfeed
               </button>
             </Link>
