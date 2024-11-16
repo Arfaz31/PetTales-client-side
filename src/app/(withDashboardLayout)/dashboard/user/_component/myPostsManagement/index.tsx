@@ -2,24 +2,9 @@
 
 import PostFilterDropdown from "@/components/Shared/PostsFilter/PostFilterDropdown";
 import MyPostsDataTable from "@/components/Table/MyPostsDataTable";
+import { categoryOptions, contentTypeOptions } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-
-interface Option {
-  label: string;
-  value: string;
-}
-
-const categoryOptions: Option[] = [
-  { label: "All Posts", value: "All Post" },
-  { label: "Tip", value: "Tip" },
-  { label: "Story", value: "Story" },
-];
-const contentTypeOptions: Option[] = [
-  { label: "All Content", value: "All Content" },
-  { label: "Basic", value: "basic" },
-  { label: "Premium", value: "premium" },
-];
 
 const MyPostsManagement = () => {
   const router = useRouter();

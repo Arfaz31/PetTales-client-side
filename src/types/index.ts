@@ -80,6 +80,14 @@ export type TUnlockPost = {
   transactionId: string;
   createdAt?: string;
 };
+export type TVerifiedUser = {
+  _id?: string;
+  userId: TUser;
+  amount: number;
+  paymentStatus: "Pending" | "Paid" | "Failed";
+  transactionId: string;
+  createdAt?: string;
+};
 
 export type TLike = {
   _id?: string;
@@ -112,3 +120,19 @@ export type TUpdateUserRole = {
   userId: string;
   role: string;
 };
+
+interface Option {
+  label: string;
+  value: string;
+}
+
+export const categoryOptions: Option[] = [
+  { label: "All Posts", value: "All Post" },
+  { label: "Tip", value: "Tip" },
+  { label: "Story", value: "Story" },
+];
+export const contentTypeOptions: Option[] = [
+  { label: "All Content", value: "All Content" },
+  { label: "Basic", value: "basic" },
+  { label: "Premium", value: "premium" },
+];

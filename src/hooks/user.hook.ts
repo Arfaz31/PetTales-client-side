@@ -7,7 +7,7 @@ import {
   updateUserRoleByAdmin,
 } from "@/services/UserService";
 import { TUpdateUserRole, TUser } from "@/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useGetAllUser = (role?: string, status?: string) => {
@@ -43,11 +43,14 @@ export const useUpdateUser = () => {
   });
 };
 export const useUpdateUserRole = () => {
+  const queryClient = useQueryClient();
   return useMutation<any, Error, TUpdateUserRole>({
     mutationKey: ["UPDATE_USER_ROLE"],
     mutationFn: async (updateData) => await updateUserRoleByAdmin(updateData),
     onSuccess: () => {
-      toast.success("User updated successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["GET_ALL_USER"],
+      });
     },
     onError: (error) => {
       toast.error(error.message);

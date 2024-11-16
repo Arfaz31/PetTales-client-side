@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -13,12 +13,14 @@ import Lottie from "lottie-react";
 import spinner from "@/assets/lottie/loading2.json";
 import Image from "next/image";
 import { useGetAllUser, useUpdateUserRole } from "@/hooks/user.hook";
-import { TUpdateUserRole, TUser } from "@/types";
+import { TUser } from "@/types";
 import userDefaultImage from "@/assets/user (3).png";
 import { toast } from "sonner";
 const AllUsersDataTable = () => {
-  // Using a ref to store loading states for each user (avoids re-rendering)
-  const loadingRef = useRef<{ [key: string]: boolean }>({});
+  const [loadingUser, setLoadingUsers] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "All users";
   const status = searchParams.get("status") || "All users";
@@ -26,27 +28,30 @@ const AllUsersDataTable = () => {
   const { data: allUsersData, isLoading } = useGetAllUser(role, status);
   const users = allUsersData?.data || [];
 
-  const { mutate: UpdateRole } = useUpdateUserRole();
+  const { mutate: updateRole } = useUpdateUserRole();
 
   const handleUpdateUserRole = (user: TUser) => {
     const newRole = user.role === "admin" ? "user" : "admin";
 
-    // Set loading state for this user
-    loadingRef.current[user._id!] = true;
+    // Set loading state for the specific user
+    //[user._id!] is used to dynamically access or assign a property in an object.square brackets ([]) allow you to reference an object’s property using a dynamic key.
+    setLoadingUsers((prev) => ({ ...prev, [user._id!]: true }));
 
-    const payload: TUpdateUserRole = {
-      userId: user._id!,
-      role: newRole,
-    };
-    console.log("payload", payload);
-    try {
-      UpdateRole(payload);
-    } catch (error) {
-      toast.error("Failed to update role");
-      console.log(error);
-    } finally {
-      loadingRef.current[user._id!] = false;
-    }
+    updateRole(
+      { userId: user._id!, role: newRole },
+      {
+        onSuccess: () => {
+          toast.success(`Role updated to ${newRole} successfully`);
+        },
+        onError: () => {
+          toast.error("Failed to update role");
+        },
+        onSettled: () => {
+          // Clear loading state for the specific user
+          setLoadingUsers((prev) => ({ ...prev, [user._id!]: false }));
+        },
+      }
+    );
   };
 
   return (
@@ -54,20 +59,22 @@ const AllUsersDataTable = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-semibold text-base">Image</TableHead>
-            <TableHead className="font-semibold text-base">Name</TableHead>
-            <TableHead className="font-semibold text-base">Email</TableHead>
-            <TableHead className="font-semibold text-base">Phone</TableHead>
-            <TableHead className="font-semibold text-base">Gender</TableHead>
-            <TableHead className="font-semibold text-base">Role</TableHead>
-            <TableHead className="font-semibold text-base">Status</TableHead>
-            <TableHead className="font-semibold text-base">
-              IsDelete-status
-            </TableHead>
-            <TableHead className="font-semibold text-base">
-              Update Role
-            </TableHead>
-            <TableHead className="font-semibold text-base">Delete</TableHead>
+            {[
+              "Image",
+              "Name",
+              "Email",
+              "Phone",
+              "Gender",
+              "Role",
+              "Status",
+              "IsDeleted",
+              "Update Role",
+              "Delete",
+            ].map((header) => (
+              <TableHead key={header} className="font-semibold text-base">
+                {header}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -111,7 +118,7 @@ const AllUsersDataTable = () => {
                       onClick={() => handleUpdateUserRole(user)}
                       className="flex text-sm items-center justify-center gap-2 bg-[#268bff] text-white w-[120px] h-11 p-3 relative group overflow-hidden"
                     >
-                      {loadingRef.current[user._id!] ? (
+                      {loadingUser[user._id!] ? (
                         <div className=" w-7  h-7 border-4 border-dashed rounded-full animate-spin  border-white"></div>
                       ) : (
                         <div>

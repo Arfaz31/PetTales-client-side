@@ -16,6 +16,7 @@ const roleBasedRoutes = {
   admin: [
     /^\/newsfeed(\/[a-zA-Z0-9-_]+)?$/,
     /^\/dashboard\/admin(\/[a-zA-Z0-9-_]+)?$/,
+    /^\/dashboard\/admin\/manage-all-post(?:\/[a-zA-Z0-9-_]*)?(?:\?.*)?$/,
     /^\/newsfeed\/posts(\/[a-zA-Z0-9-_]+)?$/,
     /^\/newsfeed\/userprofile(\/[a-zA-Z0-9-_]+)?$/,
   ],

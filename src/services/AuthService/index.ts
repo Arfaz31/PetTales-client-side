@@ -17,7 +17,7 @@ export const registerUser = async (userData: FieldValues) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    throw new Error(error.response?.data?.message || "Failed to Register");
   }
 };
 
@@ -32,7 +32,7 @@ export const loginUser = async (userData: FieldValues) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    throw new Error(error.response?.data?.message || "Failed to login");
   }
 };
 
@@ -68,10 +68,6 @@ export const resetPassword = async (resetPasswordData: FieldValues) => {
   } catch (error: any) {
     throw new Error(error);
   }
-  // catch (error: any) {
-  //   console.error(error.response?.data); // Log the exact response from the server
-  //   throw new Error(error.response?.data?.message || error.message);
-  // }
 };
 
 export const logout = () => {
@@ -132,6 +128,8 @@ export const changePassword = async (userData: FieldValues) => {
     );
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    throw new Error(
+      error.response?.data?.message || "Failed to change password"
+    );
   }
 };

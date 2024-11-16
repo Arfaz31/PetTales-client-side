@@ -32,7 +32,7 @@ const DashboardSidebar = () => {
   const adminDashboardLinks = [
     { name: "Insights", link: "/dashboard/admin", icon: <LineChart /> },
     {
-      name: "My Unlock Post",
+      name: "Manage All Posts",
       link: "/dashboard/admin/manage-all-post",
       icon: <SquarePen />,
     },

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getVerified } from "@/services/GetVerified";
-import { useMutation } from "@tanstack/react-query";
+import { getTotalVerifiedUsers, getVerified } from "@/services/GetVerified";
+import { TVerifiedUser } from "@/types";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface IResponse {
@@ -22,5 +23,12 @@ export const useUserGetVerified = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+
+export const useGetAllVerifiedUsers = () => {
+  return useQuery<any, Error, { data: TVerifiedUser[] }>({
+    queryKey: ["GET_ALL_VERIFIED_USERS"],
+    queryFn: async () => await getTotalVerifiedUsers(),
   });
 };

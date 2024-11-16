@@ -7,6 +7,8 @@ import {
   getMyUnlockPosts,
   getUnlockingUsersAndEarnings,
   updatePost,
+  updatePostAsPublishedByAdmin,
+  updatePostAsUnpublishedByAdmin,
 } from "@/services/PostService";
 import { TPost, TUnlockPost } from "@/types";
 import {
@@ -118,11 +120,16 @@ export const useUserDeletePost = () => {
 //   });
 // };
 
-export const useGetAllPost = (searchTerm?: string, category?: string) => {
+export const useGetAllPost = (
+  searchTerm?: string,
+  category?: string,
+  contentType?: string
+  // currentPage: number = 1
+) => {
   return useInfiniteQuery<any, Error>({
-    queryKey: ["GET_ALL_POST", searchTerm || "", category],
+    queryKey: ["GET_ALL_POST", searchTerm || "", category, contentType],
     queryFn: ({ pageParam = 1 }) =>
-      getAllPosts(searchTerm, category, pageParam as number),
+      getAllPosts(searchTerm, category, contentType, pageParam as number),
     getNextPageParam: (lastPage, allPages) => {
       // Check if there are more pages available
       return lastPage.hasMore ? allPages.length + 1 : undefined;
@@ -153,5 +160,36 @@ export const useGetMyUnlockPosts = () => {
   return useQuery<{ data: TUnlockPost[] }, Error>({
     queryKey: ["GET_My_Unlock_POST"],
     queryFn: async () => await getMyUnlockPosts(),
+  });
+};
+
+export const useUserUpdatePostAsPublished = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, Error, string>({
+    mutationKey: ["USER_UPDATE_POST_AS_PUBLISHED"],
+    mutationFn: async (postId) => await updatePostAsPublishedByAdmin(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["GET_ALL_POST"],
+      });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+export const useUserUpdatePostAsUnpublished = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, Error, string>({
+    mutationKey: ["USER_UPDATE_POST_AS_UNPUBLISHED"],
+    mutationFn: async (postId) => await updatePostAsUnpublishedByAdmin(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["GET_ALL_POST"],
+      });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 };

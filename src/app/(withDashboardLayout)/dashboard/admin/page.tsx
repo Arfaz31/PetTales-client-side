@@ -15,11 +15,10 @@ import UsersManagement from "./_component/manageUsers";
 
 const AdminDashboardHome = async () => {
   const { data: AllUsersData } = await getAllUser();
-  const { posts } = await getAllPosts();
+  const { totalPosts } = await getAllPosts();
   const { data: verifiedUsersData } = await getTotalVerifiedUsers();
   const { data: totalWebsiteEarnings } = await getTotalIncomeOfWebsite();
 
-  // const postsLength = AllPostData?.pages?.[0]?.posts?.length || 0;
   const cardData = [
     {
       icon: <FaUsers className="xl:w-12 xl:h-12 w-10 h-10 text-white" />,
@@ -30,7 +29,7 @@ const AdminDashboardHome = async () => {
       icon: (
         <BsFillPostcardHeartFill className="xl:w-12 xl:h-12 w-10 h-10 text-white" />
       ),
-      value: posts.length,
+      value: totalPosts,
       label: "Total Posts",
     },
     {

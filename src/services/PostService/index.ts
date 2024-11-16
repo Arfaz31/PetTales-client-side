@@ -57,6 +57,7 @@ export const deletePost = async (postId: string) => {
 export const getAllPosts = async (
   searchTerm?: string,
   category?: string,
+  contentType?: string,
   pageParam: number = 1,
   limit: number = 8
 ) => {
@@ -67,12 +68,14 @@ export const getAllPosts = async (
 
   if (searchTerm) params.searchTerm = searchTerm;
   if (category && category !== "All Posts") params.category = category;
-
+  if (contentType && contentType !== "All Content")
+    params.contentType = contentType;
   const { data } = await axiosInstance.get("/posts", { params });
 
   return {
     posts: data.data.posts,
     hasMore: data.data.hasMore,
+    totalPosts: data.data.totalPosts,
     totalPages: data.data.totalPages,
   };
 };
@@ -119,6 +122,30 @@ export const getUnlockingUsersAndEarnings = async () => {
 };
 export const getMyUnlockPosts = async () => {
   const { data } = await axiosInstance.get("/posts/myUnlockPosts");
-
   return data;
+};
+
+export const updatePostAsPublishedByAdmin = async (postId: string) => {
+  try {
+    const { data } = await axiosInstance.patch(`/posts/publish-post/${postId}`);
+    revalidateTag("posts");
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to update post as published"
+    );
+  }
+};
+export const updatePostAsUnpublishedByAdmin = async (postId: string) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/posts/unpublish-post/${postId}`
+    );
+    revalidateTag("posts");
+    return data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to update post as unpublished"
+    );
+  }
 };

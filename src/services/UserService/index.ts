@@ -67,7 +67,10 @@ export const updateUserRoleByAdmin = async (updateData: TUpdateUserRole) => {
 
     return data;
   } catch (error: any) {
-    console.log(error);
+    // console.error(
+    //   "Error in unlockPost:",
+    //   error.response?.data || error.message
+    // );
     throw new Error(
       error.response?.data?.message || "Failed to update user role"
     );
