@@ -10,6 +10,7 @@ import { changePasswordSchema } from "@/schemas/auth.schema";
 import FXInput from "@/components/Shared/Form/FXInput";
 import { useUserChangePassword } from "@/hooks/auth.hook";
 import GlassLoader from "@/components/Shared/Loading";
+import { toast } from "sonner";
 interface FormValues {
   oldPassword: string;
   newPassword: string;
@@ -20,9 +21,17 @@ const ChangePassword = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     if (data) {
       console.log(data);
-      handleChangePassword(data);
+      handleChangePassword(data, {
+        onSuccess: (userData) => {
+          if (userData.success) {
+            toast.success(userData.message || "Password Changed successfully!");
+          } else {
+            toast.error(userData.message || "Failed to change password.");
+          }
+          reset();
+        },
+      });
     }
-    reset();
   };
 
   return (

@@ -47,7 +47,7 @@ const BottomNav = () => {
     },
     {
       name: "Message",
-      link: "/newsfeed/message",
+      link: "/message",
       icon: <FaFacebookMessenger />,
     },
     {

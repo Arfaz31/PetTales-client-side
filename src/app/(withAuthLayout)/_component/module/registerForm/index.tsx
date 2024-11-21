@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { z } from "zod";
 import { registerSchema } from "@/schemas/auth.schema";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -11,6 +11,7 @@ import RegisterRightContent from "./registerRightContent";
 import { useUserRegistration } from "@/hooks/auth.hook";
 import GlassLoader from "@/components/Shared/Loading";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type RegisterFormInputs = z.infer<typeof registerSchema>;
 
@@ -18,11 +19,7 @@ const RegisterPage = () => {
   const router = useRouter();
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-  const {
-    mutate: handleUserRegistration,
-    isPending,
-    isSuccess,
-  } = useUserRegistration();
+  const { mutate: handleUserRegistration, isPending } = useUserRegistration();
   const {
     register,
     handleSubmit,
@@ -34,15 +31,26 @@ const RegisterPage = () => {
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
     if (data) {
-      handleUserRegistration(data);
+      handleUserRegistration(data, {
+        onSuccess: (userData) => {
+          if (userData.success) {
+            toast.success(userData.message || "Registered successfully!");
+            // Redirect after login success
+            router.push("/login");
+          } else {
+            toast.error(userData.message || "Registered failed.");
+          }
+
+          reset();
+        },
+      });
     }
-    reset();
   };
-  useEffect(() => {
-    if (!isPending && isSuccess) {
-      router.push("/login");
-    }
-  }, [isPending, isSuccess, router]);
+  // useEffect(() => {
+  //   if (!isPending && isSuccess) {
+  //     router.push("/login");
+  //   }
+  // }, [isPending, isSuccess, router]);
 
   return (
     <>

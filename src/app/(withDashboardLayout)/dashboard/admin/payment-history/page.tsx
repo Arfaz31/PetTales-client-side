@@ -33,7 +33,7 @@ const WebsitePaymentHistory = () => {
     <div className="md:mx-10 mt-10 mx-5 overflow-x-scroll">
       <div className="xl:w-full w-[1050px] bg-white shadow-md  pt-10">
         <h2 className="text-2xl font-bold  text-center">
-          Website Payment History
+          Website Earning History
         </h2>
         <p className="text-base text-center pt-3 pb-9 text-gray-600">
           All the verified users payment history

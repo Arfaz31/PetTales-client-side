@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PETTALES - Pet Care Tips & Stories
 
-## Getting Started
+**PETTALES** is a comprehensive platform for pet owners to discover practical advice, share engaging pet stories, and build a vibrant community of like-minded individuals. With premium features and seamless interactivity, PETTALES enhances pet care experiences and fosters a deeper connection between pet lovers and their furry companions.
 
-First, run the development server:
+## Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Explore the PETTALES platform live: [PETTALES Live Demo](https://pettales.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### User-Centric Design
 
-## Learn More
+- **Fully Responsive Design:** Optimized for desktops, tablets, and mobile devices to provide a seamless user experience across all screen sizes.
+- **Dynamic Homepage Sections:**
+  - **Hero Section:** Captivating visuals to welcome users.
+  - **Pricing:** Pricing for user verification.
+  - **Featured Content:** Highlights popular and premium posts.
+  - **Testimonials:** Showcase user feedback to build trust and engagement.
+  - **Contact Section:** Easy access for inquiries and support.
 
-To learn more about Next.js, take a look at the following resources:
+### Core Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **User Authentication:**
+  - **Registration:** Easy signup process using email.
+  - **Login/Logout:** Secure login and logout powered by JWT.
+  - **Password Recovery:** Simple and secure recovery process.
+- **User Profiles:**
+  - Update personal information and manage profile pictures.
+  - View posts, followers, and following.
+  - Facebook/X-style profile layout for a familiar user experience.
+- **Post Creation:**
+  - **Rich Text Editor:** Create detailed posts with Markdown support.
+  - **Image Uploads:** Attach images for engaging content.
+  - **Categorization:** Classify posts as "Tips" or "Stories."
+- **Monetization:** Premium Authors can create premium content for exclusive access.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Interactivity
 
-## Deploy on Vercel
+- **Upvote & Downvote System:** Engage with content using upvotes or downvotes.
+- **Commenting System:**
+  - Add, edit, and delete comments on posts.
+  - Optional replies to other users' comments.
+- **Following System:**
+  - Follow and unfollow other users.
+  - Personalized feed showing content from followed users.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Premium Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Payment Integration:** Seamlessly pay for unlocking premium content using **Aamarpay** .
+- **Premium Content Access:** Unlock exclusive content after successful payment.
+- **Premium Badge:** Distinct marker for premium posts.
+
+### News Feed
+
+- **Infinite Scroll:** Load more posts as users scroll.
+- **Search & Filter:** Advanced options to find content by category or upvote count.
+- **Dynamic Post Previews:**
+  - Full access for unlocked premium posts.
+  - Blurred previews for locked premium content with a lock icon.
+
+---
+
+## Technology Stack
+
+- **Frontend Framework:** Next.js
+- **Language:** TypeScript
+- **State Management:** TanStack Query
+- **Styling:** Tailwind CSS
+- **Ui Framework:** ShadCN
+- **Routing:** Dynamic routing using Next.js
+- **Backend:** Node.js with Express.js
+- **Database:** MongoDB
+- **Authentication:** JWT-based secure login
+- **Payment Integration:** Aamarpay
+- **Deployment:** Vercel (Frontend)
+
+---
+
+## Setup and Installation
+
+Follow these steps to run the PETTALES project locally:
+
+### Prerequisites
+
+Ensure you have the following installed on your system:
+
+- Node.js (v16 or later)
+- npm or yarn
+- MongoDB
+
+### Backend Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone <backend-repository-url>
+   cd pettales-backend
+   npm install
+   setup .env NEXT_PUBLIC_BASE_API=url
+   ```

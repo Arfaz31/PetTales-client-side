@@ -10,11 +10,11 @@ import userimage from "@/assets/user-2.png";
 import { ChartNoAxesCombined, CircleUser, LogOut } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/context/user.provider";
-import { logout } from "@/services/AuthService";
 import { protectedRoutes } from "@/constant";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
 import { useGetMe } from "@/hooks/user.hook";
+import { logout } from "@/services/AuthService";
 const NavbarDropdown = () => {
   const router = useRouter();
   const pathname = usePathname();

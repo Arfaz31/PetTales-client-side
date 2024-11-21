@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
-import { jwtDecode } from "jwt-decode";
+
 import axiosInstance from "@/AxiosInstance";
+import { cookies } from "next/headers";
+import { jwtDecode } from "jwt-decode";
 
 export const registerUser = async (userData: FieldValues) => {
   try {
@@ -17,7 +18,8 @@ export const registerUser = async (userData: FieldValues) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Failed to Register");
+    // throw new Error(error.response?.data?.message || "Failed to Register");
+    return error;
   }
 };
 
@@ -32,7 +34,9 @@ export const loginUser = async (userData: FieldValues) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Failed to login");
+    // throw new Error(error.response?.data?.message || "Failed to login");
+    // console.log("error from api:", error);
+    return error;
   }
 };
 
@@ -128,8 +132,9 @@ export const changePassword = async (userData: FieldValues) => {
     );
     return data;
   } catch (error: any) {
-    throw new Error(
-      error.response?.data?.message || "Failed to change password"
-    );
+    // throw new Error(
+    //   error.response?.data?.message || "Failed to change password"
+    // );
+    return error;
   }
 };

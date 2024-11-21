@@ -43,7 +43,7 @@ const EditPost = ({ post }: { post: TPost }) => {
       content: post?.content || "",
       category: post?.category || "",
       contentType: post?.contentType || "basic",
-      price: post?.price || "",
+      price: Number(post?.price) || "",
     },
   });
 
@@ -72,7 +72,18 @@ const EditPost = ({ post }: { post: TPost }) => {
     }
     //is a loop that iterates through each item in imageFiles (an array or iterable containing image file objects) and appends each image file to formData with the key "postImages".
 
-    handleUpdatePost({ postId, formData }); // Pass as UpdatePostData
+    handleUpdatePost(
+      { postId, formData },
+      {
+        onSuccess: (postData) => {
+          if (postData.success) {
+            toast.success(postData.message || "Post updated successfully");
+          } else {
+            toast.error(postData.message || "Failed to update post.");
+          }
+        },
+      }
+    ); // Pass as UpdatePostData
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { z } from "zod";
 import { loginSchema } from "@/schemas/auth.schema";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -12,6 +13,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useUser } from "@/context/user.provider";
 import { useUserLogin } from "@/hooks/auth.hook";
 import GlassLoader from "@/components/Shared/Loading";
+import { toast } from "sonner";
 
 type LoginFormInputs = z.infer<typeof loginSchema>;
 
@@ -21,7 +23,7 @@ const LoginPage = () => {
   const { setIsLoading: userLoading } = useUser();
   const redirect = searchParams.get("redirect");
 
-  const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
+  const { mutate: handleUserLogin, isPending } = useUserLogin();
 
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -35,23 +37,29 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
-    if (data) {
-      handleUserLogin(data);
-      userLoading(true);
-    }
-    reset();
-  };
+  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+    userLoading(true); // Start loading state
 
-  useEffect(() => {
-    if (!isPending && isSuccess) {
-      if (redirect) {
-        router.push(redirect); //redirect to that private route that was clicked before!
-      } else {
-        router.push("/");
-      }
-    }
-  }, [isPending, isSuccess, redirect, router]);
+    handleUserLogin(data, {
+      onSuccess: (userData) => {
+        userLoading(false); // Stop loading state on success
+
+        if (userData.success) {
+          toast.success(userData.message || "Logged in successfully!");
+          // Redirect after login success
+          if (redirect) {
+            router.push(redirect);
+          } else {
+            router.push("/");
+          }
+        } else {
+          toast.error(userData.message || "Login failed.");
+        }
+
+        reset(); // Reset the form after handling success or failure
+      },
+    });
+  };
 
   return (
     <>

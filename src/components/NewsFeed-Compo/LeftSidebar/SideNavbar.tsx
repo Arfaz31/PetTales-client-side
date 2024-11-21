@@ -53,7 +53,7 @@ const SideNavbar = () => {
     },
     {
       name: "Message",
-      link: "/newsfeed/message",
+      link: "/message",
       icon: <FaFacebookMessenger />,
     },
     {

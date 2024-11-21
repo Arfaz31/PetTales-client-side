@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import React from "react";
 import { useGetMe } from "@/hooks/user.hook"; // Adjust accordingly
 import { useGetAllPost } from "@/hooks/post.hook";
 import { useSearchParams } from "next/navigation"; // Adjust the import accordingly
@@ -39,11 +39,11 @@ const Post = () => {
   };
 
   // Reset posts when category changes
-  useEffect(() => {
-    if (postsData) {
-      fetchNextPage(); // Trigger a fetch when category changes
-    }
-  }, [category, fetchNextPage, postsData]);
+  // useEffect(() => {
+  //   if (postsData) {
+  //     fetchNextPage(); // Trigger a fetch when category changes
+  //   }
+  // }, [category, fetchNextPage, postsData]);
 
   if (loadingPosts && !postsData) {
     return (

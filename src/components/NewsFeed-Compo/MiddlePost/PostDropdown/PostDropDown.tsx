@@ -55,15 +55,17 @@ const PostDropDown = ({
         <DropdownMenuContent className="w-65 bg-black shadow-lg shadow-gray-600 p-3 space-y-2">
           <DropdownMenuItem
             className={`w-full p-2 border-none ${
-              post.contentType === "premium" && !isUnlocked
+              post.contentType === "premium" && !isUnlocked && !isPostOwner
                 ? "cursor-not-allowed opacity-50"
                 : "hover:bg-[#16181C] cursor-pointer"
             }`}
-            disabled={post.contentType === "premium" && !isUnlocked}
+            disabled={
+              post.contentType === "premium" && !isUnlocked && !isPostOwner
+            }
           >
             <p className="flex items-center gap-3 text-white text-sm">
               <TbListDetails className="text-white" />
-              {post.contentType === "premium" && !isUnlocked ? (
+              {post.contentType === "premium" && !isUnlocked && !isPostOwner ? (
                 <span>View Details (Locked)</span>
               ) : (
                 <Link href={`/newsfeed/posts/${post?._id}`}>View Details</Link>

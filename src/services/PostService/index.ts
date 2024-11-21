@@ -14,9 +14,10 @@ export const createPost = async (formData: FormData): Promise<any> => {
     revalidateTag("posts");
 
     return data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to create post");
+  } catch (error: any) {
+    // console.log("Error from api", error);
+    // throw new Error(error.response?.data?.message || "Failed to create post");
+    return error;
   }
 };
 
@@ -38,9 +39,9 @@ export const updatePost = async (
     revalidateTag("posts");
 
     return data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to update post");
+  } catch (error: any) {
+    // throw new Error(error.response?.data?.message || "Failed to update post");
+    return error;
   }
 };
 
@@ -50,7 +51,7 @@ export const deletePost = async (postId: string) => {
     revalidateTag("posts");
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    throw new Error(error.response?.data?.message || "Failed to delete post");
   }
 };
 
@@ -59,7 +60,7 @@ export const getAllPosts = async (
   category?: string,
   contentType?: string,
   pageParam: number = 1,
-  limit: number = 8
+  limit: number = 6
 ) => {
   const params: Record<string, string> = {
     page: pageParam.toString(),

@@ -54,7 +54,8 @@ axiosInstance.interceptors.response.use(
     }
 
     // If the error is not a 401 or the request has already been sent, reject the promise
-    return Promise.reject(error);
+
+    return Promise.reject(error.response?.data || error);
   }
 );
 

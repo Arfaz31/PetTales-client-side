@@ -50,15 +50,16 @@ export const useCreatePost = (onSuccessCallback?: () => void) => {
     mutationKey: ["CREATE_POST"],
     mutationFn: async (postData) => await createPost(postData),
     onSuccess: () => {
-      toast.success("Post created successfully");
+      // toast.success("Post created successfully");
       queryClient.invalidateQueries({
         queryKey: ["GET_ALL_POST"],
       });
       if (onSuccessCallback) onSuccessCallback();
     },
-    onError: (error) => {
-      toast.error(error.message);
-    },
+    // onError: (error) => {
+    //   console.log("error", error);
+    //   toast.error(error.message);
+    // },
   });
 };
 
@@ -70,17 +71,15 @@ export const useUpdatePost = (onSuccessCallback?: () => void) => {
       await updatePost(formData, postId),
 
     onSuccess: () => {
-      toast.success("Post updated successfully");
-
       queryClient.invalidateQueries({
         queryKey: ["GET_ALL_POST"],
       });
 
       if (onSuccessCallback) onSuccessCallback();
     },
-    onError: (error) => {
-      toast.error(error.message);
-    },
+    // onError: (error) => {
+    //   toast.error(error.message);
+    // },
   });
 };
 
@@ -101,30 +100,10 @@ export const useUserDeletePost = () => {
   });
 };
 
-// export const useGetAllPost = (
-//   searchTerm?: string,
-//   category?: string,
-//   page: number = 1
-// ) => {
-//   return useQuery<IPostResponse, Error>({
-//     queryKey: ["GET_ALL_POST", searchTerm || "", category, page],
-//     queryFn: () => getAllPosts(searchTerm, category, page),
-
-//     select: (data) => {
-//       return {
-//         posts: data.posts,
-//         hasMore: data.hasMore,
-//         totalPages: data.totalPages,
-//       };
-//     },
-//   });
-// };
-
 export const useGetAllPost = (
   searchTerm?: string,
   category?: string,
   contentType?: string
-  // currentPage: number = 1
 ) => {
   return useInfiniteQuery<any, Error>({
     queryKey: ["GET_ALL_POST", searchTerm || "", category, contentType],

@@ -3,10 +3,33 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function LoginRightContent() {
-  //   const { data: usersData } = useGetAllUsersQuery(undefined);
-  //   const users = usersData?.data as TUser[];
-  const users: any[] = []; // or your actual fetched data
-  // Replace with actual users data when ready
+  const users: any[] = [
+    {
+      _id: "641b9b8f42e5f1a1f3341a1a",
+      name: "John Doe",
+      profilePhoto: "", // No image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1b",
+      name: "Jane Smith",
+      profilePhoto: "", // No image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1c",
+      name: "Alice Johnson",
+      profilePhoto: "", // Example image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1d",
+      name: "Bob Williams",
+      profilePhoto: "", // No image
+    },
+    {
+      _id: "641b9b8f42e5f1a1f3341a1e",
+      name: "Charlie Brown",
+      profilePhoto: "", // Example image
+    },
+  ];
 
   return (
     <div className="w-full md:w-[500px] xl:w-[530px] p-8 flex flex-col justify-center items-center rounded-r-lg relative overflow-hidden shadow-lg mb-10 md:mb-0">
@@ -38,8 +61,15 @@ export default function LoginRightContent() {
               ))}
           </div>
           <span className="text-default-500 text-sm text-white">
-            Join {users?.length || "10"}+ users
+            Join 10+ users
           </span>
+        </div>
+
+        <div className="mt-8 text-center text-sm">
+          <p className="text-gray-400">Admin email: arfazahamed31@gmail.com</p>
+          <p className="text-gray-400 pt-1 pb-3">Admin password: 1234567</p>
+          <p className="text-gray-400">User email: tanmoyparvez@gmail.com</p>
+          <p className="text-gray-400 pt-1">User password: 123456</p>
         </div>
       </div>
     </div>

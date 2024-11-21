@@ -127,7 +127,7 @@ const PostAction = ({ post }: PostActionProps) => {
       </div>
       <hr className="border-gray-600" />
 
-      <div className="flex items-center justify-between pt-4 pb-6">
+      <div className="flex items-center justify-between pt-4 pb-6 sm:text-base text-sm">
         <button
           onClick={handleLike}
           className={`flex items-center justify-between gap-1 border-none transition-all ease-in-out duration-500 hover:scale-110 ${

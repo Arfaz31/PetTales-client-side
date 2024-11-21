@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { GoHeart } from "react-icons/go";
 
@@ -25,9 +26,11 @@ const LandingBanner = () => {
 
         {/* Buttons */}
         <div className="flex gap-5 z-10">
-          <button className="bg-pink-600 hover:bg-pink-500 text-white py-3 px-4 rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-105">
-            Explore Now
-          </button>
+          <Link href={"/newsfeed"}>
+            <button className="bg-pink-600 hover:bg-pink-500 text-white py-3 px-4 rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-105">
+              Explore Now
+            </button>
+          </Link>
           <button className="bg-blue-600 hover:bg-blue-500 text-white py-3 px-4 rounded-sm transition-transform duration-300 ease-in-out transform hover:scale-105">
             Learn More
           </button>

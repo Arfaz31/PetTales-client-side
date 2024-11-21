@@ -27,6 +27,7 @@ import { useCreatePost } from "@/hooks/post.hook";
 import GlassLoader from "@/components/Shared/Loading";
 import Link from "next/link";
 import { useGetMe } from "@/hooks/user.hook";
+import { toast } from "sonner";
 // import dynamic from "next/dynamic"; // Import dynamic from Next.js
 // // Dynamically import ReactQuill to load it only on the client side
 // const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -59,7 +60,7 @@ const CreatePost = () => {
       ...data,
       price: Number(data.price),
     };
-    // console.log("postData", postData);
+    console.log("postData", postData);
     const formData = new FormData();
     formData.append("data", JSON.stringify(postData));
 
@@ -69,7 +70,15 @@ const CreatePost = () => {
     }
     //is a loop that iterates through each item in imageFiles (an array or iterable containing image file objects) and appends each image file to formData with the key "postImages".
 
-    handleCreatePost(formData);
+    handleCreatePost(formData, {
+      onSuccess: (postData) => {
+        if (postData.success) {
+          toast.success(postData.message || "Post created successfully");
+        } else {
+          toast.error(postData.message || "Failed to create post.");
+        }
+      },
+    });
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

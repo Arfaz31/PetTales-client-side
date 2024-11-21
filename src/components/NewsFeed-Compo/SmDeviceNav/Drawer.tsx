@@ -13,13 +13,14 @@ import Image from "next/image";
 import userimage from "@/assets/user-2.png";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/context/user.provider";
-import { logout } from "@/services/AuthService";
+
 import { protectedRoutes } from "@/constant";
 import { CircleUser, LogOut } from "lucide-react";
 import { FaChartPie, FaHome, FaRegBookmark } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import Link from "next/link";
 import { useGetMe } from "@/hooks/user.hook";
+import { logout } from "@/services/AuthService";
 
 const Drawer = () => {
   const router = useRouter();
@@ -77,7 +78,7 @@ const Drawer = () => {
                 alt="user profile picture"
                 width={35}
                 height={35}
-                className="rounded-full object-cover object-center w-10 h-10 "
+                className="rounded-full object-cover object-center w-9 h-9 "
               />
             </div>
           </SheetTrigger>

@@ -92,7 +92,7 @@ const DashboardSidebar = () => {
               </li>
             ))}
           </ul>
-          <div className="flex items-center justify-center pt-28 pb-3">
+          <div className="flex items-center justify-center md:pt-28 pt-20 pb-3">
             <Link href="/newsfeed">
               <button className="bg-[#268bff] text-xs md:text-sm font-semibold text-white h-[40px] w-[100px] md:w-[130px] md:h-[42px]">
                 Go To Newsfeed
