@@ -90,12 +90,11 @@ Ensure you have the following installed on your system:
 - npm or yarn
 - MongoDB
 
-### Backend Setup
+## Installation:
 
-1. **Clone the repository:**
-   ```bash
-   git clone <backend-repository-url>
-   cd pettales-backend
-   npm install
-   setup .env NEXT_PUBLIC_BASE_API=url
-   ```
+- **Clone the repository:** open cmd and type git clone (github repo link here)
+- **Install dependencies:** using npm install.
+- **create .env file at root dir:** .env and set (NEXT_PUBLIC_BASE_API=url)
+- **Run the server:** using npm run dev.
+
+1.
