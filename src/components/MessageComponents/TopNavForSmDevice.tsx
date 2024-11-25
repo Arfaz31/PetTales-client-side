@@ -27,7 +27,7 @@ const MessageTopNavForSmDevice = () => {
       <div>
         <Sheet>
           <SheetTrigger asChild>
-            <Button className="text-pink-600 bg-transparent ">
+            <Button className="text-white bg-transparent ">
               <AlignJustify />
             </Button>
           </SheetTrigger>

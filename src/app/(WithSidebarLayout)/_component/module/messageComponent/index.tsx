@@ -1,39 +1,40 @@
-import React from "react";
-import Image from "next/image";
-import userimage from "@/assets/user-2.png";
-import { FaPhoneAlt, FaVideo } from "react-icons/fa";
+// "use client";
 
-const MessageComponent = () => {
-  return (
-    <div className="h-full flex flex-col">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-10 bg-[#16181C]">
-        <div className="flex items-center justify-between p-4">
-          <div className="rounded-full border-2 border-pink-600 cursor-pointer">
-            <Image
-              src={userimage}
-              alt="user profile picture"
-              width={35}
-              height={35}
-              className="rounded-full object-cover object-center w-10 h-10"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <FaPhoneAlt className="text-blue-600 w-6 h-6" />
-            <FaVideo className="text-blue-600 w-6 h-6" />
-          </div>
-        </div>
-        <hr className="border-gray-500 w-full" />
-      </div>
+// import React from "react";
+// import MessageBox from "./messageBox";
 
-      {/* Scrollable Messages */}
-      <div className="flex-grow overflow-y-auto p-4">
-        <div className="max-w-[40%] bg-blue-600 text-white rounded-3xl px-4 py-2">
-          <p>Here is your message</p>
-        </div>
-      </div>
-    </div>
-  );
-};
+// const MessageComponent = ({
+//   currentUserChatId,
+//   currentUser,
+// }: {
+//   currentUserChatId: string | undefined;
+//   currentUser: string | undefined;
+// }) => {
+//   // Check if either currentUserChatId or currentUser is undefined
+//   if (!currentUserChatId || !currentUser) {
+//     return (
+//       <div className=" h-full ">
+//         <div className="pt-10">
+//           <hr className="border-gray-500 " />
+//           <div className="mt-8 ms-4 ">
+//             <span className="py-2 px-4 text-white md:text-lg text-sm  max-w-[80%] rounded-2xl bg-blue-600">
+//               Tap on a chat to start a conversation...
+//             </span>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
 
-export default MessageComponent;
+//   // If both currentUserChatId and currentUser are defined, render the main content
+//   return (
+//     <div className=" flex flex-col overflow-hidden">
+//       <MessageBox
+//         currentUserChatId={currentUserChatId}
+//         currentUser={currentUser}
+//       />
+//     </div>
+//   );
+// };
+
+// export default MessageComponent;

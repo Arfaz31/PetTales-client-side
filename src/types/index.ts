@@ -136,3 +136,36 @@ export const contentTypeOptions: Option[] = [
   { label: "Basic", value: "basic" },
   { label: "Premium", value: "premium" },
 ];
+
+export interface IChat {
+  _id: string;
+  members: TUser; // Array of user IDs
+}
+
+export type TMember = {
+  _id: string;
+  name: string;
+  profilePhoto: string;
+  username: string;
+};
+
+export type TChat = {
+  chatId: string;
+  otherMember: TMember;
+};
+
+export interface IMessage {
+  _id: string;
+  chatId?: string;
+  senderId: TUser;
+  receiverId?: TUser;
+  text: string;
+  createdAt?: string;
+}
+
+export type TMessage = {
+  _id?: string;
+  senderId: string;
+  chatId: string;
+  text: string;
+};

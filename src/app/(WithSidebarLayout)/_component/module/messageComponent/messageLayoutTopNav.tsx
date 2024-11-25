@@ -43,7 +43,7 @@ const MessageLayoutTopNav = () => {
       : []),
   ];
   return (
-    <div className="sticky top-0 left-0 z-50 px-6 py-2  bg-black/15  border-b border-gray-600 backdrop-blur-lg w-full">
+    <div className=" z-50 px-6 py-2 h-full bg-black/15  border-b border-gray-600 backdrop-blur-lg w-full">
       <div className="flex items-center justify-between  ">
         <div className="md:hidden block">
           <MessageTopNavForSmDevice />
