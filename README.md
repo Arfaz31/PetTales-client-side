@@ -74,6 +74,7 @@ Explore the PETTALES platform live: [PETTALES Live Demo](https://pettales.vercel
 - **Database:** MongoDB
 - **Authentication:** JWT-based secure login
 - **Payment Integration:** Aamarpay
+- **Socket.IO:** Real Time Chatting
 - **Deployment:** Vercel (Frontend)
 
 ---
